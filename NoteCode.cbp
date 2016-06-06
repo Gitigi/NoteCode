@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="NoteCode" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Release">
+				<Option output="bin/Release/NoteCode" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="`wx-config  --version=3.0 --static=no --unicode=yes --debug=no --cflags`" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="`wx-config  --version=3.0 --static=no --unicode=yes --debug=no --libs`" />
+					<Add library="wx_gtk2u_aui-3.0" />
+					<Add library="wx_gtk2u_stc-3.0" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+		</Compiler>
+		<Unit filename="auto_comp_list.cpp" />
+		<Unit filename="auto_comp_list.h" />
+		<Unit filename="def.cpp" />
+		<Unit filename="def.h" />
+		<Unit filename="edit.cpp" />
+		<Unit filename="edit.h" />
+		<Unit filename="frame.cpp" />
+		<Unit filename="frame.h" />
+		<Unit filename="language.h" />
+		<Unit filename="languages/language.cpp" />
+		<Unit filename="languages/languageCpp.cpp" />
+		<Unit filename="languages/languageCss.cpp" />
+		<Unit filename="languages/languageHtml.cpp" />
+		<Unit filename="languages/languageJS.cpp" />
+		<Unit filename="languages/languageJava.cpp" />
+		<Unit filename="languages/languagePhp.cpp" />
+		<Unit filename="languages/languagePython.cpp" />
+		<Unit filename="languages/languageXml.cpp" />
+		<Unit filename="main.cpp" />
+		<Unit filename="panel.cpp" />
+		<Unit filename="panel.h" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
