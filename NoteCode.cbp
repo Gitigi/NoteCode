@@ -26,11 +26,14 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
+			<Add option="-std=c++11" />
 		</Compiler>
 		<Unit filename="auto_comp_list.cpp" />
 		<Unit filename="auto_comp_list.h" />
 		<Unit filename="def.cpp" />
 		<Unit filename="def.h" />
+		<Unit filename="dialog.cpp" />
+		<Unit filename="dialog.h" />
 		<Unit filename="edit.cpp" />
 		<Unit filename="edit.h" />
 		<Unit filename="frame.cpp" />

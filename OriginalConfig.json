@@ -1,0 +1,390 @@
+{
+	"theme" :
+	[
+		{
+			"id" : 0,
+			"name" : "Default",
+			"foreground" : [0,0,0],
+			"background" : [255,255,255],
+			"fontname" : "serif",
+			"fontsize" : 10,
+			"fontstyle" : 0
+		},
+		
+
+		{
+			"id" : 1,
+			"name" : "key word 1",
+			"foreground" : [0,0,255],
+			"background" : [255,255,255],
+			"fontname" : "serif",
+			"fontsize" : 10,
+			"fontstyle" : 0
+		},
+		
+		
+		{
+			"id" : 2,
+			"name" : "key word 2",
+			"foreground" : [25,25,112],
+			"background" : [255,255,255],
+			"fontname" : "serif",
+			"fontsize" : 10,
+			"fontstyle" : 0
+		},
+		
+		
+		{
+			"id" : 3,
+			"name" : "key word 3",
+			"foreground" : [100,149,237],
+			"background" : [255,255,255],
+			"fontname" : "serif",
+			"fontsize" : 10,
+			"fontstyle" : 0
+		},
+		
+		
+		{
+			"id" : 4,
+			"name" : "key word 4",
+			"foreground" : [0,255,255],
+			"background" : [255,255,255],
+			"fontname" : "serif",
+			"fontsize" : 10,
+			"fontstyle" : 0
+		},
+		
+		
+		{
+			"id" : 5,
+			"name" : "key word 5",
+			"foreground" : [169,169,169],
+			"background" : [255,255,255],
+			"fontname" : "serif",
+			"fontsize" : 10,
+			"fontstyle" : 0
+		},
+		
+		
+		{
+			"id" : 6,
+			"name" : "key word 6",
+			"foreground" : [128,128,128],
+			"background" : [255,255,255],
+			"fontname" : "serif",
+			"fontsize" : 10,
+			"fontstyle" : 0
+		},
+		
+		
+		{
+			"id" : 7,
+			"name" : "Comment",
+			"foreground" : [34,139,34],
+			"background" : [255,255,255],
+			"fontname" : "serif",
+			"fontsize" : 10,
+			"fontstyle" : 0
+		},
+		
+		
+		{
+			"id" : 8,
+			"name" : "Comment Doc",
+			"foreground" : [34,139,34],
+			"background" : [255,255,255],
+			"fontname" : "serif",
+			"fontsize" : 10,
+			"fontstyle" : 0
+		},
+		
+		
+		{
+			"id" : 9,
+			"name" : "Comment Line",
+			"foreground" : [34,139,34],
+			"background" : [255,255,255],
+			"fontname" : "serif",
+			"fontsize" : 10,
+			"fontstyle" : 0
+		},
+		
+		
+		{
+			"id" : 10,
+			"name" : "Comment Special",
+			"foreground" : [34,139,34],
+			"background" : [255,255,255],
+			"fontname" : "serif",
+			"fontsize" : 10,
+			"fontstyle" : 0
+		},
+		
+		
+		{
+			"id" : 11,
+			"name" : "Character",
+			"foreground" : [240,230,140],
+			"background" : [255,255,255],
+			"fontname" : "serif",
+			"fontsize" : 10,
+			"fontstyle" : 0
+		},
+		
+		
+		{
+			"id" : 12,
+			"name" : "Character EOL",
+			"foreground" : [240,230,140],
+			"background" : [255,255,255],
+			"fontname" : "serif",
+			"fontsize" : 10,
+			"fontstyle" : 0
+		},
+		
+		
+		{
+			"id" : 13,
+			"name" : "String",
+			"foreground" : [165,42,42],
+			"background" : [255,255,255],
+			"fontname" : "serif",
+			"fontsize" : 10,
+			"fontstyle" : 0
+		},
+		
+		
+		{
+			"id" : 14,
+			"name" : "String EOL",
+			"foreground" : [165,42,42],
+			"background" : [255,255,255],
+			"fontname" : "serif",
+			"fontsize" : 10,
+			"fontstyle" : 0
+		},
+		
+		
+		{
+			"id" : 15,
+			"name" : "Delimiter",
+			"foreground" : [255,165,0],
+			"background" : [255,255,255],
+			"fontname" : "serif",
+			"fontsize" : 10,
+			"fontstyle" : 0
+		},
+		
+		
+		{
+			"id" : 16,
+			"name" : "Punctuation",
+			"foreground" : [255,165,0],
+			"background" : [255,255,255],
+			"fontname" : "serif",
+			"fontsize" : 10,
+			"fontstyle" : 0
+		},
+		
+		
+		{
+			"id" : 17,
+			"name" : "Operator",
+			"foreground" : [0,0,0],
+			"background" : [255,255,255],
+			"fontname" : "serif",
+			"fontsize" : 10,
+			"fontstyle" : 0
+		},
+		
+		
+		{
+			"id" : 18,
+			"name" : "Brace",
+			"foreground" : [238,130,238],
+			"background" : [255,255,255],
+			"fontname" : "serif",
+			"fontsize" : 10,
+			"fontstyle" : 0
+		},
+		
+		
+		{
+			"id" : 19,
+			"name" : "Command",
+			"foreground" : [0,0,255],
+			"background" : [255,255,255],
+			"fontname" : "serif",
+			"fontsize" : 10,
+			"fontstyle" : 0
+		},
+		
+		
+		{
+			"id" : 20,
+			"name" : "Identifier",
+			"foreground" : [0,0,0],
+			"background" : [255,255,255],
+			"fontname" : "serif",
+			"fontsize" : 10,
+			"fontstyle" : 0
+		},
+		
+		
+		{
+			"id" : 21,
+			"name" : "Label",
+			"foreground" : [238,130,238],
+			"background" : [255,255,255],
+			"fontname" : "serif",
+			"fontsize" : 10,
+			"fontstyle" : 0
+		},
+		
+		
+		{
+			"id" : 22,
+			"name" : "Number",
+			"foreground" : [160,82,45],
+			"background" : [255,255,255],
+			"fontname" : "serif",
+			"fontsize" : 10,
+			"fontstyle" : 0
+		},
+		
+		
+		{
+			"id" : 23,
+			"name" : "Parameter",
+			"foreground" : [238,130,238],
+			"background" : [255,255,255],
+			"fontname" : "serif",
+			"fontsize" : 10,
+			"fontstyle" : 0
+		},
+		
+		
+		{
+			"id" : 24,
+			"name" : "Regex",
+			"foreground" : [218,112,214],
+			"background" : [255,255,255],
+			"fontname" : "serif",
+			"fontsize" : 10,
+			"fontstyle" : 0
+		},
+		
+		
+		{
+			"id" : 25,
+			"name" : "UUID",
+			"foreground" : [218,112,214],
+			"background" : [255,255,255],
+			"fontname" : "serif",
+			"fontsize" : 10,
+			"fontstyle" : 0
+		},
+		
+		
+		{
+			"id" : 26,
+			"name" : "Value",
+			"foreground" : [218,112,214],
+			"background" : [255,255,255],
+			"fontname" : "serif",
+			"fontsize" : 10,
+			"fontstyle" : 0
+		},
+		
+		
+		{
+			"id" : 27,
+			"name" : "Preprocessor",
+			"foreground" : [128,128,128],
+			"background" : [255,255,255],
+			"fontname" : "serif",
+			"fontsize" : 10,
+			"fontstyle" : 0
+		},
+		
+		
+		{
+			"id" : 28,
+			"name" : "Script",
+			"foreground" : [169,169,169],
+			"background" : [255,255,255],
+			"fontname" : "serif",
+			"fontsize" : 10,
+			"fontstyle" : 0
+		},
+		
+		
+		{
+			"id" : 29,
+			"name" : "Error",
+			"foreground" : [240,230,140],
+			"background" : [255,255,255],
+			"fontname" : "serif",
+			"fontsize" : 10,
+			"fontstyle" : 0
+		},
+		
+		
+		{
+			"id" : 30,
+			"name" : "Undefined",
+			"foreground" : [255,165,0],
+			"background" : [255,255,255],
+			"fontname" : "serif",
+			"fontsize" : 10,
+			"fontstyle" : 0
+		},
+		
+		
+		{
+			"id" : 31,
+			"name" : "Decorator",
+			"foreground" : [0,128,0],
+			"background" : [255,255,255],
+			"fontname" : "serif",
+			"fontsize" : 10,
+			"fontstyle" : 0
+		},
+		
+		
+		{
+			"id" : 32,
+			"name" : "Class Name",
+			"foreground" : [75,0,130],
+			"background" : [255,255,255],
+			"fontname" : "serif",
+			"fontsize" : 10,
+			"fontstyle" : 0
+		},
+		
+		
+		{
+			"id" : 33,
+			"name" : "Triple Double",
+			"foreground" : [0,0,0],
+			"background" : [255,255,255],
+			"fontname" : "serif",
+			"fontsize" : 10,
+			"fontstyle" : 0
+		},
+		
+		
+		{
+			"id" : 34,
+			"name" : "Verbatim",
+			"foreground" : [240,230,140],
+			"background" : [255,255,255],
+			"fontname" : "serif",
+			"fontsize" : 10,
+			"fontstyle" : 0
+		}
+		
+		
+	]
+}

@@ -23,6 +23,7 @@ public:
     void OnSaveAs(wxCommandEvent &event);
     void OnEdit(wxCommandEvent &event);
     void OnHighlightLang(wxCommandEvent &event);
+    void OnPreference(wxCommandEvent &event);
 private:
     void CreateImageList();
     int DetermineFile(const wxString &extension = wxEmptyString);

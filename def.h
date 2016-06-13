@@ -57,6 +57,46 @@
 
 extern void ReverseString(wxString &value);
 
+enum STYLE_ELEMENTS
+{
+    DEFAULT,
+    WORD1,
+    WORD2,
+    WORD3,
+    WORD4,
+    WORD5,
+    WORD6,
+    COMMENT,
+    COMMENT_DOC,
+    COMMENT_LINE,
+    COMMENT_SPECIAL,
+    CHARACTER,
+    CHARACTER_EOL,
+    STRING,
+    STRING_EOL,
+    DELIMITER,
+    PUNCTUATION,
+    OPERATOR,
+    BRACE,
+    COMMAND,
+    IDENTIFIER,
+    LABEL,
+    NUMBER,
+    PARAMETER,
+    REGEX,
+    UIID,
+    VALUE,
+    PREPROCESSOR,
+    SCRIPT,
+    ERROR,
+    UNDEFINED,
+    DECORATOR,
+    CLASSNAME,
+    TRIPLEDOUBLE,
+    VERBATIM,
+    LAST_STYLE_ELEMENT,
+};
+
 enum SUPPORTED_FILES{
     FILE_CPLUS = 0,
     FILE_PY,
@@ -81,6 +121,8 @@ enum MYID
     myID_HIGLIGHTLANGLAST = myID_HIGLIGHTLANGFIRST+ FILE_TOTOAL,
     myID_DWELLSTART,
     myID_DWELLEND,
+    ID_DEFAULT = wxID_HIGHEST,
+    ID_LAST_STYLE_ELEMENT = (ID_DEFAULT+LAST_STYLE_ELEMENT)*2,
 };
 
 struct FileType{
@@ -94,18 +136,40 @@ struct FileType{
 extern FileType files_supported[];
 
 
-struct StyleInfo
+//struct StyleInfo
+//{
+//    const wxChar *name;
+//    const wxChar *foreground;
+//    const wxChar *background;
+//    const wxChar *fontname;
+//    int fontsize;
+//    int fontstyle;
+//    int lettercase;
+//};
+
+struct colourFormat
 {
-    const wxChar *name;
-    const wxChar *foreground;
-    const wxChar *background;
-    const wxChar *fontname;
-    int fontsize;
-    int fontstyle;
-    int lettercase;
+    int red;
+    int green;
+    int blue;
 };
 
-extern const StyleInfo Styles[];
+struct StyleInfo
+{
+    int id;
+    wxString name;
+    colourFormat background;
+    colourFormat foreground;
+    wxString fontname;
+    int fontsize;
+    int fontstyle;
+};
+
+//extern const StyleInfo Styles[];
 extern const int StylesNumber;
+extern StyleInfo Styles[];
+extern int InitStyles();
+extern int SaveStylesToJsonFile();
+extern int StylesLength;
 
 #endif // DEF_H_INCLUDED

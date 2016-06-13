@@ -2103,16 +2103,22 @@
 
 1458119651 /usr/include/wx-3.0/wx/generic/logg.h
 
-1453107776 source:/home/stephen/Documents/C++/NoteCode/def.cpp
+1465589938 source:/home/stephen/Documents/C++/NoteCode/def.cpp
 	"def.h"
 	<wx/log.h>
 	<wx/string.h>
+	"rapidjson/document.h"
+	"rapidjson/filereadstream.h"
+	"rapidjson/stringbuffer.h"
+	"rapidjson/filewritestream.h"
+	"rapidjson/writer.h"
+	<cstdio>
 
-1464272633 /home/stephen/Documents/C++/NoteCode/def.h
+1465589201 /home/stephen/Documents/C++/NoteCode/def.h
 	<wx/string.h>
 	<wx/string.h>
 
-1465103137 source:/home/stephen/Documents/C++/NoteCode/edit.cpp
+1465591486 source:/home/stephen/Documents/C++/NoteCode/edit.cpp
 	"edit.h"
 	"def.h"
 	"language.h"
@@ -2120,7 +2126,7 @@
 	<wx/wx.h>
 	<wx/msgdlg.h>
 
-1464281816 /home/stephen/Documents/C++/NoteCode/edit.h
+1465590857 /home/stephen/Documents/C++/NoteCode/edit.h
 	<wx/stc/stc.h>
 	<wx/textctrl.h>
 	"language.h"
@@ -3534,7 +3540,7 @@
 1458119651 /usr/include/wx-3.0/wx/gtk/mdi.h
 	"wx/frame.h"
 
-1455499443 source:/home/stephen/Documents/C++/NoteCode/frame.cpp
+1465591956 source:/home/stephen/Documents/C++/NoteCode/frame.cpp
 	<wx/filedlg.h>
 	<wx/panel.h>
 	<wx/textctrl.h>
@@ -3547,8 +3553,9 @@
 	"panel.h"
 	"edit.h"
 	"def.h"
+	"dialog.h"
 
-1453107778 /home/stephen/Documents/C++/NoteCode/frame.h
+1465590011 /home/stephen/Documents/C++/NoteCode/frame.h
 	<wx/frame.h>
 	<wx/menu.h>
 	<wx/aui/auibook.h>
@@ -3638,7 +3645,7 @@
 	<wx/panel.h>
 	"edit.h"
 
-1465103206 source:/home/stephen/Documents/C++/NoteCode/languages/language.cpp
+1465591894 source:/home/stephen/Documents/C++/NoteCode/languages/language.cpp
 	"../language.h"
 	"../def.h"
 	<wx/stc/stc.h>
@@ -3646,16 +3653,16 @@
 	<wx/log.h>
 	"../edit.h"
 
-1464290186 source:/home/stephen/Documents/C++/NoteCode/languages/languageCpp.cpp
+1465589510 source:/home/stephen/Documents/C++/NoteCode/languages/languageCpp.cpp
 	"../language.h"
 	"../def.h"
 	<wx/stc/stc.h>
 
-1454299392 source:/home/stephen/Documents/C++/NoteCode/languages/languageCss.cpp
+1465589684 source:/home/stephen/Documents/C++/NoteCode/languages/languageCss.cpp
 	"../def.h"
 	"../language.h"
 
-1464280342 source:/home/stephen/Documents/C++/NoteCode/languages/languageHtml.cpp
+1465589712 source:/home/stephen/Documents/C++/NoteCode/languages/languageHtml.cpp
 	"../def.h"
 	"../language.h"
 	<string>
@@ -3664,27 +3671,28 @@
 	<wx/chartype.h>
 	<exception>
 
-1454264604 source:/home/stephen/Documents/C++/NoteCode/languages/languageJava.cpp
+1465589737 source:/home/stephen/Documents/C++/NoteCode/languages/languageJava.cpp
 	"../def.h"
 	"../language.h"
 
-1454265660 source:/home/stephen/Documents/C++/NoteCode/languages/languageJS.cpp
+1465589767 source:/home/stephen/Documents/C++/NoteCode/languages/languageJS.cpp
 	"../def.h"
 	"../language.h"
 
-1454309182 source:/home/stephen/Documents/C++/NoteCode/languages/languagePhp.cpp
+1465589821 source:/home/stephen/Documents/C++/NoteCode/languages/languagePhp.cpp
 	"../def.h"
 	"../language.h"
 
-1453107776 source:/home/stephen/Documents/C++/NoteCode/languages/languagePython.cpp
+1465589846 source:/home/stephen/Documents/C++/NoteCode/languages/languagePython.cpp
 	"../language.h"
 	"../def.h"
+	<wx/log.h>
 
-1454306090 source:/home/stephen/Documents/C++/NoteCode/languages/languageXml.cpp
+1465589870 source:/home/stephen/Documents/C++/NoteCode/languages/languageXml.cpp
 	"../def.h"
 	"../language.h"
 
-1465025556 source:/home/stephen/Documents/C++/NoteCode/main.cpp
+1465589087 source:/home/stephen/Documents/C++/NoteCode/main.cpp
 	<wx/app.h>
 	<wx/cmdline.h>
 	<wx/cmdargs.h>
@@ -3710,4 +3718,190 @@
 	<wx/log.h>
 
 1464367292 /home/stephen/Documents/C++/NoteCode/stack.h
+
+1463968504 /home/stephen/Documents/C++/NoteCode/rapidjson/document.h
+	"reader.h"
+	"internal/meta.h"
+	"internal/strfunc.h"
+	"memorystream.h"
+	"encodedstream.h"
+	<new>
+	<iterator>
+	<utility>
+
+1463968504 /home/stephen/Documents/C++/NoteCode/rapidjson/reader.h
+	"allocators.h"
+	"stream.h"
+	"encodedstream.h"
+	"internal/meta.h"
+	"internal/stack.h"
+	"internal/strtod.h"
+	<limits>
+	<intrin.h>
+	<nmmintrin.h>
+	<emmintrin.h>
+	<stdexcept>
+	"rapidjson/error/error.h"
+	"rapidjson/reader.h"
+	"error/error.h"
+
+1463968504 /home/stephen/Documents/C++/NoteCode/rapidjson/allocators.h
+	"rapidjson.h"
+
+1463968504 /home/stephen/Documents/C++/NoteCode/rapidjson/rapidjson.h
+	<cstdlib>
+	<cstring>
+	"rapidjson/..."
+	<string>
+	"msinttypes/stdint.h"
+	"msinttypes/inttypes.h"
+	<stdint.h>
+	<inttypes.h>
+	<endian.h>
+	"rapidjson/..."
+	<cassert>
+
+1463968504 /home/stephen/Documents/C++/NoteCode/rapidjson/msinttypes/stdint.h
+	<stdint.h>
+	<limits.h>
+	<wchar.h>
+
+1463968504 /home/stephen/Documents/C++/NoteCode/rapidjson/msinttypes/inttypes.h
+	"stdint.h"
+	<inttypes.h>
+
+1463968504 /home/stephen/Documents/C++/NoteCode/rapidjson/stream.h
+	"rapidjson.h"
+	"encodings.h"
+
+1463968504 /home/stephen/Documents/C++/NoteCode/rapidjson/encodings.h
+	"rapidjson.h"
+
+1463968504 /home/stephen/Documents/C++/NoteCode/rapidjson/encodedstream.h
+	"stream.h"
+	"memorystream.h"
+
+1463968504 /home/stephen/Documents/C++/NoteCode/rapidjson/memorystream.h
+	"stream.h"
+
+1463968504 /home/stephen/Documents/C++/NoteCode/rapidjson/internal/meta.h
+	"../rapidjson.h"
+	<type_traits>
+
+1463968504 /home/stephen/Documents/C++/NoteCode/rapidjson/internal/stack.h
+	"../allocators.h"
+	"swap.h"
+
+1463968504 /home/stephen/Documents/C++/NoteCode/rapidjson/internal/swap.h
+	"../rapidjson.h"
+
+1463968504 /home/stephen/Documents/C++/NoteCode/rapidjson/internal/strtod.h
+	"ieee754.h"
+	"biginteger.h"
+	"diyfp.h"
+	"pow10.h"
+
+1463968504 /home/stephen/Documents/C++/NoteCode/rapidjson/internal/ieee754.h
+	"../rapidjson.h"
+
+1463968504 /home/stephen/Documents/C++/NoteCode/rapidjson/internal/biginteger.h
+	"../rapidjson.h"
+	<intrin.h>
+
+1463968504 /home/stephen/Documents/C++/NoteCode/rapidjson/internal/diyfp.h
+	"../rapidjson.h"
+	<intrin.h>
+
+1463968504 /home/stephen/Documents/C++/NoteCode/rapidjson/internal/pow10.h
+	"../rapidjson.h"
+
+1463968504 /home/stephen/Documents/C++/NoteCode/rapidjson/error/error.h
+	"../rapidjson.h"
+
+1463968504 /home/stephen/Documents/C++/NoteCode/rapidjson/internal/strfunc.h
+	"../stream.h"
+
+1463968504 /home/stephen/Documents/C++/NoteCode/rapidjson/filereadstream.h
+	"stream.h"
+	<cstdio>
+
+1463968504 /home/stephen/Documents/C++/NoteCode/rapidjson/stringbuffer.h
+	"stream.h"
+	"internal/stack.h"
+	<utility>
+	"internal/stack.h"
+
+1463968504 /home/stephen/Documents/C++/NoteCode/rapidjson/filewritestream.h
+	"stream.h"
+	<cstdio>
+
+1463968504 /home/stephen/Documents/C++/NoteCode/rapidjson/writer.h
+	"stream.h"
+	"internal/stack.h"
+	"internal/strfunc.h"
+	"internal/dtoa.h"
+	"internal/itoa.h"
+	"stringbuffer.h"
+	<new>
+	<intrin.h>
+	<nmmintrin.h>
+	<emmintrin.h>
+
+1463968504 /home/stephen/Documents/C++/NoteCode/rapidjson/internal/dtoa.h
+	"itoa.h"
+	"diyfp.h"
+	"ieee754.h"
+
+1463968504 /home/stephen/Documents/C++/NoteCode/rapidjson/internal/itoa.h
+	"../rapidjson.h"
+
+1465588251 source:/home/stephen/Documents/C++/NoteCode/dialog.cpp
+	"dialog.h"
+	<wx/colordlg.h>
+	<wx/button.h>
+	<wx/notebook.h>
+	<wx/panel.h>
+	"def.h"
+	<wx/stattext.h>
+	<wx/colour.h>
+	<wx/scrolwin.h>
+	<wx/statline.h>
+
+1465587138 /home/stephen/Documents/C++/NoteCode/dialog.h
+	<wx/dialog.h>
+	<wx/sizer.h>
+	<wx/log.h>
+
+1458119651 /usr/include/wx-3.0/wx/colordlg.h
+	"wx/defs.h"
+	"wx/colourdata.h"
+	"wx/msw/colordlg.h"
+	"wx/osx/colordlg.h"
+	"wx/gtk/colordlg.h"
+	"wx/generic/colrdlgg.h"
+
+1458119651 /usr/include/wx-3.0/wx/colourdata.h
+	"wx/colour.h"
+
+1458119651 /usr/include/wx-3.0/wx/gtk/colordlg.h
+	"wx/dialog.h"
+
+1458119651 /usr/include/wx-3.0/wx/generic/colrdlgg.h
+	"wx/gdicmn.h"
+	"wx/dialog.h"
+
+1458119651 /usr/include/wx-3.0/wx/statline.h
+	"wx/defs.h"
+	"wx/control.h"
+	"wx/univ/statline.h"
+	"wx/msw/statline.h"
+	"wx/gtk/statline.h"
+	"wx/gtk1/statline.h"
+	"wx/os2/statline.h"
+	"wx/osx/statline.h"
+	"wx/cocoa/statline.h"
+	"wx/generic/statline.h"
+
+1458119651 /usr/include/wx-3.0/wx/gtk/statline.h
+	"wx/defs.h"
 

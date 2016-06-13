@@ -256,3 +256,7 @@ void Edit::OnLeftDown(wxMouseEvent &event)
     lang->OnCursorPositionChange();
 }
 
+void Edit::RefreshStyle()
+{
+    lang->InitializeSCT();
+}

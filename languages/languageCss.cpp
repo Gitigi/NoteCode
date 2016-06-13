@@ -56,18 +56,13 @@ void LanguageCss::InitializeSCT()
 
         m_sct->StyleSetFont(n,font);
 
-        if (cur_type.foreground) {
-                m_sct->StyleSetForeground (n, wxColour (cur_type.foreground));
-                }
-        if (cur_type.background) {
-                m_sct->StyleSetBackground (n, wxColour (cur_type.background));
-                }
+        m_sct->StyleSetForeground(n,wxColour(cur_type.foreground.red,cur_type.foreground.green,cur_type.foreground.blue));
+        m_sct->StyleSetBackground(n,wxColour(cur_type.background.red,cur_type.background.green,cur_type.background.blue));
 
         m_sct->StyleSetBold(n,(cur_type.fontstyle & mySTC_STYLE_BOLD)>0);
         m_sct->StyleSetItalic(n,(cur_type.fontstyle & mySTC_STYLE_ITALIC)>0);
         m_sct->StyleSetUnderline(n,(cur_type.fontstyle & mySTC_STYLE_UNDERL)>0);
         m_sct->StyleSetVisible(n,(cur_type.fontstyle & mySTC_STYLE_HIDDEN)== 0);
-        m_sct->StyleSetCase(n,cur_type.lettercase);
 
         n++;
     }

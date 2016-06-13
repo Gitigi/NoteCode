@@ -81,7 +81,7 @@ bool MyApp::OnInit()
     wxGetEnv(enviro_variable,&enviro_variable_value);
     wxSetWorkingDirectory(enviro_variable_value);
     #endif // __WXWINDOWS__
-
+    InitStyles();
 
     MyFrame *frame = new MyFrame("NoteCode",name,directory);
     frame->Show(true);

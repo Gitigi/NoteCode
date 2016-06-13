@@ -35,6 +35,7 @@ public:
     void OnLeftDown(wxMouseEvent &event);
 
     void SetLanguage(int file_type);
+    void RefreshStyle();
 private:
     Language *lang;
     int m_LineNrID;

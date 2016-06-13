@@ -11,6 +11,7 @@
 #include "panel.h"
 #include "edit.h"
 #include "def.h"
+#include "dialog.h"
 
 
 
@@ -31,6 +32,7 @@ BEGIN_EVENT_TABLE(MyFrame,wxFrame)
 
     EVT_MENU_RANGE(myID_HIGLIGHTLANGFIRST,myID_HIGLIGHTLANGLAST,
                    MyFrame::OnHighlightLang)
+    EVT_MENU(wxID_SETUP,MyFrame::OnPreference)
 END_EVENT_TABLE()
 
 MyFrame::MyFrame(const wxString &title,const wxString &name,const wxString &directory)
@@ -134,6 +136,20 @@ void MyFrame::OnHighlightLang(wxCommandEvent &event)
     //panel->text_area->SetLanguage(FILE_CPLUS);
 }
 
+void MyFrame::OnPreference(wxCommandEvent &event)
+{
+    SettingDialog dlg(this,wxID_ANY);
+    if(dlg.ShowModal() == wxID_OK)
+    {
+        MyPanel *panel;
+        for(size_t i=0; i < notebook->GetPageCount(); i++)
+        {
+            panel = (MyPanel *)notebook->GetPage(i);
+            panel->text_area->RefreshStyle();
+        }
+    }
+}
+
 
 void MyFrame::CreateMenu()
 {
@@ -142,6 +158,7 @@ void MyFrame::CreateMenu()
     menuFile->Append(wxID_OPEN,wxT("&Open \tCtrl - O"),wxT("Open File"));
     menuFile->Append(wxID_SAVE,wxT("&Save \tCtrl - S"),wxT("Save File"));
     menuFile->Append(wxID_SAVEAS,wxT("Save As"),wxT("Save with another name"));
+    menuFile->Append(wxID_SETUP,wxT("&Preference"),wxT("Edit Setting"));
 
     wxMenu *menuEdit = new wxMenu();
     menuEdit->Append(wxID_UNDO);
