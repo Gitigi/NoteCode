@@ -4,6 +4,7 @@
 #include <wx/dialog.h>
 #include <wx/sizer.h>
 #include <wx/log.h>
+#include <wx/colourdata.h>
 
 
 class SettingDialog : public wxDialog

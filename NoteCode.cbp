@@ -14,6 +14,7 @@
 				<Option projectLinkerOptionsRelation="2" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add option="-std=c++11" />
 					<Add option="`wx-config  --version=3.0 --static=no --unicode=yes --debug=no --cflags`" />
 				</Compiler>
 				<Linker>
@@ -28,6 +29,8 @@
 			<Add option="-Wall" />
 			<Add option="-std=c++11" />
 		</Compiler>
+		<Unit filename="CustomTabArt.cpp" />
+		<Unit filename="CustomTabArt.h" />
 		<Unit filename="auto_comp_list.cpp" />
 		<Unit filename="auto_comp_list.h" />
 		<Unit filename="def.cpp" />

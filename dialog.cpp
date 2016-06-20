@@ -70,7 +70,7 @@ void SettingDialog::CreateControl()
     SetSizer(topSizer);
 
     wxNotebook *prefernces = new wxNotebook(this,wxID_ANY,wxDefaultPosition,wxSize(500,500));
-    topSizer->Add(prefernces,1,wxGROW|wxALL|wxALIGN_CENTER,5);
+    topSizer->Add(prefernces,1,wxGROW|wxALL,5);
 
     wxPanel *theme = new wxPanel(prefernces,wxID_ANY,wxDefaultPosition,wxDefaultSize);
 

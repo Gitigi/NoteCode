@@ -33,9 +33,7 @@ Edit::Edit(wxWindow *parent,wxWindowID id,wxPoint pos,wxSize siz,long style)
     m_DividerID = 1;
     m_FoldingID = 2;
 
-    SetStyleBits(8);
-
-    wxFont font(10,wxMODERN,wxNORMAL,wxNORMAL);
+    wxFont font(10,wxFONTFAMILY_MODERN,wxFONTSTYLE_NORMAL,wxFONTWEIGHT_NORMAL);
     StyleSetFont(wxSTC_STYLE_DEFAULT,font);
     StyleSetBackground(wxSTC_STYLE_DEFAULT,*wxWHITE);
     StyleSetForeground(wxSTC_STYLE_DEFAULT,*wxBLACK);
@@ -70,7 +68,7 @@ Edit::Edit(wxWindow *parent,wxWindowID id,wxPoint pos,wxSize siz,long style)
     //Set Default styles
     int Nr;
     for (Nr = 0; Nr < wxSTC_STYLE_LASTPREDEFINED; Nr++) {
-        wxFont font (10, wxMODERN, wxNORMAL, wxNORMAL);
+        wxFont font (10, wxFONTFAMILY_MODERN, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL);
         StyleSetFont (Nr, font);
     }
 

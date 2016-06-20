@@ -22,14 +22,17 @@ Language::Language(wxStyledTextCtrl *sct)
     m_sct->AutoCompSetChooseSingle(true);
 
     m_sct->StyleSetBackground(wxSTC_STYLE_LINENUMBER,*wxWHITE);
+    m_sct->SetFoldMarginColour(true,*wxWHITE);
+    m_sct->SetFoldMarginHiColour(true,*wxWHITE);
+
     m_sct->SetMultipleSelection(true);
     m_sct->SetAdditionalCaretsVisible(false);
     m_sct->SetAdditionalSelBackground(*wxRED);
 
     m_sct->StyleSetForeground(wxSTC_STYLE_BRACEBAD,*wxRED);
     m_sct->StyleSetForeground(wxSTC_STYLE_BRACELIGHT,*wxBLUE);
-}
 
+}
 void Language::InitializeSCT()
 {
 

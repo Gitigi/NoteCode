@@ -51,10 +51,6 @@ void LanguageCss::InitializeSCT()
             break;
 
         const StyleInfo &cur_type = Styles[css_styles[n].type];
-        wxFont font(cur_type.fontsize,wxMODERN,wxNORMAL,wxNORMAL,false,
-                    cur_type.fontname);
-
-        m_sct->StyleSetFont(n,font);
 
         m_sct->StyleSetForeground(n,wxColour(cur_type.foreground.red,cur_type.foreground.green,cur_type.foreground.blue));
         m_sct->StyleSetBackground(n,wxColour(cur_type.background.red,cur_type.background.green,cur_type.background.blue));

@@ -12,6 +12,7 @@
 #include "edit.h"
 #include "def.h"
 #include "dialog.h"
+#include "CustomTabArt.h"
 
 
 
@@ -38,13 +39,15 @@ END_EVENT_TABLE()
 MyFrame::MyFrame(const wxString &title,const wxString &name,const wxString &directory)
 :wxFrame(NULL,wxID_ANY,title,wxDefaultPosition,wxSize(780,500))
 {
+    SetDropTarget(new MyFileDropTarget(this));
 
     m_menuBar = new wxMenuBar();
     CreateMenu();
 
     notebook = new wxAuiNotebook();
     notebook->Create(this,wxID_ANY,wxDefaultPosition,wxDefaultSize,
-                     wxAUI_NB_CLOSE_ON_ALL_TABS|wxAUI_NB_SCROLL_BUTTONS);
+                     wxAUI_NB_CLOSE_ON_ALL_TABS|wxAUI_NB_SCROLL_BUTTONS|wxAUI_NB_TAB_MOVE|wxAUI_NB_WINDOWLIST_BUTTON|
+                     wxNB_NOPAGETHEME);
 
     CreateImageList();
 

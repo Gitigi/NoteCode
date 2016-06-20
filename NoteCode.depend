@@ -2118,7 +2118,7 @@
 	<wx/string.h>
 	<wx/string.h>
 
-1465591486 source:/home/stephen/Documents/C++/NoteCode/edit.cpp
+1466323126 source:/home/stephen/Documents/C++/NoteCode/edit.cpp
 	"edit.h"
 	"def.h"
 	"language.h"
@@ -3540,7 +3540,7 @@
 1458119651 /usr/include/wx-3.0/wx/gtk/mdi.h
 	"wx/frame.h"
 
-1465591956 source:/home/stephen/Documents/C++/NoteCode/frame.cpp
+1466356146 source:/home/stephen/Documents/C++/NoteCode/frame.cpp
 	<wx/filedlg.h>
 	<wx/panel.h>
 	<wx/textctrl.h>
@@ -3554,6 +3554,7 @@
 	"edit.h"
 	"def.h"
 	"dialog.h"
+	"CustomTabArt.h"
 
 1465590011 /home/stephen/Documents/C++/NoteCode/frame.h
 	<wx/frame.h>
@@ -3645,7 +3646,7 @@
 	<wx/panel.h>
 	"edit.h"
 
-1465591894 source:/home/stephen/Documents/C++/NoteCode/languages/language.cpp
+1466321403 source:/home/stephen/Documents/C++/NoteCode/languages/language.cpp
 	"../language.h"
 	"../def.h"
 	<wx/stc/stc.h>
@@ -3653,16 +3654,16 @@
 	<wx/log.h>
 	"../edit.h"
 
-1465589510 source:/home/stephen/Documents/C++/NoteCode/languages/languageCpp.cpp
+1466272296 source:/home/stephen/Documents/C++/NoteCode/languages/languageCpp.cpp
 	"../language.h"
 	"../def.h"
 	<wx/stc/stc.h>
 
-1465589684 source:/home/stephen/Documents/C++/NoteCode/languages/languageCss.cpp
+1466272296 source:/home/stephen/Documents/C++/NoteCode/languages/languageCss.cpp
 	"../def.h"
 	"../language.h"
 
-1465589712 source:/home/stephen/Documents/C++/NoteCode/languages/languageHtml.cpp
+1466272202 source:/home/stephen/Documents/C++/NoteCode/languages/languageHtml.cpp
 	"../def.h"
 	"../language.h"
 	<string>
@@ -3671,24 +3672,24 @@
 	<wx/chartype.h>
 	<exception>
 
-1465589737 source:/home/stephen/Documents/C++/NoteCode/languages/languageJava.cpp
+1466272296 source:/home/stephen/Documents/C++/NoteCode/languages/languageJava.cpp
 	"../def.h"
 	"../language.h"
 
-1465589767 source:/home/stephen/Documents/C++/NoteCode/languages/languageJS.cpp
+1466272296 source:/home/stephen/Documents/C++/NoteCode/languages/languageJS.cpp
 	"../def.h"
 	"../language.h"
 
-1465589821 source:/home/stephen/Documents/C++/NoteCode/languages/languagePhp.cpp
+1466272296 source:/home/stephen/Documents/C++/NoteCode/languages/languagePhp.cpp
 	"../def.h"
 	"../language.h"
 
-1465589846 source:/home/stephen/Documents/C++/NoteCode/languages/languagePython.cpp
+1466272296 source:/home/stephen/Documents/C++/NoteCode/languages/languagePython.cpp
 	"../language.h"
 	"../def.h"
 	<wx/log.h>
 
-1465589870 source:/home/stephen/Documents/C++/NoteCode/languages/languageXml.cpp
+1466272296 source:/home/stephen/Documents/C++/NoteCode/languages/languageXml.cpp
 	"../def.h"
 	"../language.h"
 
@@ -3855,7 +3856,7 @@
 1463968504 /home/stephen/Documents/C++/NoteCode/rapidjson/internal/itoa.h
 	"../rapidjson.h"
 
-1465588251 source:/home/stephen/Documents/C++/NoteCode/dialog.cpp
+1466284676 source:/home/stephen/Documents/C++/NoteCode/dialog.cpp
 	"dialog.h"
 	<wx/colordlg.h>
 	<wx/button.h>
@@ -3867,10 +3868,11 @@
 	<wx/scrolwin.h>
 	<wx/statline.h>
 
-1465587138 /home/stephen/Documents/C++/NoteCode/dialog.h
+1466278307 /home/stephen/Documents/C++/NoteCode/dialog.h
 	<wx/dialog.h>
 	<wx/sizer.h>
 	<wx/log.h>
+	<wx/colourdata.h>
 
 1458119651 /usr/include/wx-3.0/wx/colordlg.h
 	"wx/defs.h"
@@ -3904,4 +3906,32 @@
 
 1458119651 /usr/include/wx-3.0/wx/gtk/statline.h
 	"wx/defs.h"
+
+1466357932 source:/home/stephen/Documents/C++/NoteCode/CustomTabArt.cpp
+	"CustomTabArt.h"
+	<wx/renderer.h>
+	<wx/aui/framemanager.h>
+	<wx/aui/dockart.h>
+	<wx/menu.h>
+	<wx/dcclient.h>
+	<wx/settings.h>
+
+1466355866 /home/stephen/Documents/C++/NoteCode/CustomTabArt.h
+	<wx/aui/tabart.h>
+	<wx/aui/auibook.h>
+	<wx/dc.h>
+
+1458119651 /usr/include/wx-3.0/wx/renderer.h
+	"wx/gdicmn.h"
+	"wx/colour.h"
+	"wx/font.h"
+	"wx/bitmap.h"
+	"wx/string.h"
+
+1458119652 /usr/include/wx-3.0/wx/aui/dockart.h
+	"wx/defs.h"
+	"wx/pen.h"
+	"wx/brush.h"
+	"wx/bitmap.h"
+	"wx/colour.h"
 
