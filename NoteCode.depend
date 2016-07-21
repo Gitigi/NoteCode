@@ -2105,11 +2105,12 @@
 
 1458119651 /usr/include/wx-3.0/wx/generic/logg.h
 
-1469097509 source:/home/stephen/Documents/C++/NoteCode/def.cpp
+1469132789 source:/home/stephen/Documents/C++/NoteCode/def.cpp
 	"def.h"
 	<wx/log.h>
 	<wx/string.h>
 	<string>
+	<exception>
 	"rapidjson/document.h"
 	"rapidjson/filereadstream.h"
 	"rapidjson/stringbuffer.h"
@@ -2117,10 +2118,11 @@
 	"rapidjson/writer.h"
 	<cstdio>
 
-1469097737 /home/stephen/Documents/C++/NoteCode/def.h
+1469131202 /home/stephen/Documents/C++/NoteCode/def.h
 	<wx/string.h>
 	<map>
 	<vector>
+	<type_traits>
 	<wx/string.h>
 
 1469037106 source:/home/stephen/Documents/C++/NoteCode/edit.cpp
@@ -3668,7 +3670,7 @@
 	"../def.h"
 	"../language.h"
 
-1469097121 source:/home/stephen/Documents/C++/NoteCode/languages/languageHtml.cpp
+1469132440 source:/home/stephen/Documents/C++/NoteCode/languages/languageHtml.cpp
 	"../def.h"
 	"../language.h"
 	<string>

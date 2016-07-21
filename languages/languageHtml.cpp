@@ -40,7 +40,7 @@ static lang_style html_styles[] =
 LanguageHtml::LanguageHtml(wxStyledTextCtrl *sct)
 :Language(sct)
 {
-    wxLog::SetActiveTarget(new wxLogStderr());
+
     if(allAutoComplete.find("html")==allAutoComplete.end())
     {
         allAutoComplete["html"] = AutoCompList();

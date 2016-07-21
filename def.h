@@ -4,6 +4,7 @@
 #include <wx/string.h>
 #include <map>
 #include <vector>
+#include <type_traits>
 
 //! style bits types
 #define mySTC_STYLE_BOLD 1
@@ -127,6 +128,18 @@ enum MYID
     ID_LAST_STYLE_ELEMENT = (ID_DEFAULT+LAST_STYLE_ELEMENT)*2,
 };
 
+enum DATA_TYPES
+{
+    TYPE_UNDEFINED,
+    TYPE_NUMBER,
+    TYPE_STRING,
+    TYPE_REGEX,
+    TYPE_OBJECT,
+    TYPE_ARRAY,
+    TYPE_FUNCTION,
+    TYPE_USER_DEFINED,
+};
+
 struct FileType{
     int file_type;
     wxString name;
@@ -165,6 +178,17 @@ struct StyleInfo
     wxString fontname;
     int fontsize;
     int fontstyle;
+};
+
+struct IsObject
+{
+    bool operator()(int a)
+    {
+        if(a == 1)
+            return true;
+        else
+            return false;
+    }
 };
 
 struct wordInfo

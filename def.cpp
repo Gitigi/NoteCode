@@ -3,6 +3,7 @@
 #include <wx/log.h>
 #include <wx/string.h>
 #include <string>
+#include <exception>
 
 #include "rapidjson/document.h"
 #include "rapidjson/filereadstream.h"
@@ -156,14 +157,20 @@ void AutoCompList::InsertWords(const wxString &words,const char delimiter)
     }
 }
 
-
 void AutoCompList::GenerateList(const wxString &word,wxString &word_list)
 {
+    if(root.empty())
+        return;
     auto iter = root.lower_bound(word);
+
+    if(iter == root.end())
+        return;
 
     while(true)
     {
-        if((iter->first).Contains(word))
+        if(iter == root.end())
+            break;
+        else if((iter->first).Contains(word))
         {
             word_list.Append(iter->first);
             word_list.append(" ");

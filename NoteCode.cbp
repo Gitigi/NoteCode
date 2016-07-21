@@ -31,8 +31,6 @@
 		</Compiler>
 		<Unit filename="CustomTabArt.cpp" />
 		<Unit filename="CustomTabArt.h" />
-		<Unit filename="auto_comp_list.cpp" />
-		<Unit filename="auto_comp_list.h" />
 		<Unit filename="def.cpp" />
 		<Unit filename="def.h" />
 		<Unit filename="dialog.cpp" />
