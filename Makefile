@@ -1,14 +1,12 @@
 CC = g++
 CFLAGS = `wx-config --cflags` -std=c++11
 LIBS = `wx-config --libs` -lwx_gtk3u_aui-3.1 -lwx_gtk3u_stc-3.1 -s
-OBJS = main.o auto_comp_list.o def.o dialog.o edit.o frame.o panel.o CustomTabArt.o language.o languageCpp.o languageCss.o languageHtml.o languageJava.o languageJS.o languagePhp.o languagePython.o languageXml.o
+OBJS = main.o def.o dialog.o edit.o frame.o panel.o CustomTabArt.o language.o languageCpp.o languageCss.o languageHtml.o languageJava.o languageJS.o languagePhp.o languagePython.o languageXml.o
 all : main
 
 main :  $(OBJS)
 	$(CC) -o main $(OBJS) $(LIBS) 
 
-auto_comp_list.o : auto_comp_list.cpp auto_comp_list.h
-	$(CC) $(CFLAGS) -c auto_comp_list.cpp
 	
 dialog.o : dialog.cpp dialog.h
 	$(CC) $(CFLAGS)  -c dialog.cpp

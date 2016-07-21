@@ -24,7 +24,7 @@ END_EVENT_TABLE()
 
 
 Edit::Edit(wxWindow *parent,wxWindowID id,wxPoint pos,wxSize siz,long style)
-:wxStyledTextCtrl(parent,id,pos,siz,style)
+:wxStyledTextCtrl(parent,id,pos,siz,style),lang(nullptr)
 {
     SetMouseDwellTime(100);
     SetMouseDownCaptures(true);
@@ -104,7 +104,6 @@ void Edit::OnCharAdded(wxStyledTextEvent &event)
 
         lang->OnNewLine(event);
     }
-
     lang->OnCharAdded(event);
 }
 
@@ -152,6 +151,9 @@ void Edit::OnKeyDown(wxKeyEvent &event)
 
 void Edit::SetLanguage(int file_type)
 {
+    if(lang)
+        delete lang;
+
     switch(file_type)
     {
     case FILE_CPLUS:

@@ -1,7 +1,7 @@
 #include "../language.h"
 #include "../def.h"
 #include <wx/stc/stc.h>
-
+#include <wx/log.h>
 
 
 static const char* CppWordlist1 =
@@ -120,7 +120,12 @@ void LanguageCpp::InitializeSCT()
 
 void LanguageCpp::OnCharAdded(wxStyledTextEvent &event)
 {
-    Language::OnCharAdded(event);
+    StyleBraces();
+}
+
+void LanguageCpp::OnCursorPositionChange()
+{
+    StyleBraces();
 }
 
 void LanguageCpp::OnKeyDown(wxKeyEvent &event)

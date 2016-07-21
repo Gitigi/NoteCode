@@ -100,7 +100,7 @@ void LanguagePython::InitializeSCT()
 
 void LanguagePython::OnCharAdded(wxStyledTextEvent &event)
 {
-
+    Language::OnCharAdded(event);
 }
 
 

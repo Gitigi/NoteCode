@@ -116,7 +116,7 @@ void LanguageJava::InitializeSCT()
 
 void LanguageJava::OnCharAdded(wxStyledTextEvent &event)
 {
-
+    StyleBraces();
 }
 
 void LanguageJava::OnKeyDown(wxKeyEvent &event)

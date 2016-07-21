@@ -2,6 +2,8 @@
 #define DEF_H_INCLUDED
 
 #include <wx/string.h>
+#include <map>
+#include <vector>
 
 //! style bits types
 #define mySTC_STYLE_BOLD 1
@@ -165,7 +167,34 @@ struct StyleInfo
     int fontstyle;
 };
 
-//extern const StyleInfo Styles[];
+struct wordInfo
+{
+    wordInfo()
+    {
+        type = 0;
+    }
+
+    int type;
+    //used when type is an object
+    std::map<wxString,wordInfo>Object;
+    //used when type is an array
+    std::vector<wordInfo>Array;
+    //used when type is a function
+    wxString returnType;
+};
+
+class AutoCompList
+{
+public:
+    void InsertWord(const wxString &word);
+    void InsertWords(const wxString &words,const char delimeter);
+    void GenerateList(const wxString &word,wxString &word_list);
+private:
+    std::map<wxString,wordInfo> root;
+};
+
+extern std::map<wxString,AutoCompList> allAutoComplete;
+
 extern const int StylesNumber;
 extern StyleInfo Styles[];
 extern int InitStyles();

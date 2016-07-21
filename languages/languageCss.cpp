@@ -66,7 +66,7 @@ void LanguageCss::InitializeSCT()
 
 void LanguageCss::OnCharAdded(wxStyledTextEvent &event)
 {
-
+    Language::OnCharAdded(event);
 }
 
 void LanguageCss::OnKeyDown(wxKeyEvent &event)

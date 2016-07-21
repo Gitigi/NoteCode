@@ -4,7 +4,6 @@
 #include <wx/object.h>
 #include <wx/stc/stc.h>
 
-#include "auto_comp_list.h"
 #include "def.h"
 
 #define TERMINATE_TYPE  -1
@@ -23,9 +22,9 @@ public:
     virtual void OnCharAdded(wxStyledTextEvent &event);
     virtual void OnKeyDown(wxKeyEvent &event);
     virtual void OnNewLine(wxStyledTextEvent &event);
-    void OnCursorPositionChange();
+    virtual void OnCursorPositionChange();
     //Determine a bracket default and change their style accordingly
-    void StyleBrackets();
+    void StyleBraces();
     int MyBraceMatch(int pos);
 protected:
     wxStyledTextCtrl *m_sct;
@@ -39,6 +38,7 @@ public:
     virtual void InitializeSCT();
     virtual void OnCharAdded(wxStyledTextEvent &event);
     virtual void OnKeyDown(wxKeyEvent &event);
+    virtual void OnCursorPositionChange();
 };
 
 //Java Language
@@ -92,7 +92,6 @@ public:
     virtual void OnCharAdded(wxStyledTextEvent &event);
     virtual void OnKeyDown(wxKeyEvent &event);
 private:
-    AutoCompList m_auto_comp_list;
     wxString word_entered;
     char last_non_alpha;
 };

@@ -40,19 +40,24 @@ static lang_style html_styles[] =
 LanguageHtml::LanguageHtml(wxStyledTextCtrl *sct)
 :Language(sct)
 {
-
-    m_auto_comp_list.InsertWord(wxT("html"));
-    m_auto_comp_list.InsertWord(wxT("textarea"));
-    m_auto_comp_list.InsertWord(wxT("password"));
-    m_auto_comp_list.InsertWord(wxT("title"));
-    m_auto_comp_list.InsertWord(wxT("head"));
-    m_auto_comp_list.InsertWord(wxT("input"));
-    m_auto_comp_list.InsertWord(wxT("text"));
-    m_auto_comp_list.InsertWord(wxT("body"));
-    m_auto_comp_list.InsertWord(wxT("class"));
-    m_auto_comp_list.InsertWord(wxT("style"));
-    m_auto_comp_list.InsertWord(wxT("script"));
-    m_auto_comp_list.InsertWord(wxT("maxlength"));
+    wxLog::SetActiveTarget(new wxLogStderr());
+    if(allAutoComplete.find("html")==allAutoComplete.end())
+    {
+        allAutoComplete["html"] = AutoCompList();
+        AutoCompList &m_auto_comp_list = allAutoComplete["html"];
+        m_auto_comp_list.InsertWord(wxT("html"));
+        m_auto_comp_list.InsertWord(wxT("textarea"));
+        m_auto_comp_list.InsertWord(wxT("password"));
+        m_auto_comp_list.InsertWord(wxT("title"));
+        m_auto_comp_list.InsertWord(wxT("head"));
+        m_auto_comp_list.InsertWord(wxT("input"));
+        m_auto_comp_list.InsertWord(wxT("text"));
+        m_auto_comp_list.InsertWord(wxT("body"));
+        m_auto_comp_list.InsertWord(wxT("class"));
+        m_auto_comp_list.InsertWord(wxT("style"));
+        m_auto_comp_list.InsertWord(wxT("script"));
+        m_auto_comp_list.InsertWord(wxT("maxlength"));
+    }
 }
 
 
@@ -130,7 +135,7 @@ void LanguageHtml::OnCharAdded(wxStyledTextEvent &event)
 
 
         wxString list_of_option;
-        m_auto_comp_list.GenerateList(word_entered,list_of_option);
+        allAutoComplete["html"].GenerateList(word_entered,list_of_option);
 
         if(!list_of_option.IsEmpty())
         {

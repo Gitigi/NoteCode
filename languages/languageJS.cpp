@@ -95,7 +95,7 @@ void LanguageJS::InitializeSCT()
 
 void LanguageJS::OnCharAdded(wxStyledTextEvent &event)
 {
-
+    Language::OnCharAdded(event);
 }
 
 void LanguageJS::OnKeyDown(wxKeyEvent &event)

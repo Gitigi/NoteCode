@@ -35,12 +35,12 @@ Language::Language(wxStyledTextCtrl *sct)
 }
 void Language::InitializeSCT()
 {
-
+    m_sct->SetLexer(wxSTC_LEX_NULL);
 }
 
 void Language::OnCharAdded(wxStyledTextEvent &event)
 {
-    StyleBrackets();
+    StyleBraces();
 }
 
 void Language::OnKeyDown(wxKeyEvent &event)
@@ -50,25 +50,27 @@ void Language::OnKeyDown(wxKeyEvent &event)
 
 void Language::OnCursorPositionChange()
 {
-    StyleBrackets();
+    StyleBraces();
 }
 
-void Language::StyleBrackets()
+void Language::StyleBraces()
 {
-    wxLog::SetActiveTarget(new wxLogStderr);
-    wxString msg;
 
     static bool unmachedBrace=false;
     static int lastBraceBadLight;
 
 
     static const wxString braces(wxT("{}[]()<>"));
-    int currentPos = m_sct->GetCurrentPos() - 1;
+    int currentPos = m_sct->GetCurrentPos()-1;
     int nextBracket=0;
     char character = (char) m_sct->GetCharAt(currentPos);
+
     if(braces.find(character) != wxString::npos)
     {
-        nextBracket = MyBraceMatch(currentPos);
+        nextBracket = m_sct->BraceMatch(currentPos);
+
+        //MyBraceMatch is used to fill in for the short coming of the brace Match
+        if(nextBracket == -1){nextBracket = MyBraceMatch(currentPos);}
         if(nextBracket == -1)
         {
             m_sct->BraceBadLight(currentPos);
