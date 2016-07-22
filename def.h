@@ -2,6 +2,7 @@
 #define DEF_H_INCLUDED
 
 #include <wx/string.h>
+#include <wx/fswatcher.h>
 #include <map>
 #include <vector>
 #include <type_traits>
@@ -57,6 +58,9 @@
 #define TAB_SIZE 4
 
 #include <wx/string.h>
+#include "rapidjson/document.h"
+
+using namespace rapidjson;
 
 extern void ReverseString(wxString &value);
 
@@ -207,14 +211,20 @@ struct wordInfo
     wxString returnType;
 };
 
+
+
 class AutoCompList
 {
 public:
     void InsertWord(const wxString &word);
+    void InsertWord(const wxString &word,const wordInfo &info);
     void InsertWords(const wxString &words,const char delimeter);
     void GenerateList(const wxString &word,wxString &word_list);
+    void InsertWordsFromJsonFile(const wxString &fileName);
 private:
+    void populateWordInfo(const Value &source,wordInfo &destination);
     std::map<wxString,wordInfo> root;
+
 };
 
 extern std::map<wxString,AutoCompList> allAutoComplete;

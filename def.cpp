@@ -2,6 +2,7 @@
 #include "def.h"
 #include <wx/log.h>
 #include <wx/string.h>
+#include <wx/filename.h>
 #include <string>
 #include <exception>
 
@@ -132,6 +133,11 @@ void AutoCompList::InsertWord(const wxString &word)
     root.insert(std::pair<wxString,wordInfo>(word,wordInfo()));
 }
 
+void AutoCompList::InsertWord(const wxString &word,const wordInfo &info)
+{
+    root.insert(std::pair<wxString,wordInfo>(word,info));
+}
+
 void AutoCompList::InsertWords(const wxString &words,const char delimiter)
 {
     wxString hold_word;
@@ -163,9 +169,6 @@ void AutoCompList::GenerateList(const wxString &word,wxString &word_list)
         return;
     auto iter = root.lower_bound(word);
 
-    if(iter == root.end())
-        return;
-
     while(true)
     {
         if(iter == root.end())
@@ -180,5 +183,81 @@ void AutoCompList::GenerateList(const wxString &word,wxString &word_list)
             break;
         }
         iter++;
+    }
+}
+
+void AutoCompList::populateWordInfo(const Value &source,wordInfo &destination)
+{
+    Value::ConstMemberIterator itr = source.FindMember("id");
+    if(itr == source.MemberEnd())
+    {
+        destination.type = TYPE_UNDEFINED;
+        return;
+    }
+    switch(itr->value.GetInt())
+    {
+    case TYPE_STRING:
+    case TYPE_NUMBER:
+    case TYPE_REGEX:
+        destination.type = itr->value.GetInt();
+        break;
+
+    case TYPE_FUNCTION:
+        destination.type = TYPE_FUNCTION;
+        destination.returnType = source["returnType"].GetString();
+        break;
+
+    case TYPE_ARRAY:
+        {
+            destination.type = TYPE_ARRAY;
+            wordInfo arrayElement;
+            const Value &a = source["Array"];
+            for(SizeType i=0; i < a.Size();i++)
+            {
+                populateWordInfo(a[i],arrayElement);
+                destination.Array.push_back(arrayElement);
+            }
+            break;
+        }
+
+    case TYPE_OBJECT:
+        {
+            destination.type = TYPE_OBJECT;
+            const Value &a = source["Object"];
+            for(Value::ConstMemberIterator i=a.MemberBegin();i != a.MemberEnd();++i)
+            {
+                wordInfo objectElement;
+                populateWordInfo(itr->value,objectElement);
+                destination.Object.insert(std::pair<wxString,wordInfo>(i->name.GetString(),objectElement));
+            }
+            break;
+        }
+
+    default:
+        destination.type = TYPE_UNDEFINED;
+    }
+}
+
+void AutoCompList::InsertWordsFromJsonFile(const wxString &fileName)
+{
+    FILE *openFile = fopen(fileName.c_str(),"r");
+    Document json;
+    char buffer[65536];
+    FileReadStream fileStream(openFile,buffer,sizeof(buffer));
+    json.ParseStream(fileStream);
+    fclose(openFile);
+
+    if(json.HasParseError())
+    {
+        wxString msg;
+        msg.Printf("Error while parsing the file %s",fileName);
+        wxLogMessage(msg);
+        return;
+    }
+    for(Value::ConstMemberIterator itr = json.MemberBegin();itr!=json.MemberEnd();++itr)
+    {
+        wordInfo info;
+        populateWordInfo(itr->value,info);
+        InsertWord(itr->name.GetString());
     }
 }

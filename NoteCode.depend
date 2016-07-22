@@ -2105,10 +2105,11 @@
 
 1458119651 /usr/include/wx-3.0/wx/generic/logg.h
 
-1469132789 source:/home/stephen/Documents/C++/NoteCode/def.cpp
+1469177471 source:/home/stephen/Documents/C++/NoteCode/def.cpp
 	"def.h"
 	<wx/log.h>
 	<wx/string.h>
+	<wx/filename.h>
 	<string>
 	<exception>
 	"rapidjson/document.h"
@@ -2118,12 +2119,14 @@
 	"rapidjson/writer.h"
 	<cstdio>
 
-1469131202 /home/stephen/Documents/C++/NoteCode/def.h
+1469178224 /home/stephen/Documents/C++/NoteCode/def.h
 	<wx/string.h>
+	<wx/fswatcher.h>
 	<map>
 	<vector>
 	<type_traits>
 	<wx/string.h>
+	"rapidjson/document.h"
 
 1469037106 source:/home/stephen/Documents/C++/NoteCode/edit.cpp
 	"edit.h"
@@ -3670,7 +3673,7 @@
 	"../def.h"
 	"../language.h"
 
-1469132440 source:/home/stephen/Documents/C++/NoteCode/languages/languageHtml.cpp
+1469174313 source:/home/stephen/Documents/C++/NoteCode/languages/languageHtml.cpp
 	"../def.h"
 	"../language.h"
 	<string>
@@ -3943,4 +3946,48 @@
 	"wx/colour.h"
 
 1458119653 /usr/lib/x86_64-linux-gnu/wx/include/base-unicode-3.0/wx/setup.h
+
+1458119650 /usr/include/wx-3.0/wx/fswatcher.h
+	"wx/defs.h"
+	"wx/log.h"
+	"wx/event.h"
+	"wx/evtloop.h"
+	"wx/filename.h"
+	"wx/dir.h"
+	"wx/hashmap.h"
+	"wx/unix/fswatcher_inotify.h"
+	"wx/unix/fswatcher_kqueue.h"
+	"wx/msw/fswatcher.h"
+	"wx/generic/fswatcher.h"
+
+1458119650 /usr/include/wx-3.0/wx/evtloop.h
+	"wx/event.h"
+	"wx/utils.h"
+	"wx/osx/core/evtloop.h"
+	"wx/unix/evtloop.h"
+	"wx/msw/evtloopconsole.h"
+	"wx/msw/evtloop.h"
+	"wx/cocoa/evtloop.h"
+	"wx/osx/evtloop.h"
+	"wx/dfb/evtloop.h"
+	"wx/gtk/evtloop.h"
+	"wx/stopwatch.h"
+
+1458119650 /usr/include/wx-3.0/wx/unix/evtloop.h
+
+1458119651 /usr/include/wx-3.0/wx/gtk/evtloop.h
+
+1458119650 /usr/include/wx-3.0/wx/dir.h
+	"wx/longlong.h"
+	"wx/string.h"
+	"wx/filefn.h"
+
+1458119650 /usr/include/wx-3.0/wx/unix/fswatcher_inotify.h
+	"wx/defs.h"
+
+1458119650 /usr/include/wx-3.0/wx/unix/fswatcher_kqueue.h
+	"wx/defs.h"
+
+1458119650 /usr/include/wx-3.0/wx/generic/fswatcher.h
+	"wx/defs.h"
 

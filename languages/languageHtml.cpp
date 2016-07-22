@@ -40,6 +40,11 @@ static lang_style html_styles[] =
 LanguageHtml::LanguageHtml(wxStyledTextCtrl *sct)
 :Language(sct)
 {
+    if(allAutoComplete.find("html") == allAutoComplete.end())
+    {
+        allAutoComplete["html"] = AutoCompList();
+        allAutoComplete["html"].InsertWordsFromJsonFile("html");
+    }
 
     if(allAutoComplete.find("html")==allAutoComplete.end())
     {
@@ -128,7 +133,7 @@ void LanguageHtml::OnCharAdded(wxStyledTextEvent &event)
 
     ReverseString(word_entered);
 
-    if(word_entered.length() > 2 && !isdigit(char (word_entered.GetChar(0))))
+    if(isalpha(char (word_entered.GetChar(0))))
     {
         if(m_sct->AutoCompActive())
             m_sct->AutoCompCancel();
