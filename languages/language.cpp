@@ -14,11 +14,9 @@ Language::Language(wxStyledTextCtrl *sct)
     m_sct->StyleClearAll();
 
     m_sct->AutoCompSetAutoHide(true);
-    m_sct->AutoCompSetFillUps(wxT("\n"));
     m_sct->AutoCompSetIgnoreCase(true);
     m_sct->AutoCompSetCaseInsensitiveBehaviour(wxSTC_CASEINSENSITIVEBEHAVIOUR_RESPECTCASE);
 
-    m_sct->AutoCompStops(wxT(". (/[\\"));
     m_sct->AutoCompSetChooseSingle(true);
 
     m_sct->StyleSetBackground(wxSTC_STYLE_LINENUMBER,*wxWHITE);
@@ -176,4 +174,30 @@ int Language::MyBraceMatch(int pos)
 void Language::OnNewLine(wxStyledTextEvent &event)
 {
 
+}
+
+void Language::GetWordBeforeCursor(wxString &destination)
+{
+    int position = m_sct->GetCurrentPos() - 1;
+    while(true)
+    {
+        if(position < 0)
+            break;
+        else if(isspace(m_sct->GetCharAt(position))||ispunct(m_sct->GetCharAt(position)))
+        {
+            position += 1;
+            break;
+        }
+        else
+        {
+            if(position == 0)
+                break;
+            position--;
+        }
+    }
+
+    for(int i=position; i < m_sct->GetCurrentPos(); i++)
+    {
+        destination.Append((char)m_sct->GetCharAt(i));
+    }
 }

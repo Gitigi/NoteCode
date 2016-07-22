@@ -45,24 +45,6 @@ LanguageHtml::LanguageHtml(wxStyledTextCtrl *sct)
         allAutoComplete["html"] = AutoCompList();
         allAutoComplete["html"].InsertWordsFromJsonFile("html");
     }
-
-    if(allAutoComplete.find("html")==allAutoComplete.end())
-    {
-        allAutoComplete["html"] = AutoCompList();
-        AutoCompList &m_auto_comp_list = allAutoComplete["html"];
-        m_auto_comp_list.InsertWord(wxT("html"));
-        m_auto_comp_list.InsertWord(wxT("textarea"));
-        m_auto_comp_list.InsertWord(wxT("password"));
-        m_auto_comp_list.InsertWord(wxT("title"));
-        m_auto_comp_list.InsertWord(wxT("head"));
-        m_auto_comp_list.InsertWord(wxT("input"));
-        m_auto_comp_list.InsertWord(wxT("text"));
-        m_auto_comp_list.InsertWord(wxT("body"));
-        m_auto_comp_list.InsertWord(wxT("class"));
-        m_auto_comp_list.InsertWord(wxT("style"));
-        m_auto_comp_list.InsertWord(wxT("script"));
-        m_auto_comp_list.InsertWord(wxT("maxlength"));
-    }
 }
 
 
@@ -112,41 +94,19 @@ void LanguageHtml::InitializeSCT()
 void LanguageHtml::OnCharAdded(wxStyledTextEvent &event)
 {
     Language::OnCharAdded(event);
-    word_entered.Clear();
-    char value;
-    int cursor_pos = m_sct->GetCurrentPos() - 1;
-    while(true)
+    if(!m_sct->AutoCompActive())
     {
-        if(cursor_pos < 0)
-            break;
-
-        value = (char) m_sct->GetCharAt(cursor_pos);
-
-        if(isalnum(value) || value == '_')
+        wxString word_entered;
+        wxString list_of_options;
+        GetWordBeforeCursor(word_entered);
+        if(!word_entered.IsEmpty())
         {
-            word_entered.Append(value);
+            allAutoComplete["html"].GenerateList(word_entered,list_of_options);
         }
-        else
-            break;
-        cursor_pos--;
-    }
-
-    ReverseString(word_entered);
-
-    if(isalpha(char (word_entered.GetChar(0))))
-    {
-        if(m_sct->AutoCompActive())
-            m_sct->AutoCompCancel();
-
-
-        wxString list_of_option;
-        allAutoComplete["html"].GenerateList(word_entered,list_of_option);
-
-        if(!list_of_option.IsEmpty())
+        if(!list_of_options.IsEmpty())
         {
-            m_sct->AutoCompShow(word_entered.length(),list_of_option);
+            m_sct->AutoCompShow(word_entered.length(),list_of_options);
         }
-
     }
 
 }

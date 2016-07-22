@@ -25,6 +25,7 @@ public:
     virtual void OnCursorPositionChange();
     //Determine a bracket default and change their style accordingly
     void StyleBraces();
+    virtual void GetWordBeforeCursor(wxString &destination);
     int MyBraceMatch(int pos);
 protected:
     wxStyledTextCtrl *m_sct;
@@ -91,9 +92,6 @@ public:
     virtual void InitializeSCT();
     virtual void OnCharAdded(wxStyledTextEvent &event);
     virtual void OnKeyDown(wxKeyEvent &event);
-private:
-    wxString word_entered;
-    char last_non_alpha;
 };
 
 //XML Language

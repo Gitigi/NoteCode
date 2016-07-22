@@ -62,8 +62,6 @@
 
 using namespace rapidjson;
 
-extern void ReverseString(wxString &value);
-
 enum STYLE_ELEMENTS
 {
     DEFAULT,

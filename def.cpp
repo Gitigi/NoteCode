@@ -50,20 +50,6 @@ int InitStyles()
     return 1;
 }
 
-void ReverseString(wxString &value)
-{
-    int length  = value.Len() -1;
-
-    wxString work_space;
-
-    for(int i = length; i >= 0; i--)
-    {
-        work_space.Append(value.GetChar(i));
-    }
-
-    value = work_space;
-}
-
 FileType files_supported[] = {
     { FILE_CPLUS, wxT("C++"), wxT("cpp h cxx CPP H CXX")},
     { FILE_PY, wxT("Python"), wxT("py")},
@@ -167,16 +153,19 @@ void AutoCompList::GenerateList(const wxString &word,wxString &word_list)
 {
     if(root.empty())
         return;
-    auto iter = root.lower_bound(word);
 
+    auto smallLetterBegin = root.lower_bound("a");
+    auto iter = root.lower_bound(word.Upper());
     while(true)
     {
-        if(iter == root.end())
+        if(iter == root.end()||iter == smallLetterBegin)
+        {
             break;
-        else if((iter->first).Contains(word))
+        }
+        else if(iter->first.Lower().Contains(word.Lower()))
         {
             word_list.Append(iter->first);
-            word_list.append(" ");
+            word_list.Append(" ");
         }
         else
         {
@@ -184,6 +173,26 @@ void AutoCompList::GenerateList(const wxString &word,wxString &word_list)
         }
         iter++;
     }
+
+    iter = root.lower_bound(word.Lower());
+    while(true)
+    {
+        if(iter==root.end())
+        {
+            break;
+        }
+        else if(iter->first.Lower().Contains(word.Lower()))
+        {
+            word_list.Append(iter->first);
+            word_list.Append(" ");
+        }
+        else
+        {
+            break;
+        }
+        iter++;
+    }
+
 }
 
 void AutoCompList::populateWordInfo(const Value &source,wordInfo &destination)
