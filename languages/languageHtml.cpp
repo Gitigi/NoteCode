@@ -97,15 +97,15 @@ void LanguageHtml::OnCharAdded(wxStyledTextEvent &event)
     if(!m_sct->AutoCompActive())
     {
         wxString word_entered;
-        wxString list_of_options;
         GetWordBeforeCursor(word_entered);
-        if(!word_entered.IsEmpty())
+        if(word_entered.length() > 1)
         {
+            wxString list_of_options;
             allAutoComplete["html"].GenerateList(word_entered,list_of_options);
-        }
-        if(!list_of_options.IsEmpty())
-        {
-            m_sct->AutoCompShow(word_entered.length(),list_of_options);
+            if(!list_of_options.IsEmpty())
+            {
+                m_sct->AutoCompShow(word_entered.length(),list_of_options);
+            }
         }
     }
 

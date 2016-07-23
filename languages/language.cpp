@@ -178,7 +178,7 @@ void Language::OnNewLine(wxStyledTextEvent &event)
 
 void Language::GetWordBeforeCursor(wxString &destination)
 {
-    int position = m_sct->GetCurrentPos() - 1;
+    int position = m_sct->GetCurrentPos()-1;
     while(true)
     {
         if(position < 0)
