@@ -2105,7 +2105,7 @@
 
 1458119651 /usr/include/wx-3.0/wx/generic/logg.h
 
-1469214585 source:/home/stephen/Documents/C++/NoteCode/def.cpp
+1469470869 source:/home/stephen/Documents/C++/NoteCode/def.cpp
 	"def.h"
 	<wx/log.h>
 	<wx/string.h>
@@ -2119,7 +2119,7 @@
 	"rapidjson/writer.h"
 	<cstdio>
 
-1469214585 /home/stephen/Documents/C++/NoteCode/def.h
+1469467788 /home/stephen/Documents/C++/NoteCode/def.h
 	<wx/string.h>
 	<wx/fswatcher.h>
 	<map>
@@ -2767,7 +2767,7 @@
 
 1458119651 /usr/include/wx-3.0/wx/gtk/textctrl.h
 
-1469270391 /home/stephen/Documents/C++/NoteCode/language.h
+1469473828 /home/stephen/Documents/C++/NoteCode/language.h
 	<wx/object.h>
 	<wx/stc/stc.h>
 	"def.h"
@@ -3549,7 +3549,7 @@
 1458119651 /usr/include/wx-3.0/wx/gtk/mdi.h
 	"wx/frame.h"
 
-1466358002 source:/home/stephen/Documents/C++/NoteCode/frame.cpp
+1469379607 source:/home/stephen/Documents/C++/NoteCode/frame.cpp
 	<wx/filedlg.h>
 	<wx/panel.h>
 	<wx/textctrl.h>
@@ -3655,7 +3655,7 @@
 	<wx/panel.h>
 	"edit.h"
 
-1469269494 source:/home/stephen/Documents/C++/NoteCode/languages/language.cpp
+1469270391 source:/home/stephen/Documents/C++/NoteCode/languages/language.cpp
 	"../language.h"
 	"../def.h"
 	<wx/stc/stc.h>
@@ -3673,13 +3673,14 @@
 	"../def.h"
 	"../language.h"
 
-1469270103 source:/home/stephen/Documents/C++/NoteCode/languages/languageHtml.cpp
+1469475243 source:/home/stephen/Documents/C++/NoteCode/languages/languageHtml.cpp
 	"../def.h"
 	"../language.h"
 	<string>
 	<wx/log.h>
 	<wx/string.h>
 	<wx/chartype.h>
+	<vector>
 	<exception>
 
 1469023083 source:/home/stephen/Documents/C++/NoteCode/languages/languageJava.cpp

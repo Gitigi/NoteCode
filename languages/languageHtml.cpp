@@ -5,6 +5,7 @@
 #include <wx/log.h>
 #include <wx/string.h>
 #include <wx/chartype.h>
+#include <vector>
 #include <exception>
 using namespace std;
 
@@ -94,6 +95,28 @@ void LanguageHtml::InitializeSCT()
 void LanguageHtml::OnCharAdded(wxStyledTextEvent &event)
 {
     Language::OnCharAdded(event);
+
+    if(event.GetKey() == '/' && m_sct->GetCharAt(m_sct->GetCurrentPos()-2)=='<')
+    {
+        int currentPos=m_sct->GetCurrentPos();
+        wxString lastOpenTag;
+        int tagPosition = GetOpenTag(lastOpenTag);
+        if(!lastOpenTag.IsEmpty())
+        {
+            int currentLine = m_sct->GetCurrentLine();
+            m_sct->InsertText(currentPos,lastOpenTag);
+            m_sct->InsertText(currentPos+lastOpenTag.length(),">");
+
+            if(m_sct->LineFromPosition(tagPosition) != currentLine)
+            {
+                int indentation = m_sct->GetLineIndentation(currentLine)-m_sct->GetTabWidth();
+                m_sct->SetLineIndentation(currentLine,indentation);
+            }
+            m_sct->GotoPos(m_sct->GetLineEndPosition(currentLine));
+        }
+        return;
+    }
+
     if(!m_sct->AutoCompActive())
     {
         wxString word_entered;
@@ -114,4 +137,150 @@ void LanguageHtml::OnCharAdded(wxStyledTextEvent &event)
 void LanguageHtml::OnKeyDown(wxKeyEvent &event)
 {
 
+}
+
+void LanguageHtml::OnNewLine(wxStyledTextEvent &event)
+{
+    int currentLine = m_sct->GetCurrentLine();
+    int numOfOpenTag = GetNumOpenTag(m_sct->GetCurrentPos(),currentLine-1);
+    int indentation = m_sct->GetLineIndentation(currentLine) + (numOfOpenTag * m_sct->GetTabWidth());
+    m_sct->SetLineIndentation(currentLine,indentation);
+    m_sct->GotoPos(m_sct->GetLineEndPosition(currentLine));
+}
+
+int LanguageHtml::GetOpenTag(wxString &tagName)
+{
+    int currentPos = m_sct->GetCurrentPos();
+    int index=currentPos;
+    int closedTag=0;
+    while(true)
+    {
+        if(index < 0)
+            break;
+        if(m_sct->GetCharAt(index) == '>')
+        {
+            index--;
+            while(true)
+            {
+                if(index < 0)
+                    break;
+                if(m_sct->GetCharAt(index)=='/' && m_sct->GetCharAt(index-1)=='<')
+                {
+                    wxLogMessage("open tag");
+                    closedTag++;
+                    index-=1;
+                    break;
+                }
+                else if(m_sct->GetCharAt(index)=='<')
+                {
+                    if(closedTag == 0)
+                    {
+                        int charPos = index + 1;
+                        while(true)
+                        {
+                            if(m_sct->GetCharAt(charPos) == ' '||m_sct->GetCharAt(charPos)=='>')
+                                break;
+                            tagName.Append((wxUniChar)m_sct->GetCharAt(charPos));
+                            charPos++;
+                        }
+
+                        auto iter = allAutoComplete["html"].GetMap().find(tagName);
+                        if(iter != allAutoComplete["html"].GetMap().end())
+                        {
+                            if(iter->second.type == TYPE_OPENTAG)
+                            {
+                                tagName.Clear();
+                            }
+                            else
+                                return charPos;
+                        }
+                        else
+                        {
+                            return charPos;
+                        }
+                    }
+                    else
+                    {
+                        wxLogMessage("closing tag");
+                        closedTag--;
+                    }
+                    break;
+                }
+                index--;
+            }
+        }
+        index--;
+    }
+    return 0;
+}
+
+
+int LanguageHtml::GetNumOpenTag(int position,int limit)
+{
+    int limitPos = m_sct->PositionFromLine(limit);
+    int tagCount=0;
+    wxString tagName;
+    int currentPos = position;
+    int index=currentPos;
+    int closedTag=0;
+    while(true)
+    {
+        if(index < limitPos)
+            break;
+        if(m_sct->GetCharAt(index) == '>')
+        {
+            index--;
+            while(true)
+            {
+                if(index < 0)
+                    break;
+                if(m_sct->GetCharAt(index)=='/' && m_sct->GetCharAt(index-1)=='<')
+                {
+                    closedTag++;
+                    index-=1;
+                    break;
+                }
+                else if(m_sct->GetCharAt(index)=='<')
+                {
+                    if(closedTag == 0)
+                    {
+                        int charPos = index + 1;
+                        while(true)
+                        {
+                            if(m_sct->GetCharAt(charPos) == ' '||m_sct->GetCharAt(charPos)=='>')
+                                break;
+                            tagName.Append((wxUniChar)m_sct->GetCharAt(charPos));
+                            charPos++;
+                        }
+
+                        auto iter = allAutoComplete["html"].GetMap().find(tagName);
+                        if(iter != allAutoComplete["html"].GetMap().end())
+                        {
+                            if(iter->second.type == TYPE_OPENTAG)
+                            {
+                                tagName.Empty();
+                            }
+                            else
+                            {
+                                tagCount++;
+                                tagName.Empty();
+                            }
+                        }
+                        else
+                        {
+                            tagCount++;
+                        }
+                    }
+                    else
+                    {
+                        closedTag--;
+                    }
+                    break;
+                }
+                index--;
+            }
+        }
+        index--;
+    }
+    return tagCount;
 }

@@ -133,6 +133,8 @@ enum MYID
 enum DATA_TYPES
 {
     TYPE_UNDEFINED,
+    TYPE_OPENTAG,
+    TYPE_CLOSETAG,
     TYPE_NUMBER,
     TYPE_STRING,
     TYPE_REGEX,
@@ -219,6 +221,7 @@ public:
     void InsertWords(const wxString &words,const char delimeter);
     void GenerateList(const wxString &word,wxString &word_list);
     void InsertWordsFromJsonFile(const wxString &fileName);
+    const std::map<wxString,wordInfo> &GetMap(){return root;}
 private:
     void populateWordInfo(const Value &source,wordInfo &destination);
     std::map<wxString,wordInfo> root;

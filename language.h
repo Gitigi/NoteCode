@@ -92,6 +92,10 @@ public:
     virtual void InitializeSCT();
     virtual void OnCharAdded(wxStyledTextEvent &event);
     virtual void OnKeyDown(wxKeyEvent &event);
+    virtual void OnNewLine(wxStyledTextEvent &event);
+private:
+    int GetOpenTag(wxString &tagName);
+    int GetNumOpenTag(int position,int limit=0);
 };
 
 //XML Language

@@ -208,6 +208,7 @@ void AutoCompList::populateWordInfo(const Value &source,wordInfo &destination)
     case TYPE_STRING:
     case TYPE_NUMBER:
     case TYPE_REGEX:
+    case TYPE_OPENTAG:
         destination.type = itr->value.GetInt();
         break;
 
@@ -243,7 +244,7 @@ void AutoCompList::populateWordInfo(const Value &source,wordInfo &destination)
         }
 
     default:
-        destination.type = TYPE_UNDEFINED;
+        destination.type = itr->value.GetInt();
     }
 }
 
@@ -267,6 +268,6 @@ void AutoCompList::InsertWordsFromJsonFile(const wxString &fileName)
     {
         wordInfo info;
         populateWordInfo(itr->value,info);
-        InsertWord(itr->name.GetString());
+        InsertWord(itr->name.GetString(),info);
     }
 }

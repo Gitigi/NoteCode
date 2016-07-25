@@ -53,6 +53,9 @@ MyFrame::MyFrame(const wxString &title,const wxString &name,const wxString &dire
 
     notebook->AssignImageList(imagelist);
 
+    //CustomTabArt *tab = new CustomTabArt();
+    //notebook->SetArtProvider(tab);
+
     CreatePage(name,directory);
 
 }
