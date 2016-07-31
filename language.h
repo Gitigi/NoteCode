@@ -4,6 +4,9 @@
 #include <wx/object.h>
 #include <wx/stc/stc.h>
 
+#include <vector>
+
+
 #include "def.h"
 
 #define TERMINATE_TYPE  -1
@@ -93,9 +96,12 @@ public:
     virtual void OnCharAdded(wxStyledTextEvent &event);
     virtual void OnKeyDown(wxKeyEvent &event);
     virtual void OnNewLine(wxStyledTextEvent &event);
+    virtual void OnCursorPositionChange();
 private:
-    int GetOpenTag(wxString &tagName);
+    void findTag(const wxString &tagName,std::vector<std::pair<int,int>> &tagPos,int limit=-1);
+    int GetOpenTag(wxString &tagName,int position = -1,int limit = 0);
     int GetNumOpenTag(int position,int limit=0);
+    void GetEnclosingTag(wxString &tagName,int position=-1);
 };
 
 //XML Language

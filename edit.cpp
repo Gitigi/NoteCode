@@ -119,7 +119,8 @@ void Edit::OnDoubleClick(wxStyledTextEvent &event)
 
     int searchStart = 0;
     int textLength = GetTextLength();
-    while(searchStart < textLength)
+
+    while(true)
     {
         searchStart = FindText(searchStart,textLength,selectedText);
         if(searchStart == -1)

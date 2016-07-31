@@ -139,6 +139,29 @@ void LanguageHtml::OnKeyDown(wxKeyEvent &event)
 
 }
 
+void LanguageHtml::findTag(const wxString &tagName,std::vector<std::pair<int,int>> &tagPos,int limit)
+{
+    int tagStart = 0;
+    int tagEnd = 0;
+    int maxPos = limit == -1 ? m_sct->GetTextLength() : limit;
+    while(true)
+    {
+        tagStart = m_sct->FindText(tagStart,maxPos,"<"+tagName);
+        if(tagStart == -1)
+            break;
+        tagEnd = m_sct->FindText(tagStart,maxPos,"</"+tagName);
+        if(tagEnd != -1)
+        {
+            tagEnd = m_sct->FindText(tagEnd,maxPos,">");
+        }
+        tagPos.push_back(std::pair<int,int>(tagStart,tagEnd));
+        if(tagEnd == -1)
+            break;
+
+        tagStart +=tagName.Length();
+    }
+}
+
 void LanguageHtml::OnNewLine(wxStyledTextEvent &event)
 {
     int currentLine = m_sct->GetCurrentLine();
@@ -148,15 +171,48 @@ void LanguageHtml::OnNewLine(wxStyledTextEvent &event)
     m_sct->GotoPos(m_sct->GetLineEndPosition(currentLine));
 }
 
-int LanguageHtml::GetOpenTag(wxString &tagName)
+void LanguageHtml::OnCursorPositionChange()
 {
-    int currentPos = m_sct->GetCurrentPos();
+    wxString tagName;
+    GetOpenTag(tagName);
+}
+
+int LanguageHtml::GetOpenTag(wxString &tagName,int position,int limit)
+{
+    int currentPos = position == -1 ? m_sct->GetCurrentPos()-1 : position;
+
     int index=currentPos;
     int closedTag=0;
+
+    std::vector<std::pair<int,int>> scriptPos;
+    findTag("script",scriptPos,currentPos);
+    int scriptVectorIndex = scriptPos.size()-1;
     while(true)
     {
-        if(index < 0)
+        if(index < limit)
             break;
+        if(scriptVectorIndex != -1)
+        {
+            std::pair<int,int> &scriptLoc = scriptPos[scriptVectorIndex];
+            if(scriptLoc.second == -1)
+            {
+                if(scriptLoc.first>=limit)
+                {
+                    tagName = "script";
+                    return scriptLoc.first;
+                }
+                else
+                {
+                    return -1;
+                }
+            }
+            if(index >= scriptLoc.first && index <= scriptLoc.second)
+            {
+                index = scriptLoc.first -1;
+                scriptVectorIndex--;
+            }
+
+        }
         if(m_sct->GetCharAt(index) == '>')
         {
             index--;
@@ -166,7 +222,6 @@ int LanguageHtml::GetOpenTag(wxString &tagName)
                     break;
                 if(m_sct->GetCharAt(index)=='/' && m_sct->GetCharAt(index-1)=='<')
                 {
-                    wxLogMessage("open tag");
                     closedTag++;
                     index-=1;
                     break;
@@ -201,7 +256,6 @@ int LanguageHtml::GetOpenTag(wxString &tagName)
                     }
                     else
                     {
-                        wxLogMessage("closing tag");
                         closedTag--;
                     }
                     break;
@@ -211,7 +265,7 @@ int LanguageHtml::GetOpenTag(wxString &tagName)
         }
         index--;
     }
-    return 0;
+    return -1;
 }
 
 
@@ -220,67 +274,43 @@ int LanguageHtml::GetNumOpenTag(int position,int limit)
     int limitPos = m_sct->PositionFromLine(limit);
     int tagCount=0;
     wxString tagName;
-    int currentPos = position;
-    int index=currentPos;
-    int closedTag=0;
+
     while(true)
     {
-        if(index < limitPos)
+        if(position == -1)
             break;
-        if(m_sct->GetCharAt(index) == '>')
+        position = GetOpenTag(tagName,position,limitPos)-1;
+        if(tagName.IsEmpty())
+            break;
+        else
         {
-            index--;
-            while(true)
-            {
-                if(index < 0)
-                    break;
-                if(m_sct->GetCharAt(index)=='/' && m_sct->GetCharAt(index-1)=='<')
-                {
-                    closedTag++;
-                    index-=1;
-                    break;
-                }
-                else if(m_sct->GetCharAt(index)=='<')
-                {
-                    if(closedTag == 0)
-                    {
-                        int charPos = index + 1;
-                        while(true)
-                        {
-                            if(m_sct->GetCharAt(charPos) == ' '||m_sct->GetCharAt(charPos)=='>')
-                                break;
-                            tagName.Append((wxUniChar)m_sct->GetCharAt(charPos));
-                            charPos++;
-                        }
-
-                        auto iter = allAutoComplete["html"].GetMap().find(tagName);
-                        if(iter != allAutoComplete["html"].GetMap().end())
-                        {
-                            if(iter->second.type == TYPE_OPENTAG)
-                            {
-                                tagName.Empty();
-                            }
-                            else
-                            {
-                                tagCount++;
-                                tagName.Empty();
-                            }
-                        }
-                        else
-                        {
-                            tagCount++;
-                        }
-                    }
-                    else
-                    {
-                        closedTag--;
-                    }
-                    break;
-                }
-                index--;
-            }
+            tagCount++;
+            tagName.clear();
         }
-        index--;
     }
     return tagCount;
+}
+
+void LanguageHtml::GetEnclosingTag(wxString &tagName,int position)
+{
+    position = position == -1 ? m_sct->GetCurrentPos()  : position;
+
+    int scriptStart = m_sct->FindText(0,position,"<script");
+    int scriptEnd;
+    if(scriptStart == -1)
+    {
+        GetOpenTag(tagName,position);
+    }
+    else
+    {
+        scriptEnd = m_sct->FindText(scriptStart,m_sct->GetTextLength(),"</script");
+        if(position > scriptStart && position <= scriptEnd)
+        {
+            tagName = "script";
+        }
+        else
+        {
+            GetOpenTag(tagName);
+        }
+    }
 }

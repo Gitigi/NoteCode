@@ -51,12 +51,12 @@ int InitStyles()
 }
 
 FileType files_supported[] = {
-    { FILE_CPLUS, wxT("C++"), wxT("cpp h cxx CPP H CXX")},
+    { FILE_CPLUS, wxT("C++"), wxT("cpp h cxx hpp CPP H CXX HPP")},
     { FILE_PY, wxT("Python"), wxT("py")},
     { FILE_CSS, wxT("CSS"), wxT("css") },
     { FILE_XML, wxT("XML"), wxT("xml") },
     { FILE_HTML, wxT("HTML"), wxT("html") },
-    { FILE_C, wxT("C++"), wxT("c") },
+    { FILE_C, wxT("C"), wxT("c") },
     { FILE_PHP, wxT("PHP"),  wxT("php") },
     { FILE_CSHARP, wxT("C#"), wxT("cp") },
     { FILE_JAVA, wxT("JAVA"), wxT("java") },
