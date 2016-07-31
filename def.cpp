@@ -162,7 +162,8 @@ void AutoCompList::GenerateList(const wxString &word,wxString &word_list)
         {
             break;
         }
-        else if(iter->first.Lower().Contains(word.Lower()))
+
+        else if(iter->first.Lower().StartsWith(word.Lower()))
         {
             word_list.Append(iter->first);
             word_list.Append(" ");
@@ -181,7 +182,7 @@ void AutoCompList::GenerateList(const wxString &word,wxString &word_list)
         {
             break;
         }
-        else if(iter->first.Lower().Contains(word.Lower()))
+        else if(iter->first.Lower().StartsWith(word.Lower()))
         {
             word_list.Append(iter->first);
             word_list.Append(" ");
