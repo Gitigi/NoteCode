@@ -95,12 +95,6 @@ void Edit::OnCharAdded(wxStyledTextEvent &event)
 
     if(letter == '\n')
     {
-        int current_line = GetCurrentLine();
-
-        int indentation = GetLineIndentation(current_line-1);
-        SetLineIndentation(current_line,indentation);
-
-        GotoPos(GetLineEndPosition(current_line));
 
         lang->OnNewLine(event);
     }

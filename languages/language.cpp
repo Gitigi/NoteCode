@@ -173,7 +173,10 @@ int Language::MyBraceMatch(int pos)
 
 void Language::OnNewLine(wxStyledTextEvent &event)
 {
-
+    int currentLine = m_sct->GetCurrentLine();
+    int indentation = m_sct->GetLineIndentation(currentLine-1);
+    m_sct->SetLineIndentation(currentLine,indentation);
+    m_sct->GotoPos(m_sct->GetLineEndPosition(currentLine));
 }
 
 void Language::GetWordBeforeCursor(wxString &destination)

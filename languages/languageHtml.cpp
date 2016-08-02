@@ -104,12 +104,25 @@ void LanguageHtml::OnCharAdded(wxStyledTextEvent &event)
         if(!lastOpenTag.IsEmpty())
         {
             int currentLine = m_sct->GetCurrentLine();
-            m_sct->InsertText(currentPos,lastOpenTag);
-            m_sct->InsertText(currentPos+lastOpenTag.length(),">");
+            m_sct->InsertText(currentPos,lastOpenTag+">");
 
-            if(m_sct->LineFromPosition(tagPosition) != currentLine)
+            //get the first character that is not a space in current line
+            char firstChar=' ';
+            int index = m_sct->PositionFromLine(currentLine);
+            while(index<currentPos)
             {
-                int indentation = m_sct->GetLineIndentation(currentLine)-m_sct->GetTabWidth();
+                if(!isspace(m_sct->GetCharAt(index)))
+                {
+                    firstChar=m_sct->GetCharAt(index);
+                    break;
+                }
+                index++;
+            }
+            //end of acquiring first character that is not a space
+
+            if(firstChar == '<' && m_sct->GetCharAt(index+1) == '/')
+            {
+                int indentation = m_sct->GetLineIndentation(m_sct->LineFromPosition(tagPosition));
                 m_sct->SetLineIndentation(currentLine,indentation);
             }
             m_sct->GotoPos(m_sct->GetLineEndPosition(currentLine));
@@ -165,10 +178,15 @@ void LanguageHtml::findTag(const wxString &tagName,std::vector<std::pair<int,int
 void LanguageHtml::OnNewLine(wxStyledTextEvent &event)
 {
     int currentLine = m_sct->GetCurrentLine();
-    int numOfOpenTag = GetNumOpenTag(m_sct->GetCurrentPos(),currentLine-1);
-    int indentation = m_sct->GetLineIndentation(currentLine) + (numOfOpenTag * m_sct->GetTabWidth());
-    m_sct->SetLineIndentation(currentLine,indentation);
-    m_sct->GotoPos(m_sct->GetLineEndPosition(currentLine));
+
+    wxString tagName;
+    int openTagLine = m_sct->LineFromPosition(GetOpenTag(tagName,m_sct->GetCurrentPos()));
+    if(!tagName.IsEmpty())
+    {
+        int indentation = m_sct->GetLineIndentation(openTagLine) + m_sct->GetTabWidth();
+        m_sct->SetLineIndentation(currentLine,indentation);
+        m_sct->GotoPos(m_sct->GetLineEndPosition(currentLine));
+    }
 }
 
 void LanguageHtml::OnCursorPositionChange()
@@ -228,18 +246,18 @@ int LanguageHtml::GetOpenTag(wxString &tagName,int position,int limit)
                 }
                 else if(m_sct->GetCharAt(index)=='<')
                 {
+                    int charPos = index + 1;
+                    while(true)
+                    {
+                        if(m_sct->GetCharAt(charPos) == ' '||m_sct->GetCharAt(charPos)=='>'
+                           ||m_sct->GetCharAt(charPos)=='\n')
+                            break;
+                        tagName.Append((wxUniChar)m_sct->GetCharAt(charPos));
+                        charPos++;
+                    }
+                    auto iter = allAutoComplete["html"].GetMap().find(tagName);
                     if(closedTag == 0)
                     {
-                        int charPos = index + 1;
-                        while(true)
-                        {
-                            if(m_sct->GetCharAt(charPos) == ' '||m_sct->GetCharAt(charPos)=='>')
-                                break;
-                            tagName.Append((wxUniChar)m_sct->GetCharAt(charPos));
-                            charPos++;
-                        }
-
-                        auto iter = allAutoComplete["html"].GetMap().find(tagName);
                         if(iter != allAutoComplete["html"].GetMap().end())
                         {
                             if(iter->second.type == TYPE_OPENTAG)
@@ -247,21 +265,49 @@ int LanguageHtml::GetOpenTag(wxString &tagName,int position,int limit)
                                 tagName.Clear();
                             }
                             else
-                                return charPos;
+                                return index;
                         }
                         else
                         {
-                            return charPos;
+                            return index;
                         }
                     }
                     else
                     {
-                        closedTag--;
+                        if(iter != allAutoComplete["html"].GetMap().end())
+                        {
+                            if(iter->second.type == TYPE_OPENTAG)
+                            {
+                                tagName.Clear();
+                            }
+                            else
+                            {
+                                tagName.Clear();
+                                closedTag--;
+                            }
+                        }
+                        else
+                        {
+                            tagName.Clear();
+                            closedTag--;
+                        }
                     }
                     break;
                 }
                 index--;
             }
+        }
+        else if(m_sct->GetCharAt(index)=='<' && !(m_sct->GetCharAt(index+1)=='/'))
+        {
+            int charPos = index + 1;
+            while(true)
+            {
+                if(m_sct->GetCharAt(charPos) == ' '||m_sct->GetCharAt(charPos)=='>'||m_sct->GetCharAt(charPos)=='\n')
+                    break;
+                tagName.Append((wxUniChar)m_sct->GetCharAt(charPos));
+                charPos++;
+            }
+            return index-1;
         }
         index--;
     }
