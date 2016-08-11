@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = `wx-config --cflags` -std=c++11
+CFLAGS = `wx-config --cflags` -std=c++14
 LIBS = `wx-config --libs` -lwx_gtk3u_aui-3.1 -lwx_gtk3u_stc-3.1 -s
 OBJS = main.o def.o dialog.o edit.o frame.o panel.o CustomTabArt.o language.o languageCpp.o languageCss.o languageHtml.o languageJava.o languageJS.o languagePhp.o languagePython.o languageXml.o
 all : main

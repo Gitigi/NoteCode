@@ -1,5 +1,6 @@
 #include "../def.h"
 #include "../language.h"
+#include "../edit.h"
 
 static const char* JavaWordlist1 =
     "bool break case catch char class const const_cast "
@@ -62,7 +63,7 @@ static lang_style java_styles[] = {
     {TERMINATE_TYPE}        //End style list
 };
 
-LanguageJava::LanguageJava(wxStyledTextCtrl *sct)
+LanguageJava::LanguageJava(Edit *sct)
 :Language(sct)
 {
 
@@ -116,10 +117,29 @@ void LanguageJava::InitializeSCT()
 
 void LanguageJava::OnCharAdded(wxStyledTextEvent &event)
 {
+    AutoCompBraces();
     StyleBraces();
 }
 
 void LanguageJava::OnKeyDown(wxKeyEvent &event)
 {
 
+}
+
+void LanguageJava::OnNewLine(wxStyledTextEvent &event)
+{
+    char charBeforeNew = m_sct->GetCharAt(m_sct->GetCurrentPos()-2);
+    int currentLine = m_sct->GetCurrentLine();
+    if(charBeforeNew == ':')
+    {
+        int indentation = m_sct->GetLineIndentation(currentLine-1);
+        m_sct->SetLineIndentation(currentLine-1,indentation-m_sct->GetTabWidth());
+        m_sct->SetLineIndentation(currentLine,indentation == 0 ? m_sct->GetTabWidth() : indentation);
+        m_sct->GotoPos(m_sct->GetLineEndPosition(currentLine));
+    }
+    else
+    {
+        AutoIndent(currentLine);
+    }
+    AlignBraceAfterEnter();
 }

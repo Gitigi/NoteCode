@@ -5,11 +5,16 @@
 #include <wx/wx.h>
 
 #include <wx/msgdlg.h>
+#include <iostream>
+using std::cerr;
+using std::endl;
 
 BEGIN_EVENT_TABLE(Edit,wxStyledTextCtrl)
+    EVT_STC_MODIFIED(wxID_ANY,Edit::OnModified)
     EVT_STC_MARGINCLICK(wxID_ANY, Edit::OnMarginClick)
     EVT_STC_CHARADDED(wxID_ANY, Edit::OnCharAdded)
     EVT_STC_DOUBLECLICK(wxID_ANY,Edit::OnDoubleClick)
+    EVT_STC_UPDATEUI(wxID_ANY,Edit::OnUpdateUI)
     EVT_LEFT_DOWN(Edit::OnLeftDown)
     EVT_KEY_DOWN(Edit::OnKeyDown)
 
@@ -26,8 +31,12 @@ END_EVENT_TABLE()
 Edit::Edit(wxWindow *parent,wxWindowID id,wxPoint pos,wxSize siz,long style)
 :wxStyledTextCtrl(parent,id,pos,siz,style),lang(nullptr)
 {
+    hightlightLine = true;
+
     SetMouseDwellTime(100);
     SetMouseDownCaptures(true);
+
+    SetModEventMask(wxSTC_MOD_INSERTTEXT|wxSTC_MOD_DELETETEXT|wxSTC_MOD_BEFOREDELETE|wxSTC_MOD_BEFOREINSERT);
 
     m_LineNrID = 0;
     m_DividerID = 1;
@@ -48,6 +57,7 @@ Edit::Edit(wxWindow *parent,wxWindowID id,wxPoint pos,wxSize siz,long style)
 
     SetMarginType(m_DividerID,wxSTC_MARGIN_SYMBOL);
     SetMarginWidth(m_DividerID,0);
+    SetMarginMask(m_DividerID,~wxSTC_MASK_FOLDERS);
 
     SetMarginType(m_FoldingID,wxSTC_MARGIN_SYMBOL);
     SetMarginWidth(m_FoldingID,20);
@@ -64,6 +74,12 @@ Edit::Edit(wxWindow *parent,wxWindowID id,wxPoint pos,wxSize siz,long style)
     MarkerDefine(wxSTC_MARKNUM_FOLDEROPENMID,wxSTC_MARK_BOXMINUSCONNECTED,*wxWHITE,*wxBLACK);
     MarkerDefine(wxSTC_MARKNUM_FOLDERMIDTAIL,wxSTC_MARK_TCORNER,*wxWHITE,*wxBLACK);
     MarkerDefine(wxSTC_MARKNUM_FOLDERTAIL,wxSTC_MARK_LCORNER,*wxWHITE,*wxBLACK);
+
+    MarkerDefine(1,wxSTC_MARK_BACKGROUND,*wxWHITE,wxColour(204,204,255));
+
+    SetMarginCursor(m_DividerID,wxSTC_CURSORARROW);
+    SetMarginCursor(m_FoldingID,wxSTC_CURSORARROW);
+    SetMarginCursor(m_LineNrID,wxSTC_CURSORARROW);
 
     //Set Default styles
     int Nr;
@@ -165,6 +181,7 @@ void Edit::SetLanguage(int file_type)
     case FILE_HTML:
         lang = new LanguageHtml(this);
         lang->InitializeSCT();
+        lang->OnLoad();
         break;
 
     case FILE_JAVA:
@@ -254,4 +271,32 @@ void Edit::OnLeftDown(wxMouseEvent &event)
 void Edit::RefreshStyle()
 {
     lang->InitializeSCT();
+}
+
+void Edit::OnModified(wxStyledTextEvent &event)
+{
+    if(lang)
+        lang->OnModification(event);
+}
+
+void Edit::OnUpdateUI(wxStyledTextEvent &event)
+{
+    cerr<<"update type = "<<event.GetUpdated()<<endl;
+    UpdateLine();
+    lang->OnUpdateUI(event);
+
+    if(event.GetUpdated()==wxSTC_UPDATE_SELECTION)
+        lang->StyleBraces();
+
+}
+
+void Edit::UpdateLine()
+{
+    if(hightlightLine)
+    {
+        int prevLine=MarkerLineFromHandle(lineMarkerHandle);
+        if(prevLine != -1)
+            MarkerDeleteHandle(lineMarkerHandle);
+        lineMarkerHandle = MarkerAdd(GetCurrentLine(),1);
+    }
 }

@@ -2105,7 +2105,7 @@
 
 1458119651 /usr/include/wx-3.0/wx/generic/logg.h
 
-1469997248 source:/home/stephen/Documents/C++/NoteCode/def.cpp
+1470209765 source:/home/stephen/Documents/C++/NoteCode/def.cpp
 	"def.h"
 	<wx/log.h>
 	<wx/string.h>
@@ -2119,7 +2119,7 @@
 	"rapidjson/writer.h"
 	<cstdio>
 
-1469467788 /home/stephen/Documents/C++/NoteCode/def.h
+1470209765 /home/stephen/Documents/C++/NoteCode/def.h
 	<wx/string.h>
 	<wx/fswatcher.h>
 	<map>
@@ -2128,15 +2128,16 @@
 	<wx/string.h>
 	"rapidjson/document.h"
 
-1470126843 source:/home/stephen/Documents/C++/NoteCode/edit.cpp
+1470852764 source:/home/stephen/Documents/C++/NoteCode/edit.cpp
 	"edit.h"
 	"def.h"
 	"language.h"
 	<wx/log.h>
 	<wx/wx.h>
 	<wx/msgdlg.h>
+	<iostream>
 
-1465590857 /home/stephen/Documents/C++/NoteCode/edit.h
+1470818618 /home/stephen/Documents/C++/NoteCode/edit.h
 	<wx/stc/stc.h>
 	<wx/textctrl.h>
 	"language.h"
@@ -2767,7 +2768,7 @@
 
 1458119651 /usr/include/wx-3.0/wx/gtk/textctrl.h
 
-1469990112 /home/stephen/Documents/C++/NoteCode/language.h
+1470852644 /home/stephen/Documents/C++/NoteCode/language.h
 	<wx/object.h>
 	<wx/stc/stc.h>
 	<vector>
@@ -3550,7 +3551,7 @@
 1458119651 /usr/include/wx-3.0/wx/gtk/mdi.h
 	"wx/frame.h"
 
-1469475357 source:/home/stephen/Documents/C++/NoteCode/frame.cpp
+1470835818 source:/home/stephen/Documents/C++/NoteCode/frame.cpp
 	<wx/filedlg.h>
 	<wx/panel.h>
 	<wx/textctrl.h>
@@ -3565,13 +3566,15 @@
 	"def.h"
 	"dialog.h"
 	"CustomTabArt.h"
+	<iostream>
 
-1465590011 /home/stephen/Documents/C++/NoteCode/frame.h
+1470767751 /home/stephen/Documents/C++/NoteCode/frame.h
 	<wx/frame.h>
 	<wx/menu.h>
 	<wx/aui/auibook.h>
 	<wx/dnd.h>
 	<wx/filename.h>
+	<wx/stc/stc.h>
 	"def.h"
 
 1458119652 /usr/include/wx-3.0/wx/aui/auibook.h
@@ -3652,60 +3655,89 @@
 	"wx/choice.h"
 	"wx/containr.h"
 
-1453107778 /home/stephen/Documents/C++/NoteCode/panel.h
+1470835668 /home/stephen/Documents/C++/NoteCode/panel.h
 	<wx/panel.h>
 	"edit.h"
 
-1470126843 source:/home/stephen/Documents/C++/NoteCode/languages/language.cpp
+1470852462 source:/home/stephen/Documents/C++/NoteCode/languages/language.cpp
 	"../language.h"
 	"../def.h"
 	<wx/stc/stc.h>
 	<wx/chartype.h>
 	<wx/log.h>
 	"../edit.h"
+	<iostream>
 
-1469036691 source:/home/stephen/Documents/C++/NoteCode/languages/languageCpp.cpp
+1470765875 source:/home/stephen/Documents/C++/NoteCode/languages/languageCpp.cpp
 	"../language.h"
 	"../def.h"
+	"../edit.h"
 	<wx/stc/stc.h>
 	<wx/log.h>
+	<iostream>
 
-1468912098 source:/home/stephen/Documents/C++/NoteCode/languages/languageCss.cpp
+1470759815 source:/home/stephen/Documents/C++/NoteCode/languages/languageCss.cpp
 	"../def.h"
 	"../language.h"
+	"../edit.h"
 
-1470126376 source:/home/stephen/Documents/C++/NoteCode/languages/languageHtml.cpp
+1470855220 source:/home/stephen/Documents/C++/NoteCode/languages/languageHtml.cpp
 	"../def.h"
 	"../language.h"
+	"../edit.h"
+	"parser/cssParser.hpp"
 	<string>
+	<cstring>
+	<sstream>
 	<wx/log.h>
 	<wx/string.h>
 	<wx/chartype.h>
+	<wx/filesys.h>
+	<wx/process.h>
+	<wx/stdstream.h>
+	<wx/sstream.h>
+	<wx/mstream.h>
 	<vector>
 	<exception>
+	<iostream>
+	<algorithm>
+	<iterator>
+	<boost/spirit/home/x3.hpp>
+	<boost/spirit/include/support_istream_iterator.hpp>
+	<boost/spirit/include/support_line_pos_iterator.hpp>
+	<boost/fusion/view/iterator_range.hpp>
+	<boost/fusion/include/iterator_range.hpp>
+	<boost/spirit/include/classic_position_iterator.hpp>
+	<boost/spirit/include/support_multi_pass.hpp>
+	<type_traits>
 
-1469023083 source:/home/stephen/Documents/C++/NoteCode/languages/languageJava.cpp
+1470766096 source:/home/stephen/Documents/C++/NoteCode/languages/languageJava.cpp
 	"../def.h"
 	"../language.h"
+	"../edit.h"
 
-1468911992 source:/home/stephen/Documents/C++/NoteCode/languages/languageJS.cpp
+1470837810 source:/home/stephen/Documents/C++/NoteCode/languages/languageJS.cpp
 	"../def.h"
 	"../language.h"
+	"../edit.h"
 
-1466272296 source:/home/stephen/Documents/C++/NoteCode/languages/languagePhp.cpp
+1470225434 source:/home/stephen/Documents/C++/NoteCode/languages/languagePhp.cpp
 	"../def.h"
 	"../language.h"
+	"../edit.h"
 
-1468912098 source:/home/stephen/Documents/C++/NoteCode/languages/languagePython.cpp
+1470225434 source:/home/stephen/Documents/C++/NoteCode/languages/languagePython.cpp
 	"../language.h"
 	"../def.h"
+	"../edit.h"
 	<wx/log.h>
 
-1466272296 source:/home/stephen/Documents/C++/NoteCode/languages/languageXml.cpp
+1470204519 source:/home/stephen/Documents/C++/NoteCode/languages/languageXml.cpp
 	"../def.h"
 	"../language.h"
+	"../edit.h"
 
-1465589087 source:/home/stephen/Documents/C++/NoteCode/main.cpp
+1470214356 source:/home/stephen/Documents/C++/NoteCode/main.cpp
 	<wx/app.h>
 	<wx/cmdline.h>
 	<wx/cmdargs.h>
@@ -3713,6 +3745,12 @@
 	<wx/filename.h>
 	<wx/log.h>
 	<wx/image.h>
+	<wx/filesys.h>
+	<wx/fs_zip.h>
+	<wx/fs_inet.h>
+	<wx/fs_arc.h>
+	<wx/fs_mem.h>
+	<wx/fs_filter.h>
 	"frame.h"
 
 1458119650 /usr/include/wx-3.0/wx/cmdline.h
@@ -3721,7 +3759,7 @@
 	"wx/arrstr.h"
 	"wx/cmdargs.h"
 
-1454163174 source:/home/stephen/Documents/C++/NoteCode/panel.cpp
+1470819038 source:/home/stephen/Documents/C++/NoteCode/panel.cpp
 	"panel.h"
 	<wx/sizer.h>
 	<wx/file.h>
@@ -3992,4 +4030,69 @@
 
 1458119650 /usr/include/wx-3.0/wx/generic/fswatcher.h
 	"wx/defs.h"
+
+1470241158 /home/stephen/Documents/C++/NoteCode/languages/parser/cssParser.hpp
+	<boost/spirit/home/x3.hpp>
+	<boost/optional.hpp>
+	<boost/spirit/home/x3/support/ast/variant.hpp>
+	<boost/spirit/include/support_istream_iterator.hpp>
+	<boost/fusion/include/adapt_struct.hpp>
+	<boost/fusion/include/std_pair.hpp>
+	<boost/variant.hpp>
+	<vector>
+	<iostream>
+	<string>
+	<functional>
+	<fstream>
+	<editline/history.h>
+	<editline/readline.h>
+	<istream>
+
+1458119650 /usr/include/wx-3.0/wx/filesys.h
+	"wx/defs.h"
+	"wx/stream.h"
+	"wx/datetime.h"
+	"wx/filename.h"
+	"wx/hashmap.h"
+
+1458119650 /usr/include/wx-3.0/wx/fs_zip.h
+	"wx/defs.h"
+	"wx/fs_arc.h"
+
+1458119650 /usr/include/wx-3.0/wx/fs_arc.h
+	"wx/defs.h"
+	"wx/filesys.h"
+	"wx/hashmap.h"
+
+1458119650 /usr/include/wx-3.0/wx/fs_inet.h
+	"wx/defs.h"
+	"wx/filesys.h"
+
+1458119650 /usr/include/wx-3.0/wx/fs_mem.h
+	"wx/defs.h"
+	"wx/filesys.h"
+	"wx/hashmap.h"
+	"wx/bitmap.h"
+
+1458119650 /usr/include/wx-3.0/wx/fs_filter.h
+	"wx/defs.h"
+	"wx/filesys.h"
+
+1458119650 /usr/include/wx-3.0/wx/process.h
+	"wx/event.h"
+	"wx/stream.h"
+	"wx/utils.h"
+
+1458119650 /usr/include/wx-3.0/wx/stdstream.h
+	"wx/defs.h"
+	"wx/defs.h"
+	"wx/stream.h"
+	"wx/ioswrap.h"
+
+1458119650 /usr/include/wx-3.0/wx/sstream.h
+	"wx/stream.h"
+
+1458119650 /usr/include/wx-3.0/wx/mstream.h
+	"wx/defs.h"
+	"wx/stream.h"
 

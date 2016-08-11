@@ -196,6 +196,51 @@ void AutoCompList::GenerateList(const wxString &word,wxString &word_list)
 
 }
 
+void AutoCompList::GenerateList(const wxString &word,std::vector<wxString> &word_list)
+{
+    if(root.empty())
+        return;
+
+    auto smallLetterBegin = root.lower_bound("a");
+    auto iter = root.lower_bound(word.Upper());
+    while(true)
+    {
+        if(iter == root.end()||iter == smallLetterBegin)
+        {
+            break;
+        }
+
+        else if(iter->first.Lower().StartsWith(word.Lower()))
+        {
+            word_list.push_back(iter->first);
+        }
+        else
+        {
+            break;
+        }
+        iter++;
+    }
+
+    iter = root.lower_bound(word.Lower());
+    while(true)
+    {
+        if(iter==root.end())
+        {
+            break;
+        }
+        else if(iter->first.Lower().StartsWith(word.Lower()))
+        {
+            word_list.push_back(iter->first);
+        }
+        else
+        {
+            break;
+        }
+        iter++;
+    }
+
+}
+
 void AutoCompList::populateWordInfo(const Value &source,wordInfo &destination)
 {
     Value::ConstMemberIterator itr = source.FindMember("id");

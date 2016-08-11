@@ -12,7 +12,11 @@ MyPanel::MyPanel(wxWindow *parent,const wxString &name,
     wxString path;
     path.Printf(wxT("%s/%s"),directory,name);
     if(wxFile::Exists(path))
+    {
         text_area->LoadFile(path);
+        text_area->SetSavePoint();
+    }
+    text_area->filePath = path;
 
     m_name = name;
 
@@ -32,7 +36,24 @@ MyPanel::MyPanel(wxWindow *parent,const wxString &name,
 
 void MyPanel::Save()
 {
+    if(text_area->GetModify() != 0)
+    {
+        wxString path;
+        path.Printf(wxT("%s/%s"),m_directory,m_name);
+        text_area->SaveFile(path);
+        text_area->filePath=path;
+        text_area->SetSavePoint();
+    }
+}
+
+void MyPanel::SaveAs(const wxString &name,const wxString &dir)
+{
+    m_directory = dir;
+    m_name = name;
+
     wxString path;
-    path.Printf(wxT("%s/%s"),m_directory,m_name);
+    path.Printf("%s/%s",m_directory,m_name);
     text_area->SaveFile(path);
+    text_area->filePath = path;
+    text_area->SetSavePoint();
 }

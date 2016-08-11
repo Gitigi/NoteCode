@@ -10,6 +10,7 @@ public:
     MyPanel(wxWindow *parent,const wxString &name,
             const wxString &directory = wxT("/home/"));
     void Save();
+    void SaveAs(const wxString &name,const wxString &dir);
     void SetName(const wxString &name)
     {
         m_name = name;
@@ -17,6 +18,16 @@ public:
     void SetDirectory(const wxString &directory)
     {
         m_directory = directory;
+    }
+
+    wxString GetName()
+    {
+        return m_name;
+    }
+
+    wxString GetDirectory()
+    {
+        return m_directory;
     }
 
     Edit *text_area;

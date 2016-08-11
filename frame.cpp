@@ -13,8 +13,9 @@
 #include "def.h"
 #include "dialog.h"
 #include "CustomTabArt.h"
-
-
+#include <iostream>
+using  std::cerr;
+using  std::endl;
 
 
 BEGIN_EVENT_TABLE(MyFrame,wxFrame)
@@ -34,6 +35,9 @@ BEGIN_EVENT_TABLE(MyFrame,wxFrame)
     EVT_MENU_RANGE(myID_HIGLIGHTLANGFIRST,myID_HIGLIGHTLANGLAST,
                    MyFrame::OnHighlightLang)
     EVT_MENU(wxID_SETUP,MyFrame::OnPreference)
+
+    EVT_STC_SAVEPOINTLEFT(wxID_ANY,MyFrame::OnSavePointReachLeave)
+    EVT_STC_SAVEPOINTREACHED(wxID_ANY,MyFrame::OnSavePointReachLeave)
 END_EVENT_TABLE()
 
 MyFrame::MyFrame(const wxString &title,const wxString &name,const wxString &directory)
@@ -66,6 +70,22 @@ void MyFrame::OnNew(wxCommandEvent &event)
     CreatePage();
 }
 
+void MyFrame::OnSavePointReachLeave(wxStyledTextEvent &event)
+{
+    MyPanel *panel = wxDynamicCast(notebook->GetCurrentPage(),MyPanel);
+    int pageIndex = notebook->GetPageIndex(notebook->GetCurrentPage());
+    wxString pageTitle = notebook->GetPageText(pageIndex);
+
+    if(panel->text_area->GetModify() == 0)    //save point reached
+    {
+        notebook->SetPageText(pageIndex,pageTitle.AfterLast('*'));
+    }
+    else //save point left
+    {
+        notebook->SetPageText(pageIndex,"*"+pageTitle);
+    }
+}
+
 void MyFrame::CreatePage(const wxString &title,const wxString &directory)
 {
     wxFileName fname;
@@ -80,13 +100,23 @@ void MyFrame::CreatePage(const wxString &title,const wxString &directory)
 
     panel->text_area->SetLanguage(file_type);
 
+
 }
 
 
 void MyFrame::OnSave(wxCommandEvent &event)
 {
     MyPanel *panel = wxDynamicCast(notebook->GetCurrentPage(),MyPanel);
-    panel->Save();
+    wxString fullPath;
+    fullPath.Printf("%s/%s",panel->GetDirectory(),panel->GetName());
+    if(wxFileName::Exists(fullPath))
+    {
+        panel->Save();
+    }
+    else
+    {
+        OnSaveAs(event);
+    }
 }
 
 void MyFrame::OnOpen(wxCommandEvent &event)
@@ -112,7 +142,7 @@ void MyFrame::OnSaveAs(wxCommandEvent &event)
     wxString default_dir = wxT("/home/");
     wxString wildcard = wxEmptyString;
 
-    wxFileDialog dialog(this,wxT("NoteCode Open"),default_dir,wxEmptyString,wildcard,wxFD_SAVE);
+    wxFileDialog dialog(this,wxT("NoteCode Save As"),default_dir,wxEmptyString,wildcard,wxFD_SAVE);
 
     wxString directory;
     wxString name;
@@ -120,13 +150,14 @@ void MyFrame::OnSaveAs(wxCommandEvent &event)
     {
         directory = dialog.GetDirectory();
         name = dialog.GetFilename();
-    }
-    MyPanel *panel = wxDynamicCast(notebook->GetCurrentPage(),MyPanel);
-    panel->SetDirectory(directory);
-    panel->SetName(name);
-    panel->Save();
+        MyPanel *panel = wxDynamicCast(notebook->GetCurrentPage(),MyPanel);
+        panel->SetDirectory(directory);
+        panel->SetName(name);
+        panel->Save();
 
-    notebook->SetPageText(notebook->GetSelection(),name);
+        notebook->SetPageText(notebook->GetSelection(),name);
+    }
+
 }
 
 void MyFrame::OnEdit(wxCommandEvent &event)

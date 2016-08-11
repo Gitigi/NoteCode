@@ -1,7 +1,12 @@
 #include "../language.h"
 #include "../def.h"
+#include "../edit.h"
 #include <wx/stc/stc.h>
 #include <wx/log.h>
+
+#include <iostream>
+using std::cerr;
+using std::endl;
 
 
 static const char* CppWordlist1 =
@@ -64,7 +69,7 @@ static lang_style cpp_styles[] = {
 };
 
 
-LanguageCpp::LanguageCpp(wxStyledTextCtrl *sct)
+LanguageCpp::LanguageCpp(Edit *sct)
 :Language(sct)
 {
 
@@ -120,6 +125,7 @@ void LanguageCpp::InitializeSCT()
 
 void LanguageCpp::OnCharAdded(wxStyledTextEvent &event)
 {
+    AutoCompBraces();
     StyleBraces();
 }
 
@@ -131,4 +137,22 @@ void LanguageCpp::OnCursorPositionChange()
 void LanguageCpp::OnKeyDown(wxKeyEvent &event)
 {
 
+}
+
+void LanguageCpp::OnNewLine(wxStyledTextEvent &event)
+{
+    char charBeforeNew = m_sct->GetCharAt(m_sct->GetCurrentPos()-2);
+    int currentLine = m_sct->GetCurrentLine();
+    if(charBeforeNew == ':')
+    {
+        int indentation = m_sct->GetLineIndentation(currentLine-1);
+        m_sct->SetLineIndentation(currentLine-1,indentation-m_sct->GetTabWidth());
+        m_sct->SetLineIndentation(currentLine,indentation == 0 ? m_sct->GetTabWidth() : indentation);
+        m_sct->GotoPos(m_sct->GetLineEndPosition(currentLine));
+    }
+    else
+    {
+        AutoIndent(currentLine);
+    }
+    AlignBraceAfterEnter();
 }

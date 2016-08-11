@@ -7,6 +7,7 @@
 #include <wx/aui/auibook.h>
 #include <wx/dnd.h>
 #include <wx/filename.h>
+#include <wx/stc/stc.h>
 
 #include "def.h"
 
@@ -24,6 +25,7 @@ public:
     void OnEdit(wxCommandEvent &event);
     void OnHighlightLang(wxCommandEvent &event);
     void OnPreference(wxCommandEvent &event);
+    void OnSavePointReachLeave(wxStyledTextEvent &event);
 private:
     void CreateImageList();
     int DetermineFile(const wxString &extension = wxEmptyString);

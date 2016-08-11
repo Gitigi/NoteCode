@@ -14,7 +14,7 @@
 				<Option projectLinkerOptionsRelation="2" />
 				<Compiler>
 					<Add option="-O2" />
-					<Add option="-std=c++11" />
+					<Add option="-std=c++14" />
 					<Add option="`wx-config  --version=3.0 --static=no --unicode=yes --debug=no --cflags`" />
 				</Compiler>
 				<Linker>
@@ -49,6 +49,7 @@
 		<Unit filename="languages/languagePhp.cpp" />
 		<Unit filename="languages/languagePython.cpp" />
 		<Unit filename="languages/languageXml.cpp" />
+		<Unit filename="languages/parser/cssParser.hpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="panel.cpp" />
 		<Unit filename="panel.h" />

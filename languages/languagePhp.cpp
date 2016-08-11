@@ -1,5 +1,6 @@
 #include "../def.h"
 #include "../language.h"
+#include "../edit.h"
 
 //static lang_style php_styles[] =
 //{
@@ -50,7 +51,7 @@ static lang_style php_styles[] = {
     {TERMINATE_TYPE},
 };
 
-LanguagePhp::LanguagePhp(wxStyledTextCtrl *sct)
+LanguagePhp::LanguagePhp(Edit *sct)
 :Language(sct)
 {
 

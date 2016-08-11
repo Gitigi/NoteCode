@@ -220,6 +220,7 @@ public:
     void InsertWord(const wxString &word,const wordInfo &info);
     void InsertWords(const wxString &words,const char delimeter);
     void GenerateList(const wxString &word,wxString &word_list);
+    void GenerateList(const wxString &word,std::vector<wxString> &word_list);
     void InsertWordsFromJsonFile(const wxString &fileName);
     const std::map<wxString,wordInfo> &GetMap(){return root;}
 private:

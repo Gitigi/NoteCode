@@ -1,5 +1,6 @@
 #include "../def.h"
 #include "../language.h"
+#include "../edit.h"
 
 static lang_style xml_styles[] =
 {
@@ -27,7 +28,7 @@ static lang_style xml_styles[] =
     {TERMINATE_TYPE},
 };
 
-LanguageXml::LanguageXml(wxStyledTextCtrl *sct)
+LanguageXml::LanguageXml(Edit *sct)
 :Language(sct)
 {
 

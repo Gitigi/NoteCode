@@ -1,5 +1,6 @@
 #include "../def.h"
 #include "../language.h"
+#include "../edit.h"
 
 static lang_style css_styles[] = {
     {mySTC_TYPE_DEFAULT},       //Default
@@ -30,7 +31,7 @@ static lang_style css_styles[] = {
     {TERMINATE_TYPE},
     };
 
-LanguageCss::LanguageCss(wxStyledTextCtrl *sct)
+LanguageCss::LanguageCss(Edit *sct)
 :Language(sct)
 {
 

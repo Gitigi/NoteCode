@@ -5,8 +5,13 @@
 #include <wx/log.h>
 #include "../edit.h"
 
+#include <iostream>
+using std::cerr;
+using std::endl;
+
 //Default Language
-Language::Language(wxStyledTextCtrl *sct)
+Language::Language(Edit *sct)
+:dirty(false),insertionOccured(false)
 {
     m_sct = sct;
 
@@ -29,7 +34,6 @@ Language::Language(wxStyledTextCtrl *sct)
 
     m_sct->StyleSetForeground(wxSTC_STYLE_BRACEBAD,*wxRED);
     m_sct->StyleSetForeground(wxSTC_STYLE_BRACELIGHT,*wxBLUE);
-
 }
 void Language::InitializeSCT()
 {
@@ -38,7 +42,15 @@ void Language::InitializeSCT()
 
 void Language::OnCharAdded(wxStyledTextEvent &event)
 {
+    AutoCompBraces();
     StyleBraces();
+
+    if(m_sct->GetCharAt(m_sct->GetCurrentPos()-1)=='\n')
+    {
+        EvaluateDirty();
+        wxString text = m_sct->GetLine(m_sct->GetCurrentLine()-1);
+        cerr<<"Executed Text: "<<text.BeforeFirst('\n')<<endl;
+    }
 }
 
 void Language::OnKeyDown(wxKeyEvent &event)
@@ -49,6 +61,272 @@ void Language::OnKeyDown(wxKeyEvent &event)
 void Language::OnCursorPositionChange()
 {
     StyleBraces();
+    EvaluateDirty();
+}
+
+void Language::OnNewLine(wxStyledTextEvent &event)
+{
+    AutoIndent(m_sct->GetCurrentLine());
+    AlignBraceAfterEnter();
+}
+
+void Language::AutoIndent(int line)
+{
+    int indentation = m_sct->GetLineIndentation(line-1);
+    m_sct->SetLineIndentation(line,indentation);
+    m_sct->GotoPos(FirstCharAtLinePos(line));
+}
+
+void Language::OnModification(wxStyledTextEvent &event)
+{
+    switch(event.GetModificationType())
+    {
+    case 1040:  //About to insert Text
+        break;
+    case 8209:  //New insertion Point
+        {
+            wxString lineContent = m_sct->GetLine(m_sct->GetCurrentLine());
+            if((lineContent.Length() - event.GetLength()) != 0)
+            {
+                if(!dirty)
+                {
+                    dirty = true;
+                    dirtyType = 1;
+                    dirtyStartPos = event.GetPosition();
+                    dirtyEndPos = dirtyStartPos+event.GetLength()-1;
+                }
+                else if(dirty == true && dirtyType == 0)
+                {
+                    if(insertionOccured)
+                    {
+                        insertionEnd = event.GetPosition();
+                    }
+                    else
+                    {
+                        insertionOccured = true;
+                        insertionStart = event.GetPosition();
+                        insertionEnd = insertionStart+ event.GetLength()-1;
+                    }
+                }
+                else if(dirty && dirtyType == 1)
+                {
+                    EvaluateDirty();
+                    dirty = true;
+                    dirtyType = 1;
+                    dirtyStartPos = event.GetPosition();
+                    dirtyEndPos = dirtyStartPos;
+                }
+
+            }
+            break;
+        }
+    case 17:    //Continued text insertion
+        {
+            if(dirty && dirtyType == 1)
+            {
+                dirtyEndPos = event.GetPosition();
+            }
+            else if(dirty && dirtyType == 0)
+            {
+                insertionEnd = event.GetPosition();
+            }
+            break;
+        }
+    case 2064:  //About to delete Text
+        break;
+    case 8210:  //New text delete
+        {
+            if(!dirty)
+            {
+                dirty = true;
+                dirtyType = 0;
+                dirtyStartPos = event.GetPosition();
+                dirtyEndPos = dirtyStartPos;
+                m_text.insert(0,event.GetText());
+            }
+            else if(dirty == true && dirtyType == 1)
+            {
+                dirtyEndPos-=1;
+                if(dirtyEndPos < dirtyStartPos)
+                {
+                    dirty = false;
+                }
+            }
+            else if(dirty && dirtyType == 0)
+            {
+                EvaluateDirty();
+                dirty = true;
+                dirtyType = 0;
+                dirtyStartPos = event.GetPosition();
+                dirtyEndPos = dirtyStartPos;
+                m_text.insert(0,event.GetText());
+            }
+            break;
+        }
+    case 18:    //Continued text delete
+        {
+            if(dirty && dirtyType == 0)
+            {
+                if(!insertionOccured)
+                {
+                    m_text.insert(0,event.GetText());
+                    dirtyEndPos = event.GetPosition();
+                }
+                else
+                {
+                    insertionEnd-=1;
+                    if(insertionEnd < insertionStart)
+                    {
+                        insertionOccured = false;
+                    }
+                }
+            }
+            else if(dirty && dirtyType == 1)
+            {
+                dirtyEndPos-=1;
+                if(dirtyEndPos < dirtyStartPos)
+                {
+                    dirty = false;
+                }
+            }
+            break;
+        }
+    default:
+        cerr<<event.GetModificationType()<<endl;
+    }
+}
+
+void Language::EvaluateDirty()
+{
+    if(dirty==true)
+    {
+        if(dirtyType == 1)
+        {
+            int line = m_sct->LineFromPosition(dirtyStartPos);
+            int textStart = m_sct->PositionFromLine(line);
+            wxString text;
+            text = m_sct->GetTextRange(textStart,dirtyStartPos);
+            text.Append(m_sct->GetTextRange(dirtyEndPos+1,m_sct->GetLineEndPosition(m_sct->LineFromPosition(dirtyEndPos))));
+            cerr<<"Previous Line = "<<text.BeforeFirst('\n')<<endl;
+            cerr<<"Current Line = "<<m_sct->GetLine(line).BeforeFirst('\n')<<endl;
+        }
+        else
+        {
+            int line = m_sct->LineFromPosition(dirtyEndPos);
+            wxString text = m_sct->GetTextRange(m_sct->PositionFromLine(line),dirtyEndPos);
+            text.Append(m_text);
+            if(insertionOccured)
+            {
+                dirtyEndPos=insertionEnd+1;
+            }
+            text.Append(m_sct->GetTextRange(dirtyEndPos,m_sct->GetLineEndPosition(line)));
+            cerr<<"Previous line = "<<text.BeforeFirst('\n')<<endl;
+            cerr<<"Current line = "<<m_sct->GetLine(line).BeforeFirst('\n')<<endl;
+        }
+        dirty = false;
+        insertionOccured = false;
+        m_text.Clear();
+    }
+}
+
+void Language::AutoCompBraces()
+{
+    enum {OPENING_BRACE,CLOSING_BRACE};
+
+    static wxString openingBraces("([{");
+    static wxString closingBraces(")]}");
+    static wxString braces=openingBraces + closingBraces;
+
+    static auto GetComplementBrace= [](const char brace,int type){
+        if(type == OPENING_BRACE)
+        {
+            return closingBraces[openingBraces.Find(brace)];
+        }
+        else
+        {
+            return openingBraces[closingBraces.Find(brace)];
+        }
+    };
+
+    int currentPos = m_sct->GetCurrentPos();
+    char enteredBrace=m_sct->GetCharAt(currentPos-1);
+
+    if(openingBraces.Contains(enteredBrace))
+    {
+        m_sct->InsertText(m_sct->GetCurrentPos(),
+                              wxString::Format("%c",GetComplementBrace(enteredBrace,OPENING_BRACE)));
+    }
+    else if(closingBraces.Contains(enteredBrace))
+    {
+        if(m_sct->GetCharAt(currentPos) == enteredBrace)
+        {
+            m_sct->DeleteRange(currentPos,1);
+        }
+        else
+        {
+            int oppositeBrace = BraceMatch(currentPos-1);
+            if(oppositeBrace != -1)
+            {
+                int indentation = m_sct->GetLineIndentation(m_sct->LineFromPosition(oppositeBrace));
+                m_sct->SetLineIndentation(m_sct->LineFromPosition(currentPos),indentation);
+            }
+        }
+    }
+}
+
+char Language::FirstChatAtLine(int line)
+{
+    int pos = m_sct->PositionFromLine(line);
+    int lineEnd = m_sct->GetLineEndPosition(line);
+    char character=0;
+    while(pos < lineEnd)
+    {
+        character = m_sct->GetCharAt(pos);
+        if(isprint(character))
+            break;
+        pos++;
+    }
+    return character;
+}
+
+int Language::FirstCharAtLinePos(int line)
+{
+    int pos = m_sct->PositionFromLine(line);
+    int lineEnd = m_sct->GetLineEndPosition(line);
+    char character=0;
+    while(pos < lineEnd)
+    {
+        character = m_sct->GetCharAt(pos);
+        if(isprint(character))
+            break;
+        pos++;
+    }
+
+    return pos;
+}
+
+//only call after \n is entered
+void Language::AlignBraceAfterEnter()
+{
+    int currentPos = m_sct->GetCurrentPos();
+    int currentLine = m_sct->GetCurrentLine();
+    char enteredChar = m_sct->GetCharAt(currentPos);
+
+    int correspondingBrace;
+    int correspondingBraceLine;
+    if(enteredChar == '}')
+    {
+        correspondingBrace = m_sct->BraceMatch(currentPos);
+        correspondingBraceLine = m_sct->LineFromPosition(correspondingBrace);
+        if(correspondingBrace != -1)
+        {
+            m_sct->InsertText(currentPos,"\n");
+            int newIndentation = m_sct->GetLineIndentation(correspondingBraceLine);
+            m_sct->SetLineIndentation(currentLine,newIndentation+m_sct->GetTabWidth());
+            m_sct->SetLineIndentation(currentLine+1,newIndentation);
+            m_sct->GotoPos(m_sct->GetLineEndPosition(currentLine));
+        }
+    }
 }
 
 void Language::StyleBraces()
@@ -65,10 +343,10 @@ void Language::StyleBraces()
 
     if(braces.find(character) != wxString::npos)
     {
-        nextBracket = m_sct->BraceMatch(currentPos);
-
+        nextBracket = BraceMatch(currentPos);
+        //nextBracket = m_sct->BraceMatch(currentPos);
         //MyBraceMatch is used to fill in for the short coming of the brace Match
-        if(nextBracket == -1){nextBracket = MyBraceMatch(currentPos);}
+        //if(nextBracket == -1){nextBracket = MyBraceMatch(currentPos);}
         if(nextBracket == -1)
         {
             m_sct->BraceBadLight(currentPos);
@@ -93,6 +371,12 @@ void Language::StyleBraces()
             m_sct->BraceBadLight(-1);
     }
 
+}
+
+int Language::BraceMatch(int pos)
+{
+    m_sct->Colourise(pos < 0?0:pos,pos+2);
+    return m_sct->BraceMatch(pos);
 }
 
 int Language::MyBraceMatch(int pos)
@@ -171,36 +455,30 @@ int Language::MyBraceMatch(int pos)
     return -1;
 }
 
-void Language::OnNewLine(wxStyledTextEvent &event)
-{
-    int currentLine = m_sct->GetCurrentLine();
-    int indentation = m_sct->GetLineIndentation(currentLine-1);
-    m_sct->SetLineIndentation(currentLine,indentation);
-    m_sct->GotoPos(m_sct->GetLineEndPosition(currentLine));
-}
-
 void Language::GetWordBeforeCursor(wxString &destination)
 {
-    int position = m_sct->GetCurrentPos()-1;
-    while(true)
+    int index = m_sct->GetCurrentPos()-1;
+    while(index >= 0)
     {
-        if(position < 0)
-            break;
-        else if(isspace(m_sct->GetCharAt(position))||ispunct(m_sct->GetCharAt(position)))
+        char character = m_sct->GetCharAt(index);
+        if(isalnum(character)||character=='_')
         {
-            position += 1;
-            break;
+            destination.insert(0,(wxUniChar)m_sct->GetCharAt(index));
+            index--;
         }
         else
         {
-            if(position == 0)
-                break;
-            position--;
+            break;
         }
     }
+}
 
-    for(int i=position; i < m_sct->GetCurrentPos(); i++)
-    {
-        destination.Append((char)m_sct->GetCharAt(i));
-    }
+int Language::SearchPrev(const wxString &pin)
+{
+    int currentPos = m_sct->GetCurrentPos();
+    m_sct->GotoPos(currentPos - 1);
+    m_sct->SearchAnchor();
+    int pos = m_sct->SearchPrev(wxSTC_FIND_WORDSTART,pin);
+    m_sct->GotoPos(currentPos);
+    return pos;
 }

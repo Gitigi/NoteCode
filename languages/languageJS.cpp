@@ -1,5 +1,6 @@
 #include "../def.h"
 #include "../language.h"
+#include "../edit.h"
 
 static const char *JsWordlist1 =
     "var class function document ";
@@ -40,7 +41,7 @@ static lang_style js_styles[] = {
 };
 
 
-LanguageJS::LanguageJS(wxStyledTextCtrl *sct)
+LanguageJS::LanguageJS(Edit *sct)
 :Language(sct)
 {
 
@@ -95,10 +96,29 @@ void LanguageJS::InitializeSCT()
 
 void LanguageJS::OnCharAdded(wxStyledTextEvent &event)
 {
-    Language::OnCharAdded(event);
+    Language::AutoCompBraces();
+    Language::StyleBraces();
 }
 
 void LanguageJS::OnKeyDown(wxKeyEvent &event)
 {
 
+}
+
+void LanguageJS::OnNewLine(wxStyledTextEvent &event)
+{
+    char charBeforeNew = m_sct->GetCharAt(m_sct->GetCurrentPos()-2);
+    int currentLine = m_sct->GetCurrentLine();
+    if(charBeforeNew == ':')
+    {
+        int indentation = m_sct->GetLineIndentation(currentLine-1);
+        m_sct->SetLineIndentation(currentLine-1,indentation-m_sct->GetTabWidth());
+        m_sct->SetLineIndentation(currentLine,indentation == 0 ? m_sct->GetTabWidth() : indentation);
+        m_sct->GotoPos(m_sct->GetLineEndPosition(currentLine));
+    }
+    else
+    {
+        AutoIndent(currentLine);
+    }
+    AlignBraceAfterEnter();
 }

@@ -1,5 +1,6 @@
 #include "../language.h"
 #include "../def.h"
+#include "../edit.h"
 #include <wx/log.h>
 
 // Python
@@ -47,7 +48,7 @@ static lang_style python_styles[] =
 };
 
 
-LanguagePython::LanguagePython(wxStyledTextCtrl *sct)
+LanguagePython::LanguagePython(Edit *sct)
 :Language(sct)
 {
 
@@ -111,6 +112,8 @@ void LanguagePython::OnKeyDown(wxKeyEvent &event)
 
 void LanguagePython::OnNewLine(wxStyledTextEvent &event)
 {
+    Language::OnNewLine(event);
+
     wxString prevLine = m_sct->GetLine(m_sct->GetCurrentLine()-1);
     if(prevLine.EndsWith(wxT(":\n")))
     {

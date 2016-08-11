@@ -5,6 +5,12 @@
 #include <wx/filename.h>
 #include <wx/log.h>
 #include <wx/image.h>
+#include <wx/filesys.h>
+#include <wx/fs_zip.h>
+#include <wx/fs_inet.h>
+#include <wx/fs_arc.h>
+#include <wx/fs_mem.h>
+#include <wx/fs_filter.h>
 
 
 #include "frame.h"
@@ -39,6 +45,13 @@ IMPLEMENT_APP(MyApp);
 bool MyApp::OnInit()
 {
     wxInitAllImageHandlers();
+
+    wxFileSystem::AddHandler(new wxArchiveFSHandler());
+    wxFileSystem::AddHandler(new wxFilterFSHandler());
+    wxFileSystem::AddHandler(new wxInternetFSHandler());
+    wxFileSystem::AddHandler(new wxMemoryFSHandler());
+    wxFileSystem::AddHandler(new wxZipFSHandler());
+
     wxString name = wxT("Unammed");
     wxString directory = wxEmptyString;
 
