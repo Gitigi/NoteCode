@@ -18,6 +18,7 @@ using namespace rapidjson;
 StyleInfo Styles[LAST_STYLE_ELEMENT];
 int StylesLength = sizeof(Styles)/sizeof(Styles[0]);
 const int StylesNumber = WXSIZEOF(Styles);
+bool lineHighlightPref = true;
 
 std::map<wxString,AutoCompList> allAutoComplete;
 
@@ -317,3 +318,4 @@ void AutoCompList::InsertWordsFromJsonFile(const wxString &fileName)
         InsertWord(itr->name.GetString(),info);
     }
 }
+

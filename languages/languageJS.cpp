@@ -1,6 +1,9 @@
 #include "../def.h"
 #include "../language.h"
 #include "../edit.h"
+#include <iostream>
+using std::cerr;
+using std::endl;
 
 static const char *JsWordlist1 =
     "var class function document ";
@@ -97,7 +100,7 @@ void LanguageJS::InitializeSCT()
 void LanguageJS::OnCharAdded(wxStyledTextEvent &event)
 {
     Language::AutoCompBraces();
-    Language::StyleBraces();
+    //Language::StyleBraces();
 }
 
 void LanguageJS::OnKeyDown(wxKeyEvent &event)
@@ -107,6 +110,9 @@ void LanguageJS::OnKeyDown(wxKeyEvent &event)
 
 void LanguageJS::OnNewLine(wxStyledTextEvent &event)
 {
+    cerr<<"Open brace pos = "<<GetOpenBrace(m_sct->GetCurrentPos()-1,'{')<<endl;
+    cerr<<"Open brace line = "<<m_sct->LineFromPosition(GetOpenBrace(m_sct->GetCurrentPos()-1,'{'))<<endl;
+
     char charBeforeNew = m_sct->GetCharAt(m_sct->GetCurrentPos()-2);
     int currentLine = m_sct->GetCurrentLine();
     if(charBeforeNew == ':')
@@ -118,7 +124,7 @@ void LanguageJS::OnNewLine(wxStyledTextEvent &event)
     }
     else
     {
-        AutoIndent(currentLine);
+        AutoIndentWithBrace(currentLine);
     }
     AlignBraceAfterEnter();
 }

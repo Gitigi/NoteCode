@@ -13,6 +13,7 @@
 #include "def.h"
 #include "dialog.h"
 #include "CustomTabArt.h"
+
 #include <iostream>
 using  std::cerr;
 using  std::endl;
@@ -31,6 +32,7 @@ BEGIN_EVENT_TABLE(MyFrame,wxFrame)
     EVT_MENU(wxID_PASTE,MyFrame::OnEdit)
     EVT_MENU(wxID_DELETE,MyFrame::OnEdit)
     EVT_MENU(wxID_SELECTALL,MyFrame::OnEdit)
+    EVT_MENU(myID_LINEHIGHLIGHT,MyFrame::OnLineHighlight)
 
     EVT_MENU_RANGE(myID_HIGLIGHTLANGFIRST,myID_HIGLIGHTLANGLAST,
                    MyFrame::OnHighlightLang)
@@ -43,6 +45,7 @@ END_EVENT_TABLE()
 MyFrame::MyFrame(const wxString &title,const wxString &name,const wxString &directory)
 :wxFrame(NULL,wxID_ANY,title,wxDefaultPosition,wxSize(780,500))
 {
+
     SetDropTarget(new MyFileDropTarget(this));
 
     m_menuBar = new wxMenuBar();
@@ -82,7 +85,7 @@ void MyFrame::OnSavePointReachLeave(wxStyledTextEvent &event)
     }
     else //save point left
     {
-        notebook->SetPageText(pageIndex,"*"+pageTitle);
+        notebook->SetPageText(pageIndex,"*"+pageTitle.AfterLast('*'));
     }
 }
 
@@ -170,7 +173,16 @@ void MyFrame::OnHighlightLang(wxCommandEvent &event)
 {
     MyPanel *panel = wxDynamicCast(notebook->GetCurrentPage(),MyPanel);
     panel->text_area->SetLanguage(event.GetId() - myID_HIGLIGHTLANGFIRST);
-    //panel->text_area->SetLanguage(FILE_CPLUS);
+}
+
+void MyFrame::OnLineHighlight(wxCommandEvent &event)
+{
+    //changes a global value
+    lineHighlightPref = event.IsChecked();
+
+    MyPanel *panel = wxDynamicCast(notebook->GetCurrentPage(),MyPanel);
+    panel->text_area->HighlightCurrentLine();
+
 }
 
 void MyFrame::OnPreference(wxCommandEvent &event)
@@ -216,6 +228,9 @@ void MyFrame::CreateMenu()
                               files_supported[i].name);
     }
     menuView->Append(myID_HIGLIGHTLANG,wxT("Highlight Language"),HighlightLang);
+
+    menuView->Append(myID_LINEHIGHLIGHT,wxT("Line Highlight"),"enable or disable lihe highlighting",true);
+    menuView->Check(myID_LINEHIGHLIGHT,lineHighlightPref);
 
     // construct menubar
     m_menuBar->Append (menuFile, _("&File"));

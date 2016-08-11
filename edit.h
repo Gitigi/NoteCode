@@ -39,14 +39,14 @@ public:
 
     void SetLanguage(int file_type);
     void RefreshStyle();
-    void UpdateLine();
+    void HighlightCurrentLine();
     wxString filePath;
+    bool hightlightLine;
 private:
     Language *lang;
     int m_LineNrID;
     int m_FoldingID;
     int m_DividerID;
-    bool hightlightLine;
     int lineMarkerHandle;
     DECLARE_EVENT_TABLE();
 

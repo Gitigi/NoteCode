@@ -4,10 +4,13 @@
 #include <wx/chartype.h>
 #include <wx/log.h>
 #include "../edit.h"
+#include <math.h>
 
 #include <iostream>
 using std::cerr;
 using std::endl;
+
+#define MAX(first,second,ans) {if(second > first) ans=second;else ans=first;}
 
 //Default Language
 Language::Language(Edit *sct)
@@ -40,10 +43,15 @@ void Language::InitializeSCT()
     m_sct->SetLexer(wxSTC_LEX_NULL);
 }
 
+void Language::OnLoad()
+{
+    m_sct->Colourise(0,-1);
+}
+
 void Language::OnCharAdded(wxStyledTextEvent &event)
 {
     AutoCompBraces();
-    StyleBraces();
+    //StyleBraces();
 
     if(m_sct->GetCharAt(m_sct->GetCurrentPos()-1)=='\n')
     {
@@ -60,7 +68,7 @@ void Language::OnKeyDown(wxKeyEvent &event)
 
 void Language::OnCursorPositionChange()
 {
-    StyleBraces();
+    //StyleBraces();
     EvaluateDirty();
 }
 
@@ -74,7 +82,78 @@ void Language::AutoIndent(int line)
 {
     int indentation = m_sct->GetLineIndentation(line-1);
     m_sct->SetLineIndentation(line,indentation);
-    m_sct->GotoPos(FirstCharAtLinePos(line));
+    int posReturn = FirstCharAtLinePos(line);
+    m_sct->GotoPos(posReturn);
+}
+
+void Language::AutoIndentWithBrace(int line)
+{
+    int pos = m_sct->PositionFromLine(line);
+    int openCBracket = GetOpenBrace(pos,'{');
+    int openRBracket = GetOpenBrace(pos,'[');
+    int openBracket =GetOpenBrace(pos,'(');
+
+    int bracket;
+    //set bracket to the maximum value of the three brackets
+    MAX(openCBracket,openRBracket,bracket);
+    MAX(bracket,openBracket,bracket);
+    cerr<<"bracket = "<<bracket<<endl;
+    if(bracket == -1)
+    {
+        int prevLine = line - 1;
+        int indentation = 0;
+        int openBracketPos = GetOpenBrace(m_sct->PositionFromLine(line-1),'(');
+        int openRBracketPos = GetOpenBrace(m_sct->PositionFromLine(line-1),'[');
+        int openBracePos;
+        // change the posititon of prevLine to a line that does start in '(' and ']' bracket
+        //and also set the indentation to indentation of prevLine;
+        while(true)
+        {
+            cerr<<"openBracketPos = "<<openBracketPos<<" openRBracketPos = "<<openRBracketPos<<endl;
+            MAX(openBracketPos,openRBracketPos,openBracePos);
+            if(openBracePos == -1)
+            {
+                indentation = m_sct->GetLineIndentation(prevLine);
+                break;
+            }
+            else if(openBracketPos != -1)
+                prevLine = m_sct->LineFromPosition(openBracketPos);
+            else if(openRBracketPos != -1)
+                prevLine = m_sct->LineFromPosition(openRBracketPos);
+
+            openBracketPos = GetOpenBrace(openBracePos-1,'(');
+            openRBracketPos = GetOpenBrace(openRBracketPos-1,'[');
+
+        }
+        m_sct->SetLineIndentation(line,indentation);
+        m_sct->GotoPos(FirstCharAtLinePos(line));
+    }
+    else if(bracket == openCBracket)
+    {
+        int indentation = m_sct->GetLineIndentation(m_sct->LineFromPosition(openCBracket));
+        m_sct->SetLineIndentation(line,indentation+m_sct->GetTabWidth());
+        m_sct->GotoPos(FirstCharAtLinePos(line));
+    }
+    else if(bracket == openBracket)
+    {
+        int bracketLine = m_sct->LineFromPosition(openBracket);
+        int indentation = m_sct->GetLineIndentation(bracketLine);
+        indentation = indentation + (openBracket - FirstCharAtLinePos(bracketLine));
+        m_sct->SetLineIndentation(line,indentation);
+        m_sct->GotoPos(FirstCharAtLinePos(line));
+    }
+    else if(bracket == openRBracket)
+    {
+        int bracketLine = m_sct->LineFromPosition(openRBracket);
+        int indentation = m_sct->GetLineIndentation(bracketLine);
+        indentation = indentation + (openRBracket - FirstCharAtLinePos(bracketLine));
+        m_sct->SetLineIndentation(line,indentation);
+        m_sct->GotoPos(FirstCharAtLinePos(line));
+    }
+    else
+    {
+        cerr<<"bracket unknown = "<<bracket<<endl;
+    }
 }
 
 void Language::OnModification(wxStyledTextEvent &event)
@@ -229,32 +308,41 @@ void Language::EvaluateDirty()
     }
 }
 
+char Language::GetBraceComplement(char brace)
+{
+    static wxString openingBraces("([{<");
+    static wxString closingBraces(")]}>");
+
+    if(openingBraces.Contains(wxString::Format("%c",brace)))
+    {
+        return closingBraces[openingBraces.find(brace)];
+    }
+    else if(closingBraces.Contains(wxString::Format("%c",brace)))
+    {
+        return openingBraces[closingBraces.find(brace)];
+    }
+    else
+        return 0;
+}
+
 void Language::AutoCompBraces()
 {
     enum {OPENING_BRACE,CLOSING_BRACE};
 
     static wxString openingBraces("([{");
     static wxString closingBraces(")]}");
-    static wxString braces=openingBraces + closingBraces;
 
-    static auto GetComplementBrace= [](const char brace,int type){
-        if(type == OPENING_BRACE)
-        {
-            return closingBraces[openingBraces.Find(brace)];
-        }
-        else
-        {
-            return openingBraces[closingBraces.Find(brace)];
-        }
-    };
 
     int currentPos = m_sct->GetCurrentPos();
     char enteredBrace=m_sct->GetCharAt(currentPos-1);
 
     if(openingBraces.Contains(enteredBrace))
     {
-        m_sct->InsertText(m_sct->GetCurrentPos(),
-                              wxString::Format("%c",GetComplementBrace(enteredBrace,OPENING_BRACE)));
+        if(isspace(m_sct->GetCharAt(currentPos)) || m_sct->GetCharAt(currentPos)==0)
+        {
+            m_sct->InsertText(m_sct->GetCurrentPos(),
+                              wxString::Format("%c",GetBraceComplement(enteredBrace)));
+        }
     }
     else if(closingBraces.Contains(enteredBrace))
     {
@@ -264,11 +352,33 @@ void Language::AutoCompBraces()
         }
         else
         {
-            int oppositeBrace = BraceMatch(currentPos-1);
+            int oppositeBrace = GetOpenBrace(currentPos-1,'{');
             if(oppositeBrace != -1)
             {
                 int indentation = m_sct->GetLineIndentation(m_sct->LineFromPosition(oppositeBrace));
                 m_sct->SetLineIndentation(m_sct->LineFromPosition(currentPos),indentation);
+            }
+            else
+            {
+                oppositeBrace = GetOpenBrace(currentPos-1,'(');
+                if(oppositeBrace != -1)
+                {
+                    int oppositeBraceLine = m_sct->LineFromPosition(oppositeBrace);
+                    int indentation = m_sct->GetLineIndentation(oppositeBraceLine);
+                    indentation = indentation + (oppositeBrace - FirstCharAtLinePos(oppositeBraceLine));
+                    m_sct->SetLineIndentation(m_sct->LineFromPosition(currentPos),indentation);
+                }
+                else
+                {
+                    oppositeBrace = GetOpenBrace(currentPos-1,'[');
+                    if(oppositeBrace != -1)
+                    {
+                        int oppositeBraceLine = m_sct->LineFromPosition(oppositeBrace);
+                        int indentation = m_sct->GetLineIndentation(oppositeBraceLine);
+                        indentation = indentation + (oppositeBrace - FirstCharAtLinePos(oppositeBraceLine));
+                        m_sct->SetLineIndentation(m_sct->LineFromPosition(currentPos),indentation);
+                    }
+                }
             }
         }
     }
@@ -297,7 +407,7 @@ int Language::FirstCharAtLinePos(int line)
     while(pos < lineEnd)
     {
         character = m_sct->GetCharAt(pos);
-        if(isprint(character))
+        if(isgraph(character))
             break;
         pos++;
     }
@@ -375,8 +485,25 @@ void Language::StyleBraces()
 
 int Language::BraceMatch(int pos)
 {
+    if(m_sct->GetCharAt(pos-1)!='"'&& m_sct->GetCharAt(pos-1)!='\'')
     m_sct->Colourise(pos < 0?0:pos,pos+2);
     return m_sct->BraceMatch(pos);
+}
+
+//only use with opening braces i.e ({[<
+int Language::GetOpenBrace(int pos,char brace)
+{
+    if(pos < 0)
+        return -1;
+    wxString braceStr;
+    braceStr.Printf("%c",brace);
+    wxString braceComplement;
+    braceComplement.Printf("%c",GetBraceComplement(brace));
+
+    m_sct->InsertText(pos,braceComplement);
+    int braceCompComp = BraceMatch(pos);
+    m_sct->DeleteRange(pos,1);
+    return braceCompComp;
 }
 
 int Language::MyBraceMatch(int pos)

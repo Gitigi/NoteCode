@@ -139,7 +139,7 @@ void LanguageJava::OnNewLine(wxStyledTextEvent &event)
     }
     else
     {
-        AutoIndent(currentLine);
+        AutoIndentWithBrace(currentLine);
     }
     AlignBraceAfterEnter();
 }

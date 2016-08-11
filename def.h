@@ -126,6 +126,7 @@ enum MYID
     myID_HIGLIGHTLANGLAST = myID_HIGLIGHTLANGFIRST+ FILE_TOTOAL,
     myID_DWELLSTART,
     myID_DWELLEND,
+    myID_LINEHIGHLIGHT,
     ID_DEFAULT = wxID_HIGHEST,
     ID_LAST_STYLE_ELEMENT = (ID_DEFAULT+LAST_STYLE_ELEMENT)*2,
 };
@@ -236,5 +237,6 @@ extern StyleInfo Styles[];
 extern int InitStyles();
 extern int SaveStylesToJsonFile();
 extern int StylesLength;
+extern bool lineHighlightPref;
 
 #endif // DEF_H_INCLUDED

@@ -24,6 +24,7 @@ public:
     void OnSaveAs(wxCommandEvent &event);
     void OnEdit(wxCommandEvent &event);
     void OnHighlightLang(wxCommandEvent &event);
+    void OnLineHighlight(wxCommandEvent &event);
     void OnPreference(wxCommandEvent &event);
     void OnSavePointReachLeave(wxStyledTextEvent &event);
 private:

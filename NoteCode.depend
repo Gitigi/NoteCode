@@ -2105,7 +2105,7 @@
 
 1458119651 /usr/include/wx-3.0/wx/generic/logg.h
 
-1470209765 source:/home/stephen/Documents/C++/NoteCode/def.cpp
+1470891675 source:/home/stephen/Documents/C++/NoteCode/def.cpp
 	"def.h"
 	<wx/log.h>
 	<wx/string.h>
@@ -2119,7 +2119,7 @@
 	"rapidjson/writer.h"
 	<cstdio>
 
-1470209765 /home/stephen/Documents/C++/NoteCode/def.h
+1470890167 /home/stephen/Documents/C++/NoteCode/def.h
 	<wx/string.h>
 	<wx/fswatcher.h>
 	<map>
@@ -2128,7 +2128,7 @@
 	<wx/string.h>
 	"rapidjson/document.h"
 
-1470852764 source:/home/stephen/Documents/C++/NoteCode/edit.cpp
+1470921133 source:/home/stephen/Documents/C++/NoteCode/edit.cpp
 	"edit.h"
 	"def.h"
 	"language.h"
@@ -2137,7 +2137,7 @@
 	<wx/msgdlg.h>
 	<iostream>
 
-1470818618 /home/stephen/Documents/C++/NoteCode/edit.h
+1470890422 /home/stephen/Documents/C++/NoteCode/edit.h
 	<wx/stc/stc.h>
 	<wx/textctrl.h>
 	"language.h"
@@ -2768,7 +2768,7 @@
 
 1458119651 /usr/include/wx-3.0/wx/gtk/textctrl.h
 
-1470852644 /home/stephen/Documents/C++/NoteCode/language.h
+1470908304 /home/stephen/Documents/C++/NoteCode/language.h
 	<wx/object.h>
 	<wx/stc/stc.h>
 	<vector>
@@ -3551,7 +3551,7 @@
 1458119651 /usr/include/wx-3.0/wx/gtk/mdi.h
 	"wx/frame.h"
 
-1470835818 source:/home/stephen/Documents/C++/NoteCode/frame.cpp
+1470892662 source:/home/stephen/Documents/C++/NoteCode/frame.cpp
 	<wx/filedlg.h>
 	<wx/panel.h>
 	<wx/textctrl.h>
@@ -3568,7 +3568,7 @@
 	"CustomTabArt.h"
 	<iostream>
 
-1470767751 /home/stephen/Documents/C++/NoteCode/frame.h
+1470888291 /home/stephen/Documents/C++/NoteCode/frame.h
 	<wx/frame.h>
 	<wx/menu.h>
 	<wx/aui/auibook.h>
@@ -3659,16 +3659,17 @@
 	<wx/panel.h>
 	"edit.h"
 
-1470852462 source:/home/stephen/Documents/C++/NoteCode/languages/language.cpp
+1470933910 source:/home/stephen/Documents/C++/NoteCode/languages/language.cpp
 	"../language.h"
 	"../def.h"
 	<wx/stc/stc.h>
 	<wx/chartype.h>
 	<wx/log.h>
 	"../edit.h"
+	<math.h>
 	<iostream>
 
-1470765875 source:/home/stephen/Documents/C++/NoteCode/languages/languageCpp.cpp
+1470910196 source:/home/stephen/Documents/C++/NoteCode/languages/languageCpp.cpp
 	"../language.h"
 	"../def.h"
 	"../edit.h"
@@ -3681,7 +3682,7 @@
 	"../language.h"
 	"../edit.h"
 
-1470855220 source:/home/stephen/Documents/C++/NoteCode/languages/languageHtml.cpp
+1470885445 source:/home/stephen/Documents/C++/NoteCode/languages/languageHtml.cpp
 	"../def.h"
 	"../language.h"
 	"../edit.h"
@@ -3711,15 +3712,16 @@
 	<boost/spirit/include/support_multi_pass.hpp>
 	<type_traits>
 
-1470766096 source:/home/stephen/Documents/C++/NoteCode/languages/languageJava.cpp
+1470911685 source:/home/stephen/Documents/C++/NoteCode/languages/languageJava.cpp
 	"../def.h"
 	"../language.h"
 	"../edit.h"
 
-1470837810 source:/home/stephen/Documents/C++/NoteCode/languages/languageJS.cpp
+1470920357 source:/home/stephen/Documents/C++/NoteCode/languages/languageJS.cpp
 	"../def.h"
 	"../language.h"
 	"../edit.h"
+	<iostream>
 
 1470225434 source:/home/stephen/Documents/C++/NoteCode/languages/languagePhp.cpp
 	"../def.h"
@@ -3737,7 +3739,7 @@
 	"../language.h"
 	"../edit.h"
 
-1470214356 source:/home/stephen/Documents/C++/NoteCode/main.cpp
+1470892528 source:/home/stephen/Documents/C++/NoteCode/main.cpp
 	<wx/app.h>
 	<wx/cmdline.h>
 	<wx/cmdargs.h>
@@ -4095,4 +4097,6 @@
 1458119650 /usr/include/wx-3.0/wx/mstream.h
 	"wx/defs.h"
 	"wx/stream.h"
+
+1456695217 /home/stephen/Documents/C++/NoteCode/images/icons/sample.xpm
 

@@ -28,7 +28,7 @@ public:
     virtual void OnNewLine(wxStyledTextEvent &event);
     virtual void OnCursorPositionChange();
     virtual void OnModification(wxStyledTextEvent &event);
-    virtual void OnLoad(){}
+    virtual void OnLoad();
     virtual void OnUpdateUI(wxStyledTextEvent &event){}
     //Determine a bracket default and change their style accordingly
     void StyleBraces();
@@ -37,9 +37,12 @@ public:
     char FirstChatAtLine(int line);
     int FirstCharAtLinePos(int line);
     void AutoIndent(int line);
+    void AutoIndentWithBrace(int line);
     virtual void GetWordBeforeCursor(wxString &destination);
     int SearchPrev(const wxString &pin);
     int BraceMatch(int pos);
+    int GetOpenBrace(int pos,char brace);
+    char GetBraceComplement(char brace);
     int MyBraceMatch(int pos);
 protected:
     Edit *m_sct;

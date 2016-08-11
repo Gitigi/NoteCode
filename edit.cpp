@@ -281,22 +281,25 @@ void Edit::OnModified(wxStyledTextEvent &event)
 
 void Edit::OnUpdateUI(wxStyledTextEvent &event)
 {
-    cerr<<"update type = "<<event.GetUpdated()<<endl;
-    UpdateLine();
+    HighlightCurrentLine();
     lang->OnUpdateUI(event);
 
-    if(event.GetUpdated()==wxSTC_UPDATE_SELECTION)
+    if(event.GetUpdated()==wxSTC_UPDATE_SELECTION);
         lang->StyleBraces();
 
 }
 
-void Edit::UpdateLine()
+void Edit::HighlightCurrentLine()
 {
-    if(hightlightLine)
+    if(lineHighlightPref)
     {
         int prevLine=MarkerLineFromHandle(lineMarkerHandle);
         if(prevLine != -1)
             MarkerDeleteHandle(lineMarkerHandle);
         lineMarkerHandle = MarkerAdd(GetCurrentLine(),1);
+    }
+    else
+    {
+        MarkerDeleteHandle(lineMarkerHandle);
     }
 }
