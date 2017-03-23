@@ -138,16 +138,16 @@ void Language::AutoIndentWithBrace(int line)
     {
         int bracketLine = m_sct->LineFromPosition(openBracket);
         int indentation = m_sct->GetLineIndentation(bracketLine);
-        indentation = indentation + (openBracket - FirstCharAtLinePos(bracketLine));
-        m_sct->SetLineIndentation(line,indentation);
+        //indentation = indentation + (openBracket - FirstCharAtLinePos(bracketLine));
+        m_sct->SetLineIndentation(line,indentation+m_sct->GetTabWidth());
         m_sct->GotoPos(FirstCharAtLinePos(line));
     }
     else if(bracket == openRBracket)
     {
         int bracketLine = m_sct->LineFromPosition(openRBracket);
         int indentation = m_sct->GetLineIndentation(bracketLine);
-        indentation = indentation + (openRBracket - FirstCharAtLinePos(bracketLine));
-        m_sct->SetLineIndentation(line,indentation);
+        //indentation = indentation + (openRBracket - FirstCharAtLinePos(bracketLine));
+        m_sct->SetLineIndentation(line,indentation+m_sct->GetTabWidth());
         m_sct->GotoPos(FirstCharAtLinePos(line));
     }
     else
@@ -338,7 +338,7 @@ void Language::AutoCompBraces()
 
     if(openingBraces.Contains(enteredBrace))
     {
-        if(isspace(m_sct->GetCharAt(currentPos)) || m_sct->GetCharAt(currentPos)==0)
+        if(!isalnum(m_sct->GetCharAt(currentPos)) || m_sct->GetCharAt(currentPos)==0)
         {
             m_sct->InsertText(m_sct->GetCurrentPos(),
                               wxString::Format("%c",GetBraceComplement(enteredBrace)));
@@ -485,8 +485,10 @@ void Language::StyleBraces()
 
 int Language::BraceMatch(int pos)
 {
-    if(m_sct->GetCharAt(pos-1)!='"'&& m_sct->GetCharAt(pos-1)!='\'')
-    m_sct->Colourise(pos < 0?0:pos,pos+2);
+//    if(m_sct->GetCharAt(pos-1)!='"'&& m_sct->GetCharAt(pos-1)!='\'')
+//        m_sct->Colourise(pos < 0?0:pos,pos+2);
+    if(m_sct->GetStyleAt(pos-1) == 0)
+        m_sct->Colourise(pos<0?0:pos,pos+2);
     return m_sct->BraceMatch(pos);
 }
 
@@ -500,9 +502,12 @@ int Language::GetOpenBrace(int pos,char brace)
     wxString braceComplement;
     braceComplement.Printf("%c",GetBraceComplement(brace));
 
+    m_sct->SetUndoCollection(false);
     m_sct->InsertText(pos,braceComplement);
     int braceCompComp = BraceMatch(pos);
     m_sct->DeleteRange(pos,1);
+    m_sct->SetUndoCollection(true);
+
     return braceCompComp;
 }
 

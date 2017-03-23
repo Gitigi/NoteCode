@@ -10,6 +10,8 @@ using std::cerr;
 using std::endl;
 
 BEGIN_EVENT_TABLE(Edit,wxStyledTextCtrl)
+    EVT_MOTION(Edit::OnMouseMotion)
+    EVT_ENTER_WINDOW(Edit::OnMouseEnter)
     EVT_STC_MODIFIED(wxID_ANY,Edit::OnModified)
     EVT_STC_MARGINCLICK(wxID_ANY, Edit::OnMarginClick)
     EVT_STC_CHARADDED(wxID_ANY, Edit::OnCharAdded)
@@ -90,6 +92,8 @@ Edit::Edit(wxWindow *parent,wxWindowID id,wxPoint pos,wxSize siz,long style)
 
     SetTabWidth(TAB_SIZE);
     SetLayoutCache (wxSTC_CACHE_PAGE);
+	
+	SetEndAtLastLine(false);
 }
 
 void Edit::OnMarginClick (wxStyledTextEvent &event)
@@ -298,8 +302,9 @@ void Edit::HighlightCurrentLine()
             MarkerDeleteHandle(lineMarkerHandle);
         lineMarkerHandle = MarkerAdd(GetCurrentLine(),1);
     }
-    else
-    {
-        MarkerDeleteHandle(lineMarkerHandle);
-    }
+}
+
+void Edit::UnHighlightLine()
+{
+    MarkerDeleteHandle(lineMarkerHandle);
 }

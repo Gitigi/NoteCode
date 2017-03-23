@@ -13,12 +13,15 @@
 #include "rapidjson/writer.h"
 #include <cstdio>
 
+#include <iostream>
+
 using namespace rapidjson;
 
 StyleInfo Styles[LAST_STYLE_ELEMENT];
 int StylesLength = sizeof(Styles)/sizeof(Styles[0]);
 const int StylesNumber = WXSIZEOF(Styles);
 bool lineHighlightPref = true;
+bool autoHideLeftPanelPref = true;
 
 std::map<wxString,AutoCompList> allAutoComplete;
 
@@ -105,12 +108,17 @@ int SaveStylesToJsonFile()
 
     config.AddMember("theme",stylesArray,duplicator);
 
-    FILE *configFile = fopen("config.json","w");
-    char buffer[65536];
-    FileWriteStream configStream(configFile,buffer,sizeof(buffer));
-    Writer<FileWriteStream> writer(configStream);
-    config.Accept(writer);
-    fclose(configFile);
+    FILE *configFile = fopen("./config.json","w");
+	if(configFile)
+	{
+		char buffer[65536];
+		FileWriteStream configStream(configFile,buffer,sizeof(buffer));
+		Writer<FileWriteStream> writer(configStream);
+		config.Accept(writer);
+		fclose(configFile);
+	}else{
+		std::cerr<<"Failed to open config.json file"<<std::endl;
+	}
 
     return 1;
 }

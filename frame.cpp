@@ -6,6 +6,11 @@
 #include <wx/sizer.h>
 #include <wx/msgdlg.h>
 #include <wx/log.h>
+#include <wx/splitter.h>
+#include <wx/button.h>
+#include <wx/bmpbuttn.h>
+
+#include <wx/wx.h>
 
 #include "frame.h"
 #include "panel.h"
@@ -18,6 +23,9 @@
 using  std::cerr;
 using  std::endl;
 
+BEGIN_EVENT_TABLE(SplitterWindow,wxSplitterWindow)
+    EVT_MOTION(SplitterWindow::OnMouseMotion)
+END_EVENT_TABLE()
 
 BEGIN_EVENT_TABLE(MyFrame,wxFrame)
     EVT_MENU(wxID_NEW,MyFrame::OnNew)
@@ -40,21 +48,52 @@ BEGIN_EVENT_TABLE(MyFrame,wxFrame)
 
     EVT_STC_SAVEPOINTLEFT(wxID_ANY,MyFrame::OnSavePointReachLeave)
     EVT_STC_SAVEPOINTREACHED(wxID_ANY,MyFrame::OnSavePointReachLeave)
+
+	EVT_DIRCTRL_FILEACTIVATED(myID_DIRCTRL,MyFrame::OnDirCtrlFileActivated)
+	EVT_BUTTON(myID_LOCKBUTTON,MyFrame::OnChangeAutoHideLeftPanel)
 END_EVENT_TABLE()
 
 MyFrame::MyFrame(const wxString &title,const wxString &name,const wxString &directory)
 :wxFrame(NULL,wxID_ANY,title,wxDefaultPosition,wxSize(780,500))
 {
+	wxIcon appIcon("images/icons/notecode64.png",wxBITMAP_TYPE_PNG);
+    SetIcon(appIcon);
 
     SetDropTarget(new MyFileDropTarget(this));
 
     m_menuBar = new wxMenuBar();
     CreateMenu();
 
+    splitWin = new SplitterWindow(this,myID_SPLITTER_WIN,wxSP_LIVE_UPDATE|wxSP_3D);
+    //splitWin->Create(this,wxID_ANY,wxDefaultPosition,wxDefaultSize,wxSP_3D|wxSP_LIVE_UPDATE);
+
+    leftWindow = new wxPanel(splitWin,wxID_ANY);
+    wxBoxSizer *leftWindowSizer = new wxBoxSizer(wxVERTICAL);
+    lockedPad = new wxBitmap("images/icons/closedLockTransparent16.png",wxBITMAP_TYPE_PNG);
+    unlockedPad = new wxBitmap("images/icons/openedLockTransparent16.png",wxBITMAP_TYPE_PNG);
+    wxBitmapButton *lockButton = new wxBitmapButton(leftWindow,myID_LOCKBUTTON,*unlockedPad,
+                                              wxDefaultPosition,wxDefaultSize,wxBU_AUTODRAW);
+
+    wxBoxSizer *subLeftWindowSizer = new wxBoxSizer(wxHORIZONTAL);
+    leftWindowSizer->Add(subLeftWindowSizer,0,wxEXPAND,0);
+    subLeftWindowSizer->Add(50,10,1,wxALL,0);
+    subLeftWindowSizer->Add(lockButton,0,wxALL,5);
+    m_dirCtrl = new wxGenericDirCtrl(leftWindow,myID_DIRCTRL,wxDirDialogDefaultFolderStr,wxDefaultPosition,
+                                      wxDefaultSize);
+    leftWindowSizer->Add(m_dirCtrl,1,wxGROW|wxALL,0);
+    leftWindow->SetSizer(leftWindowSizer);
+    leftWindowSizer->Fit(leftWindow);
+    leftWindowSizer->SetSizeHints(leftWindow);
+
     notebook = new wxAuiNotebook();
-    notebook->Create(this,wxID_ANY,wxDefaultPosition,wxDefaultSize,
+    notebook->Create(splitWin,wxID_ANY,wxDefaultPosition,wxDefaultSize,
                      wxAUI_NB_CLOSE_ON_ALL_TABS|wxAUI_NB_SCROLL_BUTTONS|wxAUI_NB_TAB_MOVE|wxAUI_NB_WINDOWLIST_BUTTON|
                      wxNB_NOPAGETHEME);
+    splitWin->Initialize(notebook);
+
+    splitWin->left = leftWindow;
+    splitWin->right = notebook;
+
 
     CreateImageList();
 
@@ -154,9 +193,7 @@ void MyFrame::OnSaveAs(wxCommandEvent &event)
         directory = dialog.GetDirectory();
         name = dialog.GetFilename();
         MyPanel *panel = wxDynamicCast(notebook->GetCurrentPage(),MyPanel);
-        panel->SetDirectory(directory);
-        panel->SetName(name);
-        panel->Save();
+        panel->SaveAs(name,directory);
 
         notebook->SetPageText(notebook->GetSelection(),name);
     }
@@ -179,9 +216,22 @@ void MyFrame::OnLineHighlight(wxCommandEvent &event)
 {
     //changes a global value
     lineHighlightPref = event.IsChecked();
-
-    MyPanel *panel = wxDynamicCast(notebook->GetCurrentPage(),MyPanel);
-    panel->text_area->HighlightCurrentLine();
+    if(lineHighlightPref == true)
+    {
+        for(size_t i =0;i<notebook->GetPageCount();i++)
+        {
+            MyPanel *panel = wxDynamicCast(notebook->GetPage(i),MyPanel);
+            panel->text_area->HighlightCurrentLine();
+        }
+    }
+    else
+    {
+        for(size_t i= 0; i < notebook->GetPageCount();i++)
+        {
+            MyPanel *panel = wxDynamicCast(notebook->GetPage(i),MyPanel);
+            panel->text_area->UnHighlightLine();
+        }
+    }
 
 }
 
@@ -199,6 +249,26 @@ void MyFrame::OnPreference(wxCommandEvent &event)
     }
 }
 
+void MyFrame::OnDirCtrlFileActivated(wxTreeEvent &event)
+{
+	wxFileName fname(m_dirCtrl->GetPath(event.GetItem()));
+	CreatePage(fname.GetFullName(),fname.GetPath());
+}
+
+void MyFrame::OnChangeAutoHideLeftPanel(wxCommandEvent &event)
+{
+    wxBitmapButton *btn = wxDynamicCast(FindWindow(myID_LOCKBUTTON),wxBitmapButton);
+    if(autoHideLeftPanelPref)
+    {
+        autoHideLeftPanelPref = false;
+        btn->SetBitmap(*lockedPad);
+    }
+    else
+    {
+        autoHideLeftPanelPref = true;
+        btn->SetBitmap(*unlockedPad);
+    }
+}
 
 void MyFrame::CreateMenu()
 {

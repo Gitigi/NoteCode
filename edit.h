@@ -5,7 +5,9 @@
 
 #include <wx/stc/stc.h>
 #include <wx/textctrl.h>
+#include "frame.h"
 
+#include <iostream>
 #include "language.h"
 
 class Edit : public wxStyledTextCtrl
@@ -36,10 +38,36 @@ public:
     void OnLeftDown(wxMouseEvent &event);
     void OnSavePointReachLeave(wxStyledTextEvent &event);
     void OnUpdateUI(wxStyledTextEvent &event);
+    void OnMouseMotion(wxMouseEvent &event)
+    {
+        SplitterWindow *par = wxDynamicCast(FindWindowById(myID_SPLITTER_WIN,NULL),SplitterWindow);
+        if(par)
+        {
+            par->OnMouseMotion(event);
+        }
+        OnMouseMove(event);
+    }
+
+    void OnMouseEnter(wxMouseEvent &event)
+    {
+        if(autoHideLeftPanelPref)
+        {
+            SplitterWindow *par = wxDynamicCast(FindWindowById(myID_SPLITTER_WIN,NULL),SplitterWindow);
+            if(par)
+            {
+                if(par->IsSplit())
+                {
+                    par->Unsplit(par->GetWindow1());
+                    SetFocus();
+                }
+            }
+        }
+    }
 
     void SetLanguage(int file_type);
     void RefreshStyle();
     void HighlightCurrentLine();
+    void UnHighlightLine();
     wxString filePath;
     bool hightlightLine;
 private:

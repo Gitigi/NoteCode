@@ -2105,7 +2105,7 @@
 
 1458119651 /usr/include/wx-3.0/wx/generic/logg.h
 
-1470891675 source:/home/stephen/Documents/C++/NoteCode/def.cpp
+1472561444 source:/home/stephen/Documents/C++/NoteCode/def.cpp
 	"def.h"
 	<wx/log.h>
 	<wx/string.h>
@@ -2119,7 +2119,7 @@
 	"rapidjson/writer.h"
 	<cstdio>
 
-1470890167 /home/stephen/Documents/C++/NoteCode/def.h
+1472561408 /home/stephen/Documents/C++/NoteCode/def.h
 	<wx/string.h>
 	<wx/fswatcher.h>
 	<map>
@@ -2128,7 +2128,7 @@
 	<wx/string.h>
 	"rapidjson/document.h"
 
-1470921133 source:/home/stephen/Documents/C++/NoteCode/edit.cpp
+1472492911 source:/home/stephen/Documents/C++/NoteCode/edit.cpp
 	"edit.h"
 	"def.h"
 	"language.h"
@@ -2137,9 +2137,11 @@
 	<wx/msgdlg.h>
 	<iostream>
 
-1470890422 /home/stephen/Documents/C++/NoteCode/edit.h
+1472561962 /home/stephen/Documents/C++/NoteCode/edit.h
 	<wx/stc/stc.h>
 	<wx/textctrl.h>
+	"frame.h"
+	<iostream>
 	"language.h"
 
 1458119652 /usr/include/wx-3.0/wx/stc/stc.h
@@ -3551,7 +3553,7 @@
 1458119651 /usr/include/wx-3.0/wx/gtk/mdi.h
 	"wx/frame.h"
 
-1470892662 source:/home/stephen/Documents/C++/NoteCode/frame.cpp
+1473273011 source:/home/stephen/Documents/C++/NoteCode/frame.cpp
 	<wx/filedlg.h>
 	<wx/panel.h>
 	<wx/textctrl.h>
@@ -3560,21 +3562,29 @@
 	<wx/sizer.h>
 	<wx/msgdlg.h>
 	<wx/log.h>
+	<wx/splitter.h>
+	<wx/button.h>
+	<wx/bmpbuttn.h>
+	<wx/wx.h>
 	"frame.h"
 	"panel.h"
 	"edit.h"
 	"def.h"
 	"dialog.h"
 	"CustomTabArt.h"
+	"sample.xpm"
 	<iostream>
 
-1470888291 /home/stephen/Documents/C++/NoteCode/frame.h
+1472561925 /home/stephen/Documents/C++/NoteCode/frame.h
 	<wx/frame.h>
 	<wx/menu.h>
 	<wx/aui/auibook.h>
 	<wx/dnd.h>
 	<wx/filename.h>
 	<wx/stc/stc.h>
+	<wx/splitter.h>
+	<wx/panel.h>
+	<wx/dirctrl.h>
 	"def.h"
 
 1458119652 /usr/include/wx-3.0/wx/aui/auibook.h
@@ -3659,7 +3669,7 @@
 	<wx/panel.h>
 	"edit.h"
 
-1470933910 source:/home/stephen/Documents/C++/NoteCode/languages/language.cpp
+1472487245 source:/home/stephen/Documents/C++/NoteCode/languages/language.cpp
 	"../language.h"
 	"../def.h"
 	<wx/stc/stc.h>
@@ -3669,7 +3679,7 @@
 	<math.h>
 	<iostream>
 
-1470910196 source:/home/stephen/Documents/C++/NoteCode/languages/languageCpp.cpp
+1473421822 source:/home/stephen/Documents/C++/NoteCode/languages/languageCpp.cpp
 	"../language.h"
 	"../def.h"
 	"../edit.h"
@@ -3682,7 +3692,7 @@
 	"../language.h"
 	"../edit.h"
 
-1470885445 source:/home/stephen/Documents/C++/NoteCode/languages/languageHtml.cpp
+1473315406 source:/home/stephen/Documents/C++/NoteCode/languages/languageHtml.cpp
 	"../def.h"
 	"../language.h"
 	"../edit.h"
@@ -3728,7 +3738,7 @@
 	"../language.h"
 	"../edit.h"
 
-1470225434 source:/home/stephen/Documents/C++/NoteCode/languages/languagePython.cpp
+1472180814 source:/home/stephen/Documents/C++/NoteCode/languages/languagePython.cpp
 	"../language.h"
 	"../def.h"
 	"../edit.h"
@@ -3739,7 +3749,7 @@
 	"../language.h"
 	"../edit.h"
 
-1470892528 source:/home/stephen/Documents/C++/NoteCode/main.cpp
+1473273021 source:/home/stephen/Documents/C++/NoteCode/main.cpp
 	<wx/app.h>
 	<wx/cmdline.h>
 	<wx/cmdargs.h>
@@ -4099,4 +4109,49 @@
 	"wx/stream.h"
 
 1456695217 /home/stephen/Documents/C++/NoteCode/images/icons/sample.xpm
+
+1458119651 /usr/include/wx-3.0/wx/splitter.h
+	"wx/event.h"
+	"wx/generic/splitter.h"
+
+1458119651 /usr/include/wx-3.0/wx/generic/splitter.h
+	"wx/window.h"
+	"wx/containr.h"
+
+1458119651 /usr/include/wx-3.0/wx/dirctrl.h
+	"wx/generic/dirctrlg.h"
+
+1458119651 /usr/include/wx-3.0/wx/generic/dirctrlg.h
+	"wx/treectrl.h"
+	"wx/dialog.h"
+	"wx/dirdlg.h"
+	"wx/choice.h"
+
+1458119651 /usr/include/wx-3.0/wx/treectrl.h
+	"wx/defs.h"
+	"wx/control.h"
+	"wx/treebase.h"
+	"wx/textctrl.h"
+	"wx/generic/treectlg.h"
+	"wx/msw/treectrl.h"
+	"wx/generic/treectlg.h"
+	"wx/generic/treectlg.h"
+	"wx/generic/treectlg.h"
+	"wx/generic/treectlg.h"
+	"wx/generic/treectlg.h"
+
+1458119651 /usr/include/wx-3.0/wx/treebase.h
+	"wx/defs.h"
+	"wx/window.h"
+	"wx/event.h"
+	"wx/dynarray.h"
+	"wx/itemid.h"
+
+1458119651 /usr/include/wx-3.0/wx/itemid.h
+
+1458119651 /usr/include/wx-3.0/wx/generic/treectlg.h
+	"wx/scrolwin.h"
+	"wx/pen.h"
+
+1456695217 /home/stephen/Documents/C++/NoteCode/sample.xpm
 

@@ -9,7 +9,7 @@ using std::cerr;
 using std::endl;
 
 
-static const char* CppWordlist1 =
+static const char *CppWordlist1(
     "asm auto bool break case catch char class const const_cast "
     "continue default delete do double dynamic_cast else enum explicit "
     "export extern false float for friend goto if inline int long "
@@ -17,7 +17,8 @@ static const char* CppWordlist1 =
     "reinterpret_cast return short signed sizeof static static_cast "
     "struct switch template this throw true try typedef typeid "
     "typename union unsigned using virtual void volatile wchar_t "
-    "while cout std cin endl ";
+    "while cout std cin endl ");
+
 static const char* CppWordlist2 =
     "file";
 static const char* CppWordlist3 =
@@ -109,17 +110,17 @@ void LanguageCpp::InitializeSCT()
 
         n++;
 
-        }
+    }
 
-        //Set The key words
-        n = 0;
-        while(true)
-        {
-            if(KeyWordListCpp[n] == NULL)
-                break;
-            m_sct->SetKeyWords(n,KeyWordListCpp[n]);
-            n++;
-        }
+    //Set The key words
+    n = 0;
+    while(true)
+    {
+        if(KeyWordListCpp[n] == NULL)
+            break;
+        m_sct->SetKeyWords(n,KeyWordListCpp[n]);
+        n++;
+    }
 }
 
 

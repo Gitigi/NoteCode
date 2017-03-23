@@ -10,8 +10,6 @@
 #include <string>
 #include <functional>
 #include <fstream>
-#include <editline/history.h>
-#include <editline/readline.h>
 #include <istream>
 
 using std::cout;

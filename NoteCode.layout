@@ -2,9 +2,39 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Release" />
-	<File name="frame.h" open="1" top="0" tabpos="18" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="edit.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="191" topLine="21" />
+			<Cursor1 position="7221" topLine="225" />
+		</Cursor>
+	</File>
+	<File name="main.cpp" open="1" top="0" tabpos="12" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="298" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="languages/languageJS.cpp" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3053" topLine="95" />
+		</Cursor>
+	</File>
+	<File name="frame.h" open="1" top="0" tabpos="13" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="396" topLine="15" />
+		</Cursor>
+	</File>
+	<File name="languages/languagePython.cpp" open="1" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1271" topLine="27" />
+		</Cursor>
+	</File>
+	<File name="panel.h" open="0" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="484" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="language.h" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="836" topLine="23" />
 		</Cursor>
 	</File>
 	<File name="dialog.h" open="0" top="0" tabpos="17" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -12,19 +42,9 @@
 			<Cursor1 position="126" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="dialog.cpp" open="0" top="0" tabpos="16" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="CustomTabArt.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1775" topLine="55" />
-		</Cursor>
-	</File>
-	<File name="languages/languageJava.cpp" open="1" top="0" tabpos="12" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="4591" topLine="111" />
-		</Cursor>
-	</File>
-	<File name="panel.h" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="484" topLine="0" />
+			<Cursor1 position="13164" topLine="386" />
 		</Cursor>
 	</File>
 	<File name="languages/parser/cssParser.hpp" open="0" top="0" tabpos="20" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -32,74 +52,19 @@
 			<Cursor1 position="10332" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="edit.h" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="languages/languageJava.cpp" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1031" topLine="11" />
+			<Cursor1 position="4591" topLine="111" />
 		</Cursor>
 	</File>
-	<File name="def.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="languages/languagePhp.cpp" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="3921" topLine="196" />
+			<Cursor1 position="3615" topLine="77" />
 		</Cursor>
 	</File>
-	<File name="languages/languageCpp.cpp" open="1" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="languages/language.cpp" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="5155" topLine="111" />
-		</Cursor>
-	</File>
-	<File name="languages/languageHtml.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="6224" topLine="240" />
-		</Cursor>
-	</File>
-	<File name="languages/language.cpp" open="1" top="1" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="6996" topLine="34" />
-		</Cursor>
-	</File>
-	<File name="language.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="3211" topLine="144" />
-		</Cursor>
-	</File>
-	<File name="languages/languagePython.cpp" open="1" top="0" tabpos="15" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="3311" topLine="54" />
-		</Cursor>
-	</File>
-	<File name="panel.cpp" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="467" topLine="43" />
-		</Cursor>
-	</File>
-	<File name="languages/languageXml.cpp" open="1" top="0" tabpos="16" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="65" topLine="38" />
-		</Cursor>
-	</File>
-	<File name="languages/languageCss.cpp" open="1" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="2331" topLine="32" />
-		</Cursor>
-	</File>
-	<File name="CustomTabArt.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="13164" topLine="386" />
-		</Cursor>
-	</File>
-	<File name="frame.cpp" open="1" top="0" tabpos="19" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="4392" topLine="243" />
-		</Cursor>
-	</File>
-	<File name="languages/languagePhp.cpp" open="1" top="0" tabpos="14" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="3615" topLine="74" />
-		</Cursor>
-	</File>
-	<File name="languages/languageJS.cpp" open="1" top="0" tabpos="13" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="3053" topLine="95" />
+			<Cursor1 position="9628" topLine="48" />
 		</Cursor>
 	</File>
 	<File name="CustomTabArt.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -107,19 +72,54 @@
 			<Cursor1 position="1765" topLine="42" />
 		</Cursor>
 	</File>
-	<File name="main.cpp" open="1" top="0" tabpos="17" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="languages/languageHtml.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1113" topLine="58" />
+			<Cursor1 position="9937" topLine="527" />
 		</Cursor>
 	</File>
-	<File name="edit.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="languages/languageCss.cpp" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2873" topLine="66" />
+			<Cursor1 position="363" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="edit.h" open="1" top="0" tabpos="16" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1741" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="languages/languageCpp.cpp" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="4503" topLine="136" />
+		</Cursor>
+	</File>
+	<File name="frame.cpp" open="1" top="1" tabpos="14" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1742" topLine="44" />
+		</Cursor>
+	</File>
+	<File name="dialog.cpp" open="0" top="0" tabpos="16" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1775" topLine="55" />
+		</Cursor>
+	</File>
+	<File name="languages/languageXml.cpp" open="1" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="65" topLine="38" />
+		</Cursor>
+	</File>
+	<File name="panel.cpp" open="1" top="0" tabpos="17" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1098" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="def.cpp" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="6289" topLine="211" />
+			<Cursor1 position="429" topLine="105" />
+		</Cursor>
+	</File>
+	<File name="def.h" open="1" top="0" tabpos="15" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="4522" topLine="222" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

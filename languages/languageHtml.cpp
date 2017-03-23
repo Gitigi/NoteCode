@@ -58,12 +58,16 @@ using namespace std;
             if(quote=='"' || quote=='\'')\
             {\
             index+=1;\
-            while(index<source.length()&&source[index]!=quote)\
+            while(index<source.length())\
             {\
+                if(source[index]==quote)\
+                {\
+                    index++;\
+                    break;\
+                }\
                 dest.append(source[index]);\
                 index++;\
             }\
-            index++;\
             }\
             }
 
@@ -322,12 +326,10 @@ void LanguageHtml::OnNewLineHtml(wxStyledTextEvent &event)
 
     wxString tagName;
     int openTagLine = m_sct->LineFromPosition(GetOpenTag(tagName,m_sct->GetCurrentPos()));
-    cerr<<"html new called with = "<<tagName<<endl;
     if(!tagName.IsEmpty())
     {
         int indentation = m_sct->GetLineIndentation(openTagLine) + m_sct->GetTabWidth();
         m_sct->SetLineIndentation(currentLine,indentation);
-        cerr<<"indentation = "<<indentation<<"line number = "<<currentLine<<endl;
         m_sct->GotoPos(m_sct->GetLineEndPosition(currentLine));
     }
 }
@@ -711,7 +713,7 @@ int LanguageHtml::GetOpenTag(wxString &tagName,int position,int limit)
                 tagName.Append((wxUniChar)m_sct->GetCharAt(charPos));
                 charPos++;
             }
-            return index-1;
+            return index;
         }
         index--;
     }
@@ -869,9 +871,9 @@ void LanguageHtml::ResolveFileLoc(wxString &fileName)
 
 void LanguageHtml::EvalTagContent(const wxString &tagName,const std::map<wxString,wxString>&attr)
 {
-    if(tagName == "style")
+    if(tagName == "link")
     {
-        auto iter = attr.find("link");
+        auto iter = attr.find("href");
         if(iter!=attr.end())
         {
             if(iter->second.StartsWith("https"))

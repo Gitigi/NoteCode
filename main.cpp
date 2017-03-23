@@ -15,6 +15,8 @@
 
 #include "frame.h"
 
+#include <iostream>
+
 static const wxCmdLineEntryDesc g_cmdLineDesc[] =
 {
 
@@ -87,13 +89,17 @@ bool MyApp::OnInit()
 
     }
 
-
+	wxString enviro_variable_value;
 	#ifdef __WXMSW__
 	wxString enviro_variable(wxT("NoteCode"));
-    wxString enviro_variable_value;
     wxGetEnv(enviro_variable,&enviro_variable_value);
-    wxSetWorkingDirectory(enviro_variable_value);
+	
+	#else
+	wxGetEnv(wxT("HOME"),&enviro_variable_value);
+	enviro_variable_value.append(wxT("/.NoteCode"));
+	
     #endif // __WXWINDOWS__
+    wxSetWorkingDirectory(enviro_variable_value);
     InitStyles();
 
     MyFrame *frame = new MyFrame("NoteCode",name,directory);

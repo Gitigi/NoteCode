@@ -33,7 +33,7 @@ static lang_style python_styles[] =
     {mySTC_TYPE_STRING},         //Character
     {mySTC_TYPE_WORD1},             //Word 1
     {mySTC_TYPE_DEFAULT},           //Triple
-    {mySTC_TYPE_DEFAULT},           //Triple double
+    {mySTC_TYPE_COMMENT_DOC},           //Triple double
     {mySTC_TYPE_DEFAULT},           //Class name
     {mySTC_TYPE_DEFAULT},           //Def name
     {mySTC_TYPE_OPERATOR},          //Operator

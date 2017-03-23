@@ -127,6 +127,9 @@ enum MYID
     myID_DWELLSTART,
     myID_DWELLEND,
     myID_LINEHIGHLIGHT,
+    myID_SPLITTER_WIN,
+	myID_DIRCTRL,
+	myID_LOCKBUTTON,
     ID_DEFAULT = wxID_HIGHEST,
     ID_LAST_STYLE_ELEMENT = (ID_DEFAULT+LAST_STYLE_ELEMENT)*2,
 };
@@ -238,5 +241,6 @@ extern int InitStyles();
 extern int SaveStylesToJsonFile();
 extern int StylesLength;
 extern bool lineHighlightPref;
+extern bool autoHideLeftPanelPref;
 
 #endif // DEF_H_INCLUDED

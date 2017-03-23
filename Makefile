@@ -1,11 +1,13 @@
 CC = g++
-CFLAGS = `wx-config --cflags` -std=c++14
+CFLAGS = `wx-config --cflags` -std=c++14 -O2
 LIBS = `wx-config --libs` -lwx_gtk3u_aui-3.1 -lwx_gtk3u_stc-3.1 -s
 OBJS = main.o def.o dialog.o edit.o frame.o panel.o CustomTabArt.o language.o languageCpp.o languageCss.o languageHtml.o languageJava.o languageJS.o languagePhp.o languagePython.o languageXml.o
-all : main
+INSTALL_DIR = $(HOME)/.NoteCode
 
-main :  $(OBJS)
-	$(CC) -o main $(OBJS) $(LIBS) 
+all : NoteCode
+
+NoteCode :  $(OBJS)
+	$(CC) -o NoteCode $(OBJS) $(LIBS) 
 
 	
 dialog.o : dialog.cpp dialog.h
@@ -58,3 +60,14 @@ languageHtml.o : languages/languageHtml.cpp language.h
 	
 clean: 
 	rm -f main $(OBJS)
+	
+install:
+	sudo cp ./NoteCode.desktop /usr/share/applications
+	mkdir -p $(INSTALL_DIR)
+	sudo cp ./NoteCode /usr/bin/
+	sudo cp ./images/48/NoteCode.png /usr/share/pixmaps
+	cp ./html $(INSTALL_DIR)
+	cp ./config.json $(INSTALL_DIR)
+	cp -r ./script $(INSTALL_DIR)
+	cp -r ./images $(INSTALL_DIR)
+	

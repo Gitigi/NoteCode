@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=NoteCode
+Exec=/usr/bin/NoteCode
+Icon=NoteCode
+Type=Application
+Terminal=false
+Categories=Development;IDE;
+MimeType=text/plain
