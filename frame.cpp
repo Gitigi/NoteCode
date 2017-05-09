@@ -139,9 +139,10 @@ void MyFrame::CreatePage(const wxString &title,const wxString &directory)
 
     int file_type = DetermineFile(fname.GetFullName().AfterLast(wxT('.')));
     notebook->AddPage(panel,title,true,file_type);
+	
 
     panel->text_area->SetLanguage(file_type);
-
+	panel->LoadFile(title,directory);
 
 }
 

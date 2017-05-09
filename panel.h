@@ -11,6 +11,7 @@ public:
             const wxString &directory = wxT("/home/"));
     void Save();
     void SaveAs(const wxString &name,const wxString &dir);
+    void LoadFile(const wxString &name,const wxString &dir);
     void SetName(const wxString &name)
     {
         m_name = name;
