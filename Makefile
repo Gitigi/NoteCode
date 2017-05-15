@@ -1,7 +1,9 @@
 CC = g++
 CFLAGS = `wx-config --cflags` -std=c++14 -O2
 LIBS = `wx-config --libs` -lwx_gtk3u_aui-3.1 -lwx_gtk3u_stc-3.1 -s
-OBJS = main.o def.o dialog.o edit.o frame.o panel.o CustomTabArt.o language.o languageCpp.o languageCss.o languageHtml.o languageJava.o languageJS.o languagePhp.o languagePython.o languageXml.o
+OBJS = main.o def.o dialog.o edit.o frame.o panel.o CustomTabArt.o \
+	language.o languageCpp.o languageCss.o languageHtml.o languageJava.o \
+	languageJS.o languagePhp.o languagePython.o languageXml.o connection.o
 INSTALL_DIR = $(HOME)/.NoteCode
 
 all : NoteCode
@@ -22,7 +24,7 @@ edit.o : edit.cpp edit.h
 frame.o : frame.cpp frame.h
 	$(CC) $(CFLAGS) -c frame.cpp
 	
-main.o : main.cpp
+main.o : main.cpp main.h
 	$(CC) $(CFLAGS) -c main.cpp
 	
 panel.o : panel.cpp panel.h
@@ -57,6 +59,9 @@ languageXml.o : languages/languageXml.cpp language.h
 	
 languageHtml.o : languages/languageHtml.cpp language.h
 	$(CC) $(CFLAGS) -c languages/languageHtml.cpp
+	
+connection.o : connection.cpp connection.hpp
+	$(CC) $(CFLAGS) -c connection.cpp
 	
 clean: 
 	rm -f main $(OBJS)

@@ -12,7 +12,12 @@
 #include <wx/fs_mem.h>
 #include <wx/fs_filter.h>
 
+#include <wx/snglinst.h>
+#include <wx/msgdlg.h>
 
+#include "connection.hpp"
+
+#include "main.h"
 #include "frame.h"
 
 #include <iostream>
@@ -36,16 +41,13 @@ static const wxCmdLineEntryDesc g_cmdLineDesc[] =
     }
 };
 
-class MyApp: public wxApp
-{
-public:
-    virtual bool OnInit();
-};
-
 IMPLEMENT_APP(MyApp);
 
 bool MyApp::OnInit()
 {
+	
+	
+	
     wxInitAllImageHandlers();
 
     wxFileSystem::AddHandler(new wxArchiveFSHandler());
@@ -56,6 +58,7 @@ bool MyApp::OnInit()
 
     wxString name = wxT("Unammed");
     wxString directory = wxEmptyString;
+    wxString fullpath = wxEmptyString;
 
     wxString cmd_file_name;
     wxCmdLineParser cmd_parser(g_cmdLineDesc,argc,argv);
@@ -86,8 +89,40 @@ bool MyApp::OnInit()
 
         name = fname.GetFullName();
         directory = fname.GetPath();
+		fullpath =fname.GetFullPath();
 
     }
+	
+	const wxString AppName = wxString::Format(wxT("NoteCode-%s"),wxGetUserId().c_str());
+	m_singleInstanceChecker = new wxSingleInstanceChecker(AppName);
+	if(!m_singleInstanceChecker->IsAnotherRunning()){
+		m_server = new stServer;
+		if(!m_server->Create(NOTECODE_PORT))
+		{
+			wxLogDebug(wxT("Failed to create an IPC service."));
+		}
+		
+	}
+	else
+	{
+		stClient *client = new stClient;
+		wxString hostName = wxT("localhost");
+		wxConnectionBase *connection = client->MakeConnection(hostName,
+			NOTECODE_PORT,AppName);
+		if(connection)
+		{
+			connection->Execute(fullpath);
+			connection->Disconnect();
+			delete connection;
+		}
+		else
+		{
+			wxMessageBox(wxT("Sorry, the existing instance may be too busy to respond .\nPlease close any open dialogs and retry."),
+				AppName,wxICON_INFORMATION|wxOK);
+		}
+		delete client;
+		return false;
+	}
 
 	wxString enviro_variable_value;
 	#ifdef __WXMSW__
