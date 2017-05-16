@@ -12,6 +12,7 @@ public:
     void Save();
     void SaveAs(const wxString &name,const wxString &dir);
     void LoadFile(const wxString &name,const wxString &dir);
+	void ShowSearchControl();
     void SetName(const wxString &name)
     {
         m_name = name;
@@ -33,6 +34,8 @@ public:
 
     Edit *text_area;
 private:
+	wxPanel *searchPanel;
+	wxBoxSizer *sizer;
     wxString m_name;
     wxString m_directory;
 };

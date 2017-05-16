@@ -1,5 +1,6 @@
 #include "edit.h"
 #include "def.h"
+#include "panel.h"
 #include "language.h"
 #include <wx/log.h>
 #include <wx/wx.h>
@@ -161,7 +162,12 @@ void Edit::OnDoubleClick(wxStyledTextEvent &event)
 void Edit::OnKeyDown(wxKeyEvent &event)
 {
     lang->OnKeyDown(event);
-    event.Skip();
+	if(event.ControlDown() && event.GetKeyCode() == 70){
+		wxDynamicCast(GetParent(),MyPanel)->ShowSearchControl();
+	}
+	else{
+		event.Skip();
+	}
 }
 
 void Edit::SetLanguage(int file_type)
