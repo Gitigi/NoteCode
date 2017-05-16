@@ -111,8 +111,8 @@ bool MyApp::OnInit()
 			NOTECODE_PORT,AppName);
 		if(connection)
 		{
-			//connection->Execute(fullpath);
-			//connection->Disconnect();
+			connection->Execute(fullpath);
+			connection->Disconnect();
 			delete connection;
 		}
 		else
@@ -121,7 +121,7 @@ bool MyApp::OnInit()
 				AppName,wxICON_INFORMATION|wxOK);
 		}
 		delete client;
-		//return false;
+		return false;
 	}
 
 	wxString enviro_variable_value;
