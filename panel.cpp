@@ -28,7 +28,7 @@ MyPanel::MyPanel(wxWindow *parent,const wxString &name,
 	
 	//search component
 	searchPanel = new wxPanel(this,wxID_ANY);
-	wxTextCtrl *searchInput = new wxTextCtrl(searchPanel,ID_SEARCH_TEXT_INPUT,wxEmptyString,wxDefaultPosition,wxSize(240,30));
+	searchInput = new SearchTextCtrl(searchPanel,ID_SEARCH_TEXT_INPUT,wxEmptyString,wxDefaultPosition,wxSize(240,30));
 	wxBoxSizer *searchSizer = new wxBoxSizer(wxHORIZONTAL);
 	searchPanel->SetSizer(searchSizer);
 	searchSizer->Add(searchInput,1);
@@ -87,10 +87,25 @@ void MyPanel::ShowSearchControl()
 	if(searchPanel->IsShown()){
 		searchPanel->Show(false);
 		sizer->Layout();
+		text_area->SetFocus();
 	}
 	else{
 		searchPanel->Show(true);
-		FindWindow(ID_SEARCH_TEXT_INPUT)->SetFocus();
+		searchInput->SetFocus();
 		sizer->Layout();
+	}
+}
+
+wxBEGIN_EVENT_TABLE(SearchTextCtrl,wxTextCtrl)
+	EVT_KEY_DOWN(SearchTextCtrl::OnChar)
+wxEND_EVENT_TABLE()
+
+void SearchTextCtrl::OnChar(wxKeyEvent &event)
+{
+	if(event.ControlDown() && event.GetKeyCode() == 70){
+		wxDynamicCast(GetParent()->GetParent(),MyPanel)->ShowSearchControl();
+	}
+	else{
+		event.Skip();
 	}
 }
