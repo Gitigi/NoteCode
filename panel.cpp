@@ -1,6 +1,10 @@
 #include "panel.h"
 #include <wx/sizer.h>
 #include <wx/file.h>
+#include <wx/artprov.h>
+#include <wx/button.h>
+#include <wx/bmpbuttn.h>
+#include <wx/checkbox.h>
 #include <iostream>
 
 MyPanel::MyPanel(wxWindow *parent,const wxString &name,
@@ -31,7 +35,27 @@ MyPanel::MyPanel(wxWindow *parent,const wxString &name,
 	searchInput = new SearchTextCtrl(searchPanel,ID_SEARCH_TEXT_INPUT,wxEmptyString,wxDefaultPosition,wxSize(240,30));
 	wxBoxSizer *searchSizer = new wxBoxSizer(wxHORIZONTAL);
 	searchPanel->SetSizer(searchSizer);
+	
+	wxBitmap goUp = wxArtProvider::GetBitmap(wxART_GO_UP,wxART_BUTTON);
+	wxBitmap goDown = wxArtProvider::GetBitmap(wxART_GO_DOWN,wxART_BUTTON);
+	wxBitmapButton *goUpButton = new wxBitmapButton(searchPanel,wxID_ANY,goUp,
+                                              wxDefaultPosition,wxDefaultSize,wxBU_AUTODRAW);
+
+	wxBitmapButton *goDownButton = new wxBitmapButton(searchPanel,wxID_ANY,goDown,
+                                              wxDefaultPosition,wxDefaultSize,wxBU_AUTODRAW);
+	
+	wxCheckBox *matchCase = new wxCheckBox(searchPanel,wxID_ANY,wxT("Match Case"));
+	wxCheckBox *matchRegex = new wxCheckBox(searchPanel,wxID_ANY,wxT("Regex"));
+	wxCheckBox *matchWords = new wxCheckBox(searchPanel,wxID_ANY,wxT("Words"));
+
+	
 	searchSizer->Add(searchInput,1);
+	searchSizer->Add(goDownButton,0);
+	searchSizer->Add(goUpButton,0);
+	searchSizer->Add(matchCase,0);
+	searchSizer->Add(matchRegex,0);
+	searchSizer->Add(matchWords,0);
+	
 	searchSizer->Fit(searchPanel);
 	searchSizer->SetSizeHints(searchPanel);
 	searchPanel->Show(false);
