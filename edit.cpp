@@ -166,6 +166,7 @@ void Edit::OnDoubleClick(wxStyledTextEvent &event)
 
 void Edit::SearchText(const wxString &text,int position)
 {
+    searchText = text;
 	if(position == -1)
 	{
 		position = GetCurrentPos();
@@ -205,6 +206,56 @@ void Edit::SearchText(const wxString &text,int position)
         searchStart += text.Length();
     }
 	
+}
+
+void Edit::SearchTextDown()
+{
+    if(searchText.IsEmpty())
+        return;
+    int newMain = FindText(mainSearchSelPos+1,GetTextLength(),searchText);
+    if(newMain == -1)
+    {
+        newMain = FindText(0,mainSearchSelPos,searchText);
+    }
+    if(newMain != -1 && newMain != mainSearchSelPos)
+    {
+        SetIndicatorCurrent(33);
+        IndicatorClearRange(newMain,searchText.Length());
+        IndicatorFillRange(mainSearchSelPos,searchText.Length());
+        
+        SetIndicatorCurrent(32);
+        IndicatorClearRange(mainSearchSelPos,searchText.Length());
+        IndicatorFillRange(newMain,searchText.Length());
+        mainSearchSelPos = newMain;
+        ScrollToLine(LineFromPosition(mainSearchSelPos));
+    }
+}
+
+void Edit::SearchTextUp()
+{
+    if(searchText.IsEmpty())
+        return;
+    SetSelectionStart(mainSearchSelPos);
+    SearchAnchor();
+    int newMain = SearchPrev(0,searchText);
+    if(newMain == -1)
+    {
+        SetSelectionStart(GetTextLength());
+        SearchAnchor();
+        newMain = SearchPrev(0,searchText);
+    }
+    if(newMain != -1 && newMain != mainSearchSelPos)
+    {
+        SetIndicatorCurrent(33);
+        IndicatorClearRange(newMain,searchText.Length());
+        IndicatorFillRange(mainSearchSelPos,searchText.Length());
+        
+        SetIndicatorCurrent(32);
+        IndicatorClearRange(mainSearchSelPos,searchText.Length());
+        IndicatorFillRange(newMain,searchText.Length());
+        mainSearchSelPos = newMain;
+        ScrollToLine(LineFromPosition(mainSearchSelPos));
+    }
 }
 
 void Edit::OnKeyDown(wxKeyEvent &event)

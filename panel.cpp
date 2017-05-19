@@ -9,6 +9,8 @@
 
 BEGIN_EVENT_TABLE(MyPanel,wxPanel)
 	EVT_TEXT(ID_SEARCH_TEXT_INPUT,MyPanel::SearchTextChanged)
+    EVT_BUTTON(ID_SEARCH_DOWN,MyPanel::SearchTextDown)
+    EVT_BUTTON(ID_SEARCH_UP,MyPanel::SearchTextUp)
 END_EVENT_TABLE()
 
 MyPanel::MyPanel(wxWindow *parent,const wxString &name,
@@ -42,10 +44,10 @@ MyPanel::MyPanel(wxWindow *parent,const wxString &name,
 	
 	wxBitmap goUp = wxArtProvider::GetBitmap(wxART_GO_UP,wxART_BUTTON);
 	wxBitmap goDown = wxArtProvider::GetBitmap(wxART_GO_DOWN,wxART_BUTTON);
-	wxBitmapButton *goUpButton = new wxBitmapButton(searchPanel,wxID_ANY,goUp,
+	wxBitmapButton *goUpButton = new wxBitmapButton(searchPanel,ID_SEARCH_UP,goUp,
                                               wxDefaultPosition,wxDefaultSize,wxBU_AUTODRAW);
 
-	wxBitmapButton *goDownButton = new wxBitmapButton(searchPanel,wxID_ANY,goDown,
+	wxBitmapButton *goDownButton = new wxBitmapButton(searchPanel,ID_SEARCH_DOWN,goDown,
                                               wxDefaultPosition,wxDefaultSize,wxBU_AUTODRAW);
 	
 	wxCheckBox *matchCase = new wxCheckBox(searchPanel,wxID_ANY,wxT("Match Case"));
@@ -128,6 +130,16 @@ void MyPanel::SearchTextChanged(wxCommandEvent &event)
 {
 	wxTextCtrl *search = (wxTextCtrl *)event.GetEventObject();
 	text_area->SearchText(search->GetValue());
+}
+
+void MyPanel::SearchTextDown(wxCommandEvent &event)
+{
+    text_area->SearchTextDown();
+}
+
+void MyPanel::SearchTextUp(wxCommandEvent &event)
+{
+    text_area->SearchTextUp();
 }
 
 wxBEGIN_EVENT_TABLE(SearchTextCtrl,wxTextCtrl)

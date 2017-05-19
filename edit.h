@@ -65,6 +65,8 @@ public:
     }
 	
 	void SearchText(const wxString &text,int position = -1);
+    void SearchTextDown();
+    void SearchTextUp();
 
     void SetLanguage(int file_type);
     void RefreshStyle();
@@ -79,6 +81,7 @@ private:
     int m_DividerID;
     int lineMarkerHandle;
     int mainSearchSelPos;
+    wxString searchText;
     DECLARE_EVENT_TABLE();
 
 };
