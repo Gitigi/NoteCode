@@ -96,6 +96,10 @@ Edit::Edit(wxWindow *parent,wxWindowID id,wxPoint pos,wxSize siz,long style)
     SetLayoutCache (wxSTC_CACHE_PAGE);
 	
 	SetEndAtLastLine(false);
+	
+	IndicatorSetStyle(32,wxSTC_INDIC_ROUNDBOX);
+	IndicatorSetStyle(33,wxSTC_INDIC_ROUNDBOX);
+	IndicatorSetForeground(32,*wxRED);
 }
 
 void Edit::OnMarginClick (wxStyledTextEvent &event)
@@ -166,24 +170,42 @@ void Edit::SearchText(const wxString &text,int position)
 	{
 		position = GetCurrentPos();
 	}
-	
-	ClearSelections();
-
-    if(text.IsEmpty())
-        return;
-
-    int searchStart = 0;
+	int searchStart = 0;
     int textLength = GetTextLength();
 	
+	SetIndicatorCurrent(32);
+	IndicatorClearRange(0,textLength);
+	SetIndicatorCurrent(33);
+	IndicatorClearRange(0,textLength);
+
+    if(text.IsEmpty())
+    {
+		return;
+	}
+	
+	SetIndicatorCurrent(32);
+	int nearestValuePos = FindText(searchStart,textLength,text);
+	if(nearestValuePos == -1)
+		return;
+	IndicatorFillRange(nearestValuePos,text.Length());
+	ScrollToLine(LineFromPosition(nearestValuePos));
+	
+	SetIndicatorCurrent(33);
     while(true)
     {
         searchStart = FindText(searchStart,textLength,text);
         if(searchStart == -1)
             break;
-        AddSelection(searchStart+text.Length(),searchStart);
-
+        if(searchStart == nearestValuePos)
+		{
+			searchStart += text.Length();
+			continue;
+		}
+		IndicatorFillRange(searchStart,text.Length());
         searchStart += text.Length();
     }
+	
+	std::cout<<"indicator pos = "<<IndicatorStart(32,nearestValuePos)<<std::endl;
 }
 
 void Edit::OnKeyDown(wxKeyEvent &event)
