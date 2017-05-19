@@ -184,11 +184,11 @@ void Edit::SearchText(const wxString &text,int position)
 	}
 	
 	SetIndicatorCurrent(32);
-	int nearestValuePos = FindText(searchStart,textLength,text);
-	if(nearestValuePos == -1)
+	mainSearchSelPos = FindText(position,textLength,text);
+	if(mainSearchSelPos == -1)
 		return;
-	IndicatorFillRange(nearestValuePos,text.Length());
-	ScrollToLine(LineFromPosition(nearestValuePos));
+	IndicatorFillRange(mainSearchSelPos,text.Length());
+	ScrollToLine(LineFromPosition(mainSearchSelPos));
 	
 	SetIndicatorCurrent(33);
     while(true)
@@ -196,7 +196,7 @@ void Edit::SearchText(const wxString &text,int position)
         searchStart = FindText(searchStart,textLength,text);
         if(searchStart == -1)
             break;
-        if(searchStart == nearestValuePos)
+        if(searchStart == mainSearchSelPos)
 		{
 			searchStart += text.Length();
 			continue;
@@ -205,7 +205,6 @@ void Edit::SearchText(const wxString &text,int position)
         searchStart += text.Length();
     }
 	
-	std::cout<<"indicator pos = "<<IndicatorStart(32,nearestValuePos)<<std::endl;
 }
 
 void Edit::OnKeyDown(wxKeyEvent &event)

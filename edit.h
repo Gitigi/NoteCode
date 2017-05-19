@@ -78,6 +78,7 @@ private:
     int m_FoldingID;
     int m_DividerID;
     int lineMarkerHandle;
+    int mainSearchSelPos;
     DECLARE_EVENT_TABLE();
 
 };
