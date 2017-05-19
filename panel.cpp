@@ -7,6 +7,10 @@
 #include <wx/checkbox.h>
 #include <iostream>
 
+BEGIN_EVENT_TABLE(MyPanel,wxPanel)
+	EVT_TEXT(ID_SEARCH_TEXT_INPUT,MyPanel::SearchTextChanged)
+END_EVENT_TABLE()
+
 MyPanel::MyPanel(wxWindow *parent,const wxString &name,
                  const wxString &directory)
 :wxPanel(parent,wxID_ANY)
@@ -118,6 +122,12 @@ void MyPanel::ShowSearchControl()
 		searchInput->SetFocus();
 		sizer->Layout();
 	}
+}
+
+void MyPanel::SearchTextChanged(wxCommandEvent &event)
+{
+	wxTextCtrl *search = (wxTextCtrl *)event.GetEventObject();
+	text_area->SearchText(search->GetValue());
 }
 
 wxBEGIN_EVENT_TABLE(SearchTextCtrl,wxTextCtrl)

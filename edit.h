@@ -63,6 +63,8 @@ public:
             }
         }
     }
+	
+	void SearchText(const wxString &text,int position = -1);
 
     void SetLanguage(int file_type);
     void RefreshStyle();

@@ -159,6 +159,32 @@ void Edit::OnDoubleClick(wxStyledTextEvent &event)
 
 }
 
+void Edit::SearchText(const wxString &text,int position)
+{
+	if(position == -1)
+	{
+		position = GetCurrentPos();
+	}
+	
+	ClearSelections();
+
+    if(text.IsEmpty())
+        return;
+
+    int searchStart = 0;
+    int textLength = GetTextLength();
+	
+    while(true)
+    {
+        searchStart = FindText(searchStart,textLength,text);
+        if(searchStart == -1)
+            break;
+        AddSelection(searchStart+text.Length(),searchStart);
+
+        searchStart += text.Length();
+    }
+}
+
 void Edit::OnKeyDown(wxKeyEvent &event)
 {
     lang->OnKeyDown(event);

@@ -32,6 +32,7 @@ public:
     {
         return m_directory;
     }
+	void SearchTextChanged(wxCommandEvent &event);
 
     Edit *text_area;
 private:
@@ -40,6 +41,8 @@ private:
 	wxBoxSizer *sizer;
     wxString m_name;
     wxString m_directory;
+	
+	wxDECLARE_EVENT_TABLE();
 };
 
 class SearchTextCtrl : public wxTextCtrl
