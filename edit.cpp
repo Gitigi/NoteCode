@@ -99,7 +99,7 @@ Edit::Edit(wxWindow *parent,wxWindowID id,wxPoint pos,wxSize siz,long style)
 	
 	IndicatorSetStyle(32,wxSTC_INDIC_ROUNDBOX);
 	IndicatorSetStyle(33,wxSTC_INDIC_ROUNDBOX);
-	IndicatorSetForeground(32,*wxRED);
+	IndicatorSetForeground(33,*wxRED);
 }
 
 void Edit::OnMarginClick (wxStyledTextEvent &event)
