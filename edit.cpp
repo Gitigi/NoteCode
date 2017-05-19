@@ -92,6 +92,7 @@ Edit::Edit(wxWindow *parent,wxWindowID id,wxPoint pos,wxSize siz,long style)
     }
 
     SetTabWidth(TAB_SIZE);
+	SetUseTabs(false);
     SetLayoutCache (wxSTC_CACHE_PAGE);
 	
 	SetEndAtLastLine(false);
