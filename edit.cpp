@@ -190,7 +190,7 @@ void Edit::SearchText(const wxString &text,int position)
 		return;
 	IndicatorFillRange(mainSearchSelPos,text.Length());
 	ScrollToLine(LineFromPosition(mainSearchSelPos));
-    ScrollToColumn(GetColumn(mainSearchSelPos));
+    ScrollToColumn(GetColumn(mainSearchSelPos)-30);
 	
 	SetIndicatorCurrent(33);
     while(true)
@@ -229,7 +229,7 @@ void Edit::SearchTextDown()
         IndicatorFillRange(newMain,searchText.Length());
         mainSearchSelPos = newMain;
         ScrollToLine(LineFromPosition(mainSearchSelPos));
-        ScrollToColumn(GetColumn(mainSearchSelPos));
+        ScrollToColumn(GetColumn(mainSearchSelPos)-30);
     }
 }
 
@@ -257,7 +257,7 @@ void Edit::SearchTextUp()
         IndicatorFillRange(newMain,searchText.Length());
         mainSearchSelPos = newMain;
         ScrollToLine(LineFromPosition(mainSearchSelPos));
-        ScrollToColumn(GetColumn(mainSearchSelPos));
+        ScrollToColumn(GetColumn(mainSearchSelPos)-30);
     }
 }
 
