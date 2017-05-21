@@ -51,7 +51,7 @@ static lang_style python_styles[] =
 LanguagePython::LanguagePython(Edit *sct)
 :Language(sct)
 {
-
+    commentSym = wxT("#");
 }
 
 void LanguagePython::InitializeSCT()

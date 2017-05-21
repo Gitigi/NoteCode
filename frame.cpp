@@ -41,6 +41,9 @@ BEGIN_EVENT_TABLE(MyFrame,wxFrame)
     EVT_MENU(wxID_DELETE,MyFrame::OnEdit)
     EVT_MENU(wxID_SELECTALL,MyFrame::OnEdit)
     EVT_MENU(myID_LINEHIGHLIGHT,MyFrame::OnLineHighlight)
+    EVT_MENU(ID_COMMENT_TOGGLE,MyFrame::OnCommentToggle)
+    EVT_MENU(ID_COMMENT,MyFrame::OnComment)
+    EVT_MENU(ID_UNCOMMENT,MyFrame::OnUncomment)
 
     EVT_MENU_RANGE(myID_HIGLIGHTLANGFIRST,myID_HIGLIGHTLANGLAST,
                    MyFrame::OnHighlightLang)
@@ -289,6 +292,10 @@ void MyFrame::CreateMenu()
     menuEdit->Append(wxID_PASTE);
     menuEdit->Append(wxID_DELETE);
     menuEdit->Append(wxID_SELECTALL);
+    menuEdit->AppendSeparator();
+    menuEdit->Append(ID_COMMENT_TOGGLE,wxT("Toggle Comment\tCtrl-/"));
+    menuEdit->Append(ID_COMMENT,wxT("Comment"));
+    menuEdit->Append(ID_UNCOMMENT,wxT("Uncomment"));
 
     wxMenu *menuView = new wxMenu();
     wxMenu *HighlightLang = new wxMenu();
@@ -342,4 +349,22 @@ int MyFrame::DetermineFile(const wxString &extension)
 
     }
     return FILE_TXT;
+}
+
+void MyFrame::OnCommentToggle(wxCommandEvent &event)
+{
+    MyPanel *panel = wxDynamicCast(notebook->GetCurrentPage(),MyPanel);
+    panel->text_area->CommentToggle();
+}
+
+void MyFrame::OnComment(wxCommandEvent &event)
+{
+    MyPanel *panel = wxDynamicCast(notebook->GetCurrentPage(),MyPanel);
+    panel->text_area->Comment();
+}
+
+void MyFrame::OnUncomment(wxCommandEvent &event)
+{
+    MyPanel *panel = wxDynamicCast(notebook->GetCurrentPage(),MyPanel);
+    panel->text_area->Uncomment();
 }

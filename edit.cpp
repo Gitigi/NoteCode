@@ -100,6 +100,9 @@ Edit::Edit(wxWindow *parent,wxWindowID id,wxPoint pos,wxSize siz,long style)
 	IndicatorSetStyle(32,wxSTC_INDIC_ROUNDBOX);
 	IndicatorSetStyle(33,wxSTC_INDIC_ROUNDBOX);
 	IndicatorSetForeground(33,*wxRED);
+    
+    //cmd to be used in toggling comment
+    CmdKeyAssign('/',wxSTC_SCMOD_CTRL,0);
 }
 
 void Edit::OnMarginClick (wxStyledTextEvent &event)
@@ -430,4 +433,19 @@ void Edit::HighlightCurrentLine()
 void Edit::UnHighlightLine()
 {
     MarkerDeleteHandle(lineMarkerHandle);
+}
+
+void Edit::CommentToggle()
+{
+    lang->CommentToggle();
+}
+
+void Edit::Comment()
+{
+    lang->Comment();
+}
+
+void Edit::Uncomment()
+{
+    lang->Uncomment();
 }

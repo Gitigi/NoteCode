@@ -614,3 +614,63 @@ int Language::SearchPrev(const wxString &pin)
     m_sct->GotoPos(currentPos);
     return pos;
 }
+
+void Language::CommentToggle()
+{
+    std::cout<<"Toggle comment called"<<std::endl;
+    if(commentSym.IsEmpty())
+        return;
+    int start = m_sct->LineFromPosition(m_sct->GetSelectionStart());
+    int end = m_sct->LineFromPosition(m_sct->GetSelectionEnd());
+    
+    wxString lineContent;
+    for(int i = start; i <= end; i++)
+    {
+        lineContent = m_sct->GetLine(i);
+        if(lineContent.Strip(wxString::stripType::both).StartsWith(commentSym))
+        {
+            m_sct->DeleteRange(FirstCharAtLinePos(i),commentSym.Length());
+        }
+        else
+        {
+            m_sct->InsertText(m_sct->PositionFromLine(i),commentSym);
+        }
+    }
+    
+    m_sct->SetSelectionStart(m_sct->PositionFromLine(start));
+    m_sct->SetSelectionEnd(m_sct->PositionFromLine(end));
+}
+
+void Language::Comment()
+{
+    if(commentSym.IsEmpty())
+        return;
+    int start = m_sct->LineFromPosition(m_sct->GetSelectionStart());
+    int end = m_sct->LineFromPosition(m_sct->GetSelectionEnd());
+    
+    for(int i = start; i <= end; i++)
+    {
+        m_sct->InsertText(m_sct->PositionFromLine(i),commentSym);
+    }
+    
+    m_sct->SetSelectionStart(m_sct->PositionFromLine(start));
+    m_sct->SetSelectionEnd(m_sct->PositionFromLine(end));
+}
+
+void Language::Uncomment()
+{
+    if(commentSym.IsEmpty())
+        return;
+    int start = m_sct->LineFromPosition(m_sct->GetSelectionStart());
+    int end = m_sct->LineFromPosition(m_sct->GetSelectionEnd());
+    
+    wxString lineContent;
+    for(int i = start; i <= end; i++)
+    {
+        lineContent = m_sct->GetLine(i);
+        if(lineContent.Strip(wxString::stripType::both).StartsWith(commentSym))
+        {
+            m_sct->DeleteRange(FirstCharAtLinePos(i),commentSym.Length());
+        }
+    }
+}

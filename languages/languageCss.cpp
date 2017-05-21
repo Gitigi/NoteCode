@@ -34,7 +34,7 @@ static lang_style css_styles[] = {
 LanguageCss::LanguageCss(Edit *sct)
 :Language(sct)
 {
-
+    commentSym = wxT("//");
 }
 
 void LanguageCss::InitializeSCT()

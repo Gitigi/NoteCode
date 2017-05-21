@@ -66,7 +66,7 @@ static lang_style java_styles[] = {
 LanguageJava::LanguageJava(Edit *sct)
 :Language(sct)
 {
-
+    commentSym = wxT("//");
 }
 
 void LanguageJava::InitializeSCT()

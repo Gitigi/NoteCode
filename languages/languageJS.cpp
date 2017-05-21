@@ -47,7 +47,7 @@ static lang_style js_styles[] = {
 LanguageJS::LanguageJS(Edit *sct)
 :Language(sct)
 {
-
+    commentSym = wxT("//");
 }
 
 void LanguageJS::InitializeSCT()

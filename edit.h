@@ -72,6 +72,9 @@ public:
     void RefreshStyle();
     void HighlightCurrentLine();
     void UnHighlightLine();
+    void CommentToggle();
+    void Comment();
+    void Uncomment();
     wxString filePath;
     bool hightlightLine;
 private:

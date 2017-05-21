@@ -73,7 +73,7 @@ static lang_style cpp_styles[] = {
 LanguageCpp::LanguageCpp(Edit *sct)
 :Language(sct)
 {
-
+    commentSym = wxT("//");
 }
 
 

@@ -75,6 +75,9 @@ public:
     void OnSavePointReachLeave(wxStyledTextEvent &event);
     void OnDirCtrlFileActivated(wxTreeEvent &event);
     void OnChangeAutoHideLeftPanel(wxCommandEvent &event);
+    void OnCommentToggle(wxCommandEvent &event);
+    void OnComment(wxCommandEvent &event);
+    void OnUncomment(wxCommandEvent &event);
 private:
     void CreateImageList();
     int DetermineFile(const wxString &extension = wxEmptyString);

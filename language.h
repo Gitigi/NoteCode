@@ -30,6 +30,9 @@ public:
     virtual void OnModification(wxStyledTextEvent &event);
     virtual void OnLoad();
     virtual void OnUpdateUI(wxStyledTextEvent &event){}
+    virtual void CommentToggle();
+    virtual void Comment();
+    virtual void Uncomment();
     //Determine a bracket default and change their style accordingly
     void StyleBraces();
     void AutoCompBraces();
@@ -46,6 +49,7 @@ public:
     int MyBraceMatch(int pos);
 protected:
     Edit *m_sct;
+    wxString commentSym;
 private:
     //Test
     bool dirty;
