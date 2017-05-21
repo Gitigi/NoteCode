@@ -623,22 +623,28 @@ void Language::CommentToggle()
     int start = m_sct->LineFromPosition(m_sct->GetSelectionStart());
     int end = m_sct->LineFromPosition(m_sct->GetSelectionEnd());
     
+    int comment = 0,uncomment=0;
     wxString lineContent;
     for(int i = start; i <= end; i++)
     {
         lineContent = m_sct->GetLine(i);
         if(lineContent.Strip(wxString::stripType::both).StartsWith(commentSym))
         {
-            m_sct->DeleteRange(FirstCharAtLinePos(i),commentSym.Length());
+            uncomment += 1;
         }
         else
         {
-            m_sct->InsertText(m_sct->PositionFromLine(i),commentSym);
+            comment += 1;
         }
     }
     
-    m_sct->SetSelectionStart(m_sct->PositionFromLine(start));
-    m_sct->SetSelectionEnd(m_sct->PositionFromLine(end));
+    if(comment >= uncomment)
+    {
+        Comment();
+    }
+    else{
+        Uncomment();
+    }
 }
 
 void Language::Comment()
