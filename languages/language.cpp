@@ -623,22 +623,22 @@ void Language::CommentToggle()
     int start = m_sct->LineFromPosition(m_sct->GetSelectionStart());
     int end = m_sct->LineFromPosition(m_sct->GetSelectionEnd());
     
-    int comment = 0,uncomment=0;
+    bool comment = false;
     wxString lineContent;
     for(int i = start; i <= end; i++)
     {
         lineContent = m_sct->GetLine(i);
         if(lineContent.Strip(wxString::stripType::both).StartsWith(commentSym))
         {
-            uncomment += 1;
         }
         else
         {
-            comment += 1;
+            comment = true;
+            break;
         }
     }
     
-    if(comment >= uncomment)
+    if(comment)
     {
         Comment();
     }
