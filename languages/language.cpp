@@ -160,6 +160,18 @@ void Language::OnModification(wxStyledTextEvent &event)
 {
     switch(event.GetModificationType())
     {
+    case 2080:  //About to undo
+        std::cout<<"about to undo"<<std::endl;
+        break;
+    case 290:   //undo action
+        std::cout<<"undo"<<std::endl;
+        break;
+    case 1088:  //about to redo
+        std::cout<<"about to redo"<<std::endl;
+        break;
+    case 321: //redo action
+        std::cout<<"redo"<<std::endl;
+        break;
     case 1040:  //About to insert Text
         break;
     case 8209:  //New insertion Point
@@ -654,10 +666,12 @@ void Language::Comment()
     int start = m_sct->LineFromPosition(m_sct->GetSelectionStart());
     int end = m_sct->LineFromPosition(m_sct->GetSelectionEnd());
     
+    m_sct->BeginUndoAction();
     for(int i = start; i <= end; i++)
     {
         m_sct->InsertText(m_sct->PositionFromLine(i),commentSym);
     }
+    m_sct->EndUndoAction();
     
     m_sct->SetSelectionStart(m_sct->PositionFromLine(start));
     m_sct->SetSelectionEnd(m_sct->PositionFromLine(end));
@@ -670,6 +684,7 @@ void Language::Uncomment()
     int start = m_sct->LineFromPosition(m_sct->GetSelectionStart());
     int end = m_sct->LineFromPosition(m_sct->GetSelectionEnd());
     
+    m_sct->BeginUndoAction();
     wxString lineContent;
     for(int i = start; i <= end; i++)
     {
@@ -679,4 +694,5 @@ void Language::Uncomment()
             m_sct->DeleteRange(FirstCharAtLinePos(i),commentSym.Length());
         }
     }
+    m_sct->EndUndoAction();
 }
