@@ -84,7 +84,7 @@ static lang_style html_styles[] =
     {mySTC_TYPE_DEFAULT},           //Other
     {mySTC_TYPE_COMMENT},           //Comment
     {mySTC_TYPE_DEFAULT},           //entity
-    {mySTC_TYPE_ERROR},             //Target
+    {mySTC_TYPE_WORD1},             //TagEnd
     {mySTC_TYPE_WORD1},             //XML start
     {mySTC_TYPE_WORD2},             //XML end
     {mySTC_TYPE_SCRIPT},            //Script
