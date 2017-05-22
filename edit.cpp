@@ -133,15 +133,12 @@ void Edit::OnCharAdded(wxStyledTextEvent &event)
 void Edit::OnDoubleClick(wxStyledTextEvent &event)
 {
     wxString selectedText = GetSelectedText();
-
-    //Hold position of selected text
-    int initialSelPos = GetSelectionStart();
-
+    int textLength = GetTextLength();
+    HighlightTextClear(0,textLength);
     if(selectedText.IsEmpty())
         return;
 
     int searchStart = 0;
-    int textLength = GetTextLength();
 
     while(true)
     {
@@ -149,22 +146,10 @@ void Edit::OnDoubleClick(wxStyledTextEvent &event)
         if(searchStart == -1)
             break;
 
-        //Avoid highlighting the initially selected word
-        if(searchStart == initialSelPos)
-        {
-            searchStart += selectedText.Length();
-            continue;
-        }
-        AddSelection(searchStart+selectedText.Length(),searchStart);
-
+        
+        HighlightText(searchStart,selectedText.Length());
         searchStart += selectedText.Length();
     }
-
-    //if addition selection were made add initially selected word to
-    //make it main selection again
-    if(GetSelections() > 1)
-        AddSelection(initialSelPos+selectedText.Length(),initialSelPos);
-
 }
 
 void Edit::HighlightMainText(int start,int length)
