@@ -167,6 +167,33 @@ void Edit::OnDoubleClick(wxStyledTextEvent &event)
 
 }
 
+void Edit::HighlightMainText(int start,int length)
+{
+    SetIndicatorCurrent(32);
+	IndicatorFillRange(start,length);
+    int lineToScroll = LineFromPosition(start);
+    int firstLine = GetFirstVisibleLine();
+    if(lineToScroll < firstLine || (firstLine + LinesOnScreen()) < lineToScroll)
+    {
+        ScrollToLine(lineToScroll);
+        ScrollToColumn(GetColumn(start)-30);
+    }
+}
+
+void Edit::HighlightText(int start,int length)
+{
+    SetIndicatorCurrent(33);
+    IndicatorFillRange(start,length);
+}
+
+void Edit::HighlightTextClear(int start,int length)
+{
+    SetIndicatorCurrent(32);
+    IndicatorClearRange(start,length);
+    SetIndicatorCurrent(33);
+    IndicatorClearRange(start,length);
+}
+
 void Edit::SearchText(const wxString &text,int position)
 {
     searchText = text;
@@ -177,30 +204,18 @@ void Edit::SearchText(const wxString &text,int position)
 	int searchStart = 0;
     int textLength = GetTextLength();
 	
-	SetIndicatorCurrent(32);
-	IndicatorClearRange(0,textLength);
-	SetIndicatorCurrent(33);
-	IndicatorClearRange(0,textLength);
+	HighlightTextClear(0,textLength);
 
     if(text.IsEmpty())
     {
 		return;
 	}
 	
-	SetIndicatorCurrent(32);
 	mainSearchSelPos = FindText(position,textLength,text);
 	if(mainSearchSelPos == -1)
 		return;
-	IndicatorFillRange(mainSearchSelPos,text.Length());
-    int lineToScroll = LineFromPosition(mainSearchSelPos);
-    int firstLine = GetFirstVisibleLine();
-    if(lineToScroll < firstLine || (firstLine + LinesOnScreen()) < lineToScroll)
-    {
-        ScrollToLine(lineToScroll);
-        ScrollToColumn(GetColumn(mainSearchSelPos)-30);
-    }
+    HighlightMainText(mainSearchSelPos,text.Length());
 	
-	SetIndicatorCurrent(33);
     while(true)
     {
         searchStart = FindText(searchStart,textLength,text);
@@ -211,7 +226,7 @@ void Edit::SearchText(const wxString &text,int position)
 			searchStart += text.Length();
 			continue;
 		}
-		IndicatorFillRange(searchStart,text.Length());
+		HighlightText(searchStart,text.Length());
         searchStart += text.Length();
     }
 	
@@ -228,21 +243,13 @@ void Edit::SearchTextDown()
     }
     if(newMain != -1 && newMain != mainSearchSelPos)
     {
-        SetIndicatorCurrent(33);
-        IndicatorClearRange(newMain,searchText.Length());
-        IndicatorFillRange(mainSearchSelPos,searchText.Length());
+        HighlightTextClear(newMain,searchText.Length());
+        HighlightMainText(newMain,searchText.Length());
         
-        SetIndicatorCurrent(32);
-        IndicatorClearRange(mainSearchSelPos,searchText.Length());
-        IndicatorFillRange(newMain,searchText.Length());
+        HighlightTextClear(mainSearchSelPos,searchText.Length());
+        HighlightText(mainSearchSelPos,searchText.Length());
+        
         mainSearchSelPos = newMain;
-        int lineToScroll = LineFromPosition(mainSearchSelPos);
-        int firstLine = GetFirstVisibleLine();
-        if(lineToScroll < firstLine || (firstLine + LinesOnScreen()) < lineToScroll)
-        {
-            ScrollToLine(lineToScroll);
-            ScrollToColumn(GetColumn(mainSearchSelPos)-30);
-        }
     }
 }
 
@@ -261,21 +268,13 @@ void Edit::SearchTextUp()
     }
     if(newMain != -1 && newMain != mainSearchSelPos)
     {
-        SetIndicatorCurrent(33);
-        IndicatorClearRange(newMain,searchText.Length());
-        IndicatorFillRange(mainSearchSelPos,searchText.Length());
+        HighlightTextClear(newMain,searchText.Length());
+        HighlightMainText(newMain,searchText.Length());
         
-        SetIndicatorCurrent(32);
-        IndicatorClearRange(mainSearchSelPos,searchText.Length());
-        IndicatorFillRange(newMain,searchText.Length());
+        HighlightTextClear(mainSearchSelPos,searchText.Length());
+        HighlightText(mainSearchSelPos,searchText.Length());
+        
         mainSearchSelPos = newMain;
-        int lineToScroll = LineFromPosition(mainSearchSelPos);
-        int firstLine = GetFirstVisibleLine();
-        if(lineToScroll < firstLine || (firstLine + LinesOnScreen()) < lineToScroll)
-        {
-            ScrollToLine(lineToScroll);
-            ScrollToColumn(GetColumn(mainSearchSelPos)-30);
-        }
     }
 }
 

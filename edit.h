@@ -64,6 +64,9 @@ public:
         }
     }
 	
+    void HighlightMainText(int start,int length);
+    void HighlightText(int start,int length);
+    void HighlightTextClear(int start,int length);
 	void SearchText(const wxString &text,int position = -1);
     void SearchTextDown();
     void SearchTextUp();
