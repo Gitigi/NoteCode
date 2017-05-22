@@ -47,19 +47,5 @@ private:
 	wxDECLARE_EVENT_TABLE();
 };
 
-class SearchTextCtrl : public wxTextCtrl
-{
-public:
-	SearchTextCtrl(wxWindow *parent,wxWindowID id,wxString value = wxEmptyString,
-		wxPoint pos=wxDefaultPosition,wxSize siz = wxDefaultSize,long style = 0)
-	:wxTextCtrl(parent,id,value,pos,siz,style)
-	{
-		
-	}
-	
-	void OnChar(wxKeyEvent &event);
-private:
-	wxDECLARE_EVENT_TABLE();
-};
 
 #endif // PANEL_H_INCLUDED

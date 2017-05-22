@@ -44,6 +44,7 @@ BEGIN_EVENT_TABLE(MyFrame,wxFrame)
     EVT_MENU(ID_COMMENT_TOGGLE,MyFrame::OnCommentToggle)
     EVT_MENU(ID_COMMENT,MyFrame::OnComment)
     EVT_MENU(ID_UNCOMMENT,MyFrame::OnUncomment)
+    EVT_MENU(wxID_FIND,MyFrame::OnFind)
 
     EVT_MENU_RANGE(myID_HIGLIGHTLANGFIRST,myID_HIGLIGHTLANGLAST,
                    MyFrame::OnHighlightLang)
@@ -287,6 +288,8 @@ void MyFrame::CreateMenu()
     menuEdit->Append(wxID_UNDO);
     menuEdit->Append(wxID_REDO);
     menuEdit->AppendSeparator();
+    menuEdit->Append(wxID_FIND,wxT("&Find\tCtrl-F"));
+    menuEdit->AppendSeparator();
     menuEdit->Append(wxID_CUT);
     menuEdit->Append(wxID_COPY);
     menuEdit->Append(wxID_PASTE);
@@ -367,4 +370,9 @@ void MyFrame::OnUncomment(wxCommandEvent &event)
 {
     MyPanel *panel = wxDynamicCast(notebook->GetCurrentPage(),MyPanel);
     panel->text_area->Uncomment();
+}
+
+void MyFrame::OnFind(wxCommandEvent &event)
+{
+    wxDynamicCast(notebook->GetCurrentPage(),MyPanel)->ShowSearchControl();
 }

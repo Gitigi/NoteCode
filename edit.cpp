@@ -282,12 +282,7 @@ void Edit::SearchTextUp()
 void Edit::OnKeyDown(wxKeyEvent &event)
 {
     lang->OnKeyDown(event);
-	if(event.ControlDown() && event.GetKeyCode() == 70){
-		wxDynamicCast(GetParent(),MyPanel)->ShowSearchControl();
-	}
-	else{
-		event.Skip();
-	}
+    event.Skip();
 }
 
 void Edit::SetLanguage(int file_type)
