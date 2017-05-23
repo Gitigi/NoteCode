@@ -35,6 +35,7 @@ public:
 	void SearchTextChanged(wxCommandEvent &event);
     void SearchTextDown(wxCommandEvent &event);
     void SearchTextUp(wxCommandEvent &event);
+    void ChangeSearchFlags(wxCommandEvent &event);
 
     Edit *text_area;
 private:

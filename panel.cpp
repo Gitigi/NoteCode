@@ -11,6 +11,9 @@ BEGIN_EVENT_TABLE(MyPanel,wxPanel)
 	EVT_TEXT(ID_SEARCH_TEXT_INPUT,MyPanel::SearchTextChanged)
     EVT_BUTTON(ID_SEARCH_DOWN,MyPanel::SearchTextDown)
     EVT_BUTTON(ID_SEARCH_UP,MyPanel::SearchTextUp)
+    EVT_CHECKBOX(ID_MATCH_CASE,MyPanel::ChangeSearchFlags)
+    EVT_CHECKBOX(ID_MATCH_REGEX,MyPanel::ChangeSearchFlags)
+    EVT_CHECKBOX(ID_MATCH_WORDS,MyPanel::ChangeSearchFlags)
 END_EVENT_TABLE()
 
 MyPanel::MyPanel(wxWindow *parent,const wxString &name,
@@ -50,9 +53,9 @@ MyPanel::MyPanel(wxWindow *parent,const wxString &name,
 	wxBitmapButton *goDownButton = new wxBitmapButton(searchPanel,ID_SEARCH_DOWN,goDown,
                                               wxDefaultPosition,wxDefaultSize,wxBU_AUTODRAW);
 	
-	wxCheckBox *matchCase = new wxCheckBox(searchPanel,wxID_ANY,wxT("Match Case"));
-	wxCheckBox *matchRegex = new wxCheckBox(searchPanel,wxID_ANY,wxT("Regex"));
-	wxCheckBox *matchWords = new wxCheckBox(searchPanel,wxID_ANY,wxT("Words"));
+	wxCheckBox *matchCase = new wxCheckBox(searchPanel,ID_MATCH_CASE,wxT("Match Case"));
+	wxCheckBox *matchRegex = new wxCheckBox(searchPanel,ID_MATCH_REGEX,wxT("Regex"));
+	wxCheckBox *matchWords = new wxCheckBox(searchPanel,ID_MATCH_WORDS,wxT("Words"));
 
 	
 	searchSizer->Add(searchInput,1);
@@ -140,4 +143,22 @@ void MyPanel::SearchTextDown(wxCommandEvent &event)
 void MyPanel::SearchTextUp(wxCommandEvent &event)
 {
     text_area->SearchTextUp();
+}
+
+void MyPanel::ChangeSearchFlags(wxCommandEvent &event)
+{
+    switch(event.GetId())
+    {
+    case ID_MATCH_CASE:
+        text_area->ChangeSearchFlags(wxSTC_FIND_MATCHCASE,event.IsChecked());
+        break;
+    case ID_MATCH_REGEX:
+        text_area->ChangeSearchFlags(wxSTC_FIND_REGEXP,event.IsChecked());
+        break;
+    case ID_MATCH_WORDS:
+        text_area->ChangeSearchFlags(wxSTC_FIND_WHOLEWORD,event.IsChecked());
+        break;
+    default:
+        break;
+    };
 }

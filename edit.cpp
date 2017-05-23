@@ -196,14 +196,14 @@ void Edit::SearchText(const wxString &text,int position)
 		return;
 	}
 	
-	mainSearchSelPos = FindText(position,textLength,text);
+	mainSearchSelPos = FindText(position,textLength,text,searchFlag);
 	if(mainSearchSelPos == -1)
 		return;
     HighlightMainText(mainSearchSelPos,text.Length());
 	
     while(true)
     {
-        searchStart = FindText(searchStart,textLength,text);
+        searchStart = FindText(searchStart,textLength,text,searchFlag);
         if(searchStart == -1)
             break;
         if(searchStart == mainSearchSelPos)
@@ -221,10 +221,10 @@ void Edit::SearchTextDown()
 {
     if(searchText.IsEmpty())
         return;
-    int newMain = FindText(mainSearchSelPos+1,GetTextLength(),searchText);
+    int newMain = FindText(mainSearchSelPos+1,GetTextLength(),searchText,searchFlag);
     if(newMain == -1)
     {
-        newMain = FindText(0,mainSearchSelPos,searchText);
+        newMain = FindText(0,mainSearchSelPos,searchText,searchFlag);
     }
     if(newMain != -1 && newMain != mainSearchSelPos)
     {
@@ -242,14 +242,10 @@ void Edit::SearchTextUp()
 {
     if(searchText.IsEmpty())
         return;
-    SetSelectionStart(mainSearchSelPos);
-    SearchAnchor();
-    int newMain = SearchPrev(0,searchText);
+    int newMain = FindText(mainSearchSelPos-1,0,searchText,searchFlag);
     if(newMain == -1)
     {
-        SetSelectionStart(GetTextLength());
-        SearchAnchor();
-        newMain = SearchPrev(0,searchText);
+        newMain = FindText(GetTextLength(),mainSearchSelPos,searchText,searchFlag);
     }
     if(newMain != -1 && newMain != mainSearchSelPos)
     {
@@ -261,6 +257,35 @@ void Edit::SearchTextUp()
         
         mainSearchSelPos = newMain;
     }
+}
+
+void Edit::ChangeSearchFlags(int type,bool value)
+{
+    int flag = 0;
+    switch(type)
+    {
+    case wxSTC_FIND_MATCHCASE:
+        flag = wxSTC_FIND_MATCHCASE;
+        break;
+    case wxSTC_FIND_REGEXP:
+        flag = wxSTC_FIND_REGEXP;
+        break;
+    case wxSTC_FIND_WHOLEWORD:
+        flag = wxSTC_FIND_WHOLEWORD;
+        break;
+    default:
+        break;
+    };
+    
+    if(value)
+    {
+        searchFlag |= flag;
+    }
+    else
+    {
+        searchFlag ^= flag;
+    }
+    SearchText(searchText);
 }
 
 void Edit::OnKeyDown(wxKeyEvent &event)
