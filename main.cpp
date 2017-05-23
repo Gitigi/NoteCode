@@ -31,6 +31,9 @@ static const wxCmdLineEntryDesc g_cmdLineDesc[] =
     {
         wxCMD_LINE_SWITCH, "v", "version", "print version"
     },
+    {
+        wxCMD_LINE_SWITCH, "n", "new","Open a new NoteCode window"
+    },
 
     {
         wxCMD_LINE_PARAM,NULL,NULL,"Input file",
@@ -77,6 +80,12 @@ bool MyApp::OnInit()
         wxLogMessage("Version 0.1");
         return false;
     }
+    
+    bool createNewWindow = false;
+    if(cmd_parser.Found(wxT("n")))
+    {
+        createNewWindow = true;
+    }
 
     if(cmd_parser.GetParamCount() > 0)
     {
@@ -103,7 +112,7 @@ bool MyApp::OnInit()
 		}
 		
 	}
-	else
+	else if(!createNewWindow)
 	{
 		stClient *client = new stClient;
 		wxString hostName = wxT("localhost");
