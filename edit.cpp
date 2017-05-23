@@ -103,6 +103,10 @@ Edit::Edit(wxWindow *parent,wxWindowID id,wxPoint pos,wxSize siz,long style)
     
     //cmd to be used in toggling comment
     CmdKeyAssign('/',wxSTC_SCMOD_CTRL,0);
+    
+    //add vertical line as mark for maximum column in editor
+    SetEdgeMode(wxSTC_EDGE_LINE);
+    SetEdgeColumn(120);
 }
 
 void Edit::OnMarginClick (wxStyledTextEvent &event)
