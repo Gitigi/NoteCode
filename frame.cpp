@@ -45,6 +45,7 @@ BEGIN_EVENT_TABLE(MyFrame,wxFrame)
     EVT_MENU(ID_COMMENT,MyFrame::OnComment)
     EVT_MENU(ID_UNCOMMENT,MyFrame::OnUncomment)
     EVT_MENU(wxID_FIND,MyFrame::OnFind)
+    EVT_MENU_RANGE(ID_INDENTATION,ID_INDENTATION_SPACE,MyFrame::OnChangeIndentation)
 
     EVT_MENU_RANGE(myID_HIGLIGHTLANGFIRST,myID_HIGLIGHTLANGLAST,
                    MyFrame::OnHighlightLang)
@@ -312,6 +313,16 @@ void MyFrame::CreateMenu()
 
     menuView->Append(myID_LINEHIGHLIGHT,wxT("Line Highlight"),"enable or disable lihe highlighting",true);
     menuView->Check(myID_LINEHIGHLIGHT,lineHighlightPref);
+    
+    wxMenu *indentation = new wxMenu();
+    indentation->AppendCheckItem(ID_INDENTATION_TAB,wxT("Tab"),wxT("change indentation to tabs"));
+    indentation->AppendCheckItem(ID_INDENTATION_SPACE,wxT("Space"),wxT("change indentation to space"));
+    menuView->Append(ID_INDENTATION,wxT("Change indentation"),indentation);
+    wxMenu *indentationSize = new wxMenu();
+    indentationSize->AppendCheckItem(ID_INDENTATION_WIDTH_2,wxT("2"),wxT("use space indentation of width 2"));
+    indentationSize->AppendCheckItem(ID_INDENTATION_WIDTH_4,wxT("4"),wxT("use space indentation of width 4"));
+    indentationSize->AppendCheckItem(ID_INDENTATION_WIDTH_8,wxT("8"),wxT("use space indentation of width 8"));
+    menuView->AppendSubMenu(indentationSize,"Indentation Size");
 
     // construct menubar
     m_menuBar->Append (menuFile, _("&File"));
@@ -375,4 +386,51 @@ void MyFrame::OnUncomment(wxCommandEvent &event)
 void MyFrame::OnFind(wxCommandEvent &event)
 {
     wxDynamicCast(notebook->GetCurrentPage(),MyPanel)->ShowSearchControl();
+}
+
+void MyFrame::OnChangeIndentation(wxCommandEvent &event)
+{
+    SetIndentation(event.GetId());
+}
+
+void MyFrame::SetIndentation(int id)
+{
+    wxMenuBar *menu = GetMenuBar();
+    wxMenuItem *item = NULL;
+    MyPanel *panel = wxDynamicCast(notebook->GetCurrentPage(),MyPanel);
+    switch(id)
+    {
+    case ID_INDENTATION_TAB:
+        menu->FindItem(ID_INDENTATION_TAB)->Check(true);
+        menu->FindItem(ID_INDENTATION_SPACE)->Check(false);
+        panel->text_area->ChangeIndentation(id);
+        break;
+    case ID_INDENTATION_SPACE:
+        menu->FindItem(ID_INDENTATION_TAB)->Check(false);
+        menu->FindItem(ID_INDENTATION_SPACE)->Check(true);
+        panel->text_area->ChangeIndentation(id);
+        break;
+        
+        //indentation size
+    case ID_INDENTATION_WIDTH_2:
+        menu->FindItem(ID_INDENTATION_WIDTH_2)->Check(true);
+        menu->FindItem(ID_INDENTATION_WIDTH_4)->Check(false);
+        menu->FindItem(ID_INDENTATION_WIDTH_8)->Check(false);
+        panel->text_area->ChangeIndentationWidth(2);
+        break;
+    case ID_INDENTATION_WIDTH_4:
+        menu->FindItem(ID_INDENTATION_WIDTH_2)->Check(false);
+        menu->FindItem(ID_INDENTATION_WIDTH_4)->Check(true);
+        menu->FindItem(ID_INDENTATION_WIDTH_8)->Check(false);
+        panel->text_area->ChangeIndentationWidth(4);
+        break;
+    case ID_INDENTATION_WIDTH_8:
+        menu->FindItem(ID_INDENTATION_WIDTH_2)->Check(false);
+        menu->FindItem(ID_INDENTATION_WIDTH_4)->Check(false);
+        menu->FindItem(ID_INDENTATION_WIDTH_8)->Check(true);
+        panel->text_area->ChangeIndentationWidth(8);
+        break;
+    default:
+        break;
+    };
 }

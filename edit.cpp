@@ -457,3 +457,23 @@ void Edit::Uncomment()
 {
     lang->Uncomment();
 }
+
+void Edit::ChangeIndentation(int id)
+{
+    switch(id)
+    {
+    case ID_INDENTATION_TAB:
+        SetUseTabs(true);
+        break;
+    case ID_INDENTATION_SPACE:
+        SetUseTabs(false);
+        break;
+    default:
+        break;
+    };
+}
+
+void Edit::ChangeIndentationWidth(int size)
+{
+    SetTabWidth(size);
+}

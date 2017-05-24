@@ -79,6 +79,8 @@ public:
     void CommentToggle();
     void Comment();
     void Uncomment();
+    void ChangeIndentation(int id);
+    void ChangeIndentationWidth(int size);
     wxString filePath;
     bool hightlightLine;
 private:
