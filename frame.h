@@ -81,6 +81,7 @@ public:
     void OnFind(wxCommandEvent &event);
     void OnChangeIndentation(wxCommandEvent &event);
     void SetIndentation(int id);
+    void ConvertIndentation(wxCommandEvent &event);
 private:
     void CreateImageList();
     int DetermineFile(const wxString &extension = wxEmptyString);

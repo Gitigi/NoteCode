@@ -46,6 +46,7 @@ BEGIN_EVENT_TABLE(MyFrame,wxFrame)
     EVT_MENU(ID_UNCOMMENT,MyFrame::OnUncomment)
     EVT_MENU(wxID_FIND,MyFrame::OnFind)
     EVT_MENU_RANGE(ID_INDENTATION,ID_INDENTATION_SPACE,MyFrame::OnChangeIndentation)
+    EVT_MENU_RANGE(ID_CONVERT_INDENTATION,ID_CONVERT_INDENTATION_WIDTH_8,MyFrame::ConvertIndentation)
 
     EVT_MENU_RANGE(myID_HIGLIGHTLANGFIRST,myID_HIGLIGHTLANGLAST,
                    MyFrame::OnHighlightLang)
@@ -297,6 +298,16 @@ void MyFrame::CreateMenu()
     menuEdit->Append(wxID_DELETE);
     menuEdit->Append(wxID_SELECTALL);
     menuEdit->AppendSeparator();
+    wxMenu *convertIndentation = new wxMenu();
+    convertIndentation->Append(ID_CONVERT_INDENTATION_TAB,wxT("Convert file indentation to tabs"));
+    convertIndentation->Append(ID_CONVERT_INDENTATION_SPACE,wxT("Convert file indentation to spaces"));
+    menuEdit->AppendSubMenu(convertIndentation,wxT("Convert indentation"));
+    wxMenu *convertIndentationWidth = new wxMenu();
+    convertIndentationWidth->Append(ID_CONVERT_INDENTATION_WIDTH_2,wxT("Change file indentation size to 2"));
+    convertIndentationWidth->Append(ID_CONVERT_INDENTATION_WIDTH_4,wxT("Change file indentation size to 4"));
+    convertIndentationWidth->Append(ID_CONVERT_INDENTATION_WIDTH_8,wxT("Change file indentation size to 8"));
+    menuEdit->AppendSubMenu(convertIndentationWidth,wxT("Convert indentation width"));
+    menuEdit->AppendSeparator();
     menuEdit->Append(ID_COMMENT_TOGGLE,wxT("Toggle Comment\tCtrl-/"));
     menuEdit->Append(ID_COMMENT,wxT("Comment"));
     menuEdit->Append(ID_UNCOMMENT,wxT("Uncomment"));
@@ -429,6 +440,29 @@ void MyFrame::SetIndentation(int id)
         menu->FindItem(ID_INDENTATION_WIDTH_4)->Check(false);
         menu->FindItem(ID_INDENTATION_WIDTH_8)->Check(true);
         panel->text_area->ChangeIndentationWidth(8);
+        break;
+    default:
+        break;
+    };
+}
+
+void MyFrame::ConvertIndentation(wxCommandEvent &event)
+{
+    MyPanel *panel = wxDynamicCast(notebook->GetCurrentPage(),MyPanel);
+    switch(event.GetId())
+    {
+    case ID_CONVERT_INDENTATION_TAB:
+    case ID_CONVERT_INDENTATION_SPACE:
+        panel->text_area->ConvertIndentation(event.GetId());
+        break;
+    case ID_CONVERT_INDENTATION_WIDTH_2:
+        panel->text_area->ConvertIndentationWidth(2);
+        break;
+    case ID_CONVERT_INDENTATION_WIDTH_4:
+        panel->text_area->ConvertIndentationWidth(4);
+        break;
+    case ID_CONVERT_INDENTATION_WIDTH_8:
+        panel->text_area->ConvertIndentationWidth(8);
         break;
     default:
         break;

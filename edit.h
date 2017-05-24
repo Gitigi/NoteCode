@@ -81,6 +81,9 @@ public:
     void Uncomment();
     void ChangeIndentation(int id);
     void ChangeIndentationWidth(int size);
+    void ConvertIndentation(int id);
+    void ConvertIndentationWidth(int width);
+    void ReplaceAllText(const wxString &text,const wxString &newText);
     wxString filePath;
     bool hightlightLine;
 private:

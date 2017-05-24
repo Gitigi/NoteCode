@@ -477,3 +477,47 @@ void Edit::ChangeIndentationWidth(int size)
 {
     SetTabWidth(size);
 }
+
+void Edit::ReplaceAllText(const wxString &text,const wxString &newText)
+{
+    int length = GetTextLength();
+    SetTargetRange(0,length);
+    int pos;
+    BeginUndoAction();
+    while(true)
+    {
+        pos = SearchInTarget(text);
+        if(pos == -1)
+            break;
+        ReplaceTarget(newText);
+        SetTargetRange(pos+1,length);
+    }
+    EndUndoAction();
+}
+
+void Edit::ConvertIndentation(int id)
+{
+    switch(id)
+    {
+    case ID_CONVERT_INDENTATION_SPACE:
+        ReplaceAllText(wxUniChar(wxSTC_KEY_TAB),wxString(wxUniChar(' '),GetTabWidth()));
+        break;
+    case ID_CONVERT_INDENTATION_TAB:
+        ReplaceAllText(wxString(wxUniChar(' '),GetTabWidth()),wxUniChar(wxSTC_KEY_TAB));
+        break;
+    default:
+        break;
+    };
+}
+
+void Edit::ConvertIndentationWidth(int width)
+{
+    BeginUndoAction();
+    ConvertIndentation(ID_CONVERT_INDENTATION_TAB);
+    SetTabWidth(width);
+    if(!GetUseTabs())
+    {
+        ConvertIndentation(ID_CONVERT_INDENTATION_SPACE);
+    }
+    EndUndoAction();
+}
